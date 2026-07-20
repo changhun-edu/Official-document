@@ -689,6 +689,124 @@ body.ann-off #ann-panel { display: none !important; }
 
 
 
+/* ══════════ 회의록 위저드 ══════════ */
+.min-wizard {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink2) 100%);
+  border-radius: 14px; padding: 1.25rem 1.4rem;
+  margin-bottom: 1.5rem; color: #fff;
+}
+.min-wizard-q {
+  font-size: 1rem; font-weight: 700; margin-bottom: .25rem;
+}
+.min-wizard-sub {
+  font-size: .78rem; color: rgba(255,255,255,.6); margin-bottom: 1rem;
+}
+.min-wizard-choices {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .65rem;
+}
+.min-wiz-btn {
+  display: flex; flex-direction: column; align-items: center;
+  gap: .4rem; padding: .9rem .75rem;
+  background: rgba(255,255,255,.08);
+  border: 2px solid rgba(255,255,255,.18);
+  border-radius: 12px; color: #fff;
+  font-family: inherit; cursor: pointer;
+  transition: all .18s; text-align: center;
+}
+.min-wiz-btn:hover { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.4); transform: translateY(-2px); }
+.min-wiz-btn.picked-legal { background: rgba(35,85,160,.5); border-color: #7ab0ff; }
+.min-wiz-btn.picked-non   { background: rgba(26,122,74,.45); border-color: #7adfa8; }
+.min-wiz-icon { font-size: 1.6rem; }
+.min-wiz-label { font-size: .9rem; font-weight: 700; }
+.min-wiz-desc  { font-size: .72rem; color: rgba(255,255,255,.6); line-height: 1.45; }
+.min-wiz-hint {
+  display: flex; align-items: center; justify-content: center; gap: .4rem;
+  margin-top: .85rem; font-size: .74rem; color: rgba(255,255,255,.45);
+  animation: mwPulse 2s infinite;
+}
+@keyframes mwPulse { 0%,100%{opacity:.45} 50%{opacity:.9} }
+.min-wiz-hint.hidden { display: none; }
+
+/* 선택 후 결과 배지 */
+.min-type-badge {
+  display: none; align-items: center; gap: .5rem;
+  padding: .5rem 1rem; border-radius: 8px;
+  font-size: .82rem; font-weight: 700; margin-top: .85rem;
+  cursor: pointer;
+}
+.min-type-badge.show { display: flex; }
+.min-type-badge.legal { background: rgba(35,85,160,.25); border: 1px solid rgba(35,85,160,.5); color: #a0c4ff; }
+.min-type-badge.non   { background: rgba(26,122,74,.25);  border: 1px solid rgba(26,122,74,.5);  color: #7adfa8; }
+.min-type-badge .mtb-arrow { margin-left: auto; font-size: .85rem; opacity: .7; }
+
+/* 상세 영역 */
+.min-detail-wrap {
+  display: none;
+  animation: mdFadeIn .25s ease;
+}
+.min-detail-wrap.show { display: block; }
+@keyframes mdFadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+
+.min-detail-header {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .65rem 1rem; border-radius: 10px;
+  font-size: .85rem; font-weight: 700;
+  margin-bottom: 1rem;
+}
+.min-detail-header.legal { background: #e8f0ff; color: var(--blue); border: 1.5px solid #a0b8e0; }
+.min-detail-header.non   { background: #e8fff2; color: var(--ok);   border: 1.5px solid #80c8a0; }
+
+/* 체크리스트 연동 */
+.min-checklist {
+  background: var(--cream); border: 1px solid var(--line);
+  border-radius: 12px; padding: 1rem 1.1rem; margin-top: 1rem;
+}
+.min-checklist-title {
+  font-size: .78rem; font-weight: 700; color: var(--ink2);
+  margin-bottom: .75rem; display: flex; align-items: center; gap: .4rem;
+}
+.min-cs-item {
+  background: var(--paper); border: 1.5px solid var(--line);
+  border-radius: 9px; padding: .7rem .95rem;
+  margin-bottom: .5rem; transition: border-color .15s;
+}
+.min-cs-item.answered { border-color: var(--ok); }
+.min-cs-q { font-size: .85rem; font-weight: 700; margin-bottom: .5rem; color: var(--ink); }
+.min-cs-btns { display: flex; gap: .4rem; flex-wrap: wrap; }
+.min-cs-btn {
+  font-family: inherit; font-size: .78rem; font-weight: 700;
+  padding: .3rem .85rem; border-radius: 7px; border: 1.5px solid;
+  cursor: pointer; transition: all .13s;
+}
+.min-cs-y { border-color: var(--blue); color: var(--blue); background: #f0f4ff; }
+.min-cs-y:hover, .min-cs-y.picked { background: var(--blue); color: #fff; }
+.min-cs-n { border-color: var(--ok); color: var(--ok); background: #f0faf4; }
+.min-cs-n:hover, .min-cs-n.picked { background: var(--ok); color: #fff; }
+.min-cs-ans {
+  margin-top: .45rem; font-size: .8rem; padding: .4rem .7rem;
+  border-radius: 6px; background: var(--ink); color: #fff;
+  line-height: 1.6; display: none;
+}
+.min-cs-ans.show { display: block; }
+
+/* 리셋 버튼 */
+.min-reset-btn {
+  display: inline-flex; align-items: center; gap: .35rem;
+  background: none; border: none; font-family: inherit;
+  font-size: .78rem; color: rgba(255,255,255,.45);
+  cursor: pointer; padding: .35rem .5rem; border-radius: 6px;
+  margin-top: .6rem; transition: color .13s;
+}
+.min-reset-btn:hover { color: rgba(255,255,255,.85); }
+
+/* 모바일 */
+@media (max-width: 520px) {
+  .min-wizard-choices { grid-template-columns: 1fr 1fr; gap: .4rem; }
+  .min-wiz-btn { padding: .75rem .5rem; }
+  .min-wiz-icon { font-size: 1.3rem; }
+  .min-wiz-label { font-size: .82rem; }
+}
+
 /* ── Step6 회의록 ── */
 .minutes-type-card {
   border: 2px solid var(--line); border-radius: 12px;
@@ -789,6 +907,248 @@ body.ann-off #ann-panel { display: none !important; }
 .rule-tab.on { background: var(--ink); border-color: var(--ink); color: #fff; }
 .rule-section { display: none; }
 .rule-section.on { display: block; }
+
+/* ══════════ 붙임·끝 케이스 탭 ══════════ */
+.end-case-tabs {
+  display: flex; gap: .4rem; flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.ec-tab {
+  display: flex; align-items: center; gap: .45rem;
+  padding: .45rem .9rem; border-radius: 8px;
+  border: 1.5px solid var(--line); background: var(--paper);
+  font-family: inherit; font-size: .82rem; font-weight: 500;
+  color: var(--muted); cursor: pointer; transition: all .15s;
+  white-space: nowrap;
+}
+.ec-tab:hover { border-color: var(--ink2); color: var(--ink); }
+.ec-tab.on {
+  background: var(--ink); border-color: var(--ink); color: #fff;
+}
+.ec-tab-num {
+  width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .7rem; font-weight: 900; flex-shrink: 0;
+  background: rgba(255,255,255,.15); color: inherit;
+  border: 1.5px solid rgba(255,255,255,.25);
+}
+.ec-tab:not(.on) .ec-tab-num {
+  background: var(--cream); color: var(--muted); border-color: var(--line);
+}
+.ec-tab.on .ec-tab-num { background: var(--gold); color: var(--ink); border-color: var(--gold-l); }
+.ec-tab-label { font-size: .82rem; }
+
+.ec-panels { position: relative; }
+.ec-panel { display: none; }
+.ec-panel.on { display: block; animation: ecFade .2s ease; }
+@keyframes ecFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* 규칙 바 */
+.ec-rule-bar {
+  display: flex; align-items: flex-start; gap: .6rem;
+  background: var(--ink); color: #fff;
+  border-radius: 10px; padding: .75rem 1rem;
+  font-size: .85rem; line-height: 1.7; margin-bottom: .85rem;
+}
+.ec-rule-icon { font-size: 1rem; flex-shrink: 0; margin-top: .1rem; }
+.ec-end-mark {
+  background: rgba(212,150,10,.25); color: var(--gold-l);
+  border-radius: 3px; padding: .05rem .3rem; font-weight: 700;
+}
+
+/* 미리보기 */
+.ec-preview { margin-bottom: .75rem; }
+.ec-preview-label {
+  font-size: .68rem; font-weight: 700; color: var(--muted);
+  letter-spacing: .6px; margin-bottom: .4rem;
+  text-transform: uppercase;
+}
+.ec-doc {
+  background: #fff; border: 1px solid #c8ccd8;
+  border-radius: 8px; padding: 1rem 1.25rem;
+  font-family: 'Noto Serif KR', serif; font-size: .82rem;
+  line-height: 2.1; box-shadow: 1px 2px 10px rgba(0,0,0,.07);
+}
+.ec-doc-line { line-height: 2.1; }
+.ec-muted { color: var(--muted); }
+.ec-blank-row {
+  display: flex; align-items: center; gap: .5rem;
+  background: rgba(212,150,10,.07); border-radius: 4px;
+  padding: .1rem .5rem; margin: .1rem 0;
+}
+.ec-blank-icon { font-size: .85rem; color: #c8a030; font-weight: 900; }
+.ec-blank-txt  { font-size: .65rem; color: #c8a030; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; }
+
+/* 공백·끝 마크 */
+.ec-space-mark {
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #e8a020; font-weight: 700; font-size: .8em;
+  letter-spacing: -.05em;
+}
+.ec-end-highlight {
+  font-weight: 700; color: var(--err);
+  background: rgba(184,48,48,.09); border-radius: 3px;
+  padding: 0 .2rem;
+}
+
+/* 케이스 4 표 */
+.ec-table {
+  width: 100%; border-collapse: collapse;
+  font-family: 'Noto Sans KR', sans-serif; font-size: .76rem;
+  margin: .4rem 0;
+}
+.ec-table th {
+  background: #f0f2f8; padding: .35rem .5rem;
+  border: 1px solid #c8ccd8; font-size: .72rem; font-weight: 700;
+  text-align: center;
+}
+.ec-table td {
+  padding: .35rem .5rem; border: 1px solid #c8ccd8;
+  text-align: center;
+}
+
+/* 설명 노트 */
+.ec-note {
+  background: var(--cream); border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: .65rem .9rem; font-size: .82rem; color: #444;
+  line-height: 1.75; margin-top: .5rem;
+}
+.ec-note strong { color: var(--ink); }
+
+@media (max-width: 560px) {
+  .ec-tab { font-size: .76rem; padding: .4rem .65rem; gap: .35rem; }
+  .ec-tab-label { display: none; }
+  .ec-tab-num { width: 22px; height: 22px; }
+}
+
+/* ══════════ 공개 설정 카드 ══════════ */
+
+.pub-tabs {
+  display: flex; gap: .35rem; margin-bottom: 1rem; flex-wrap: wrap;
+}
+.pub-tab {
+  flex: 1; min-width: 72px;
+  padding: .5rem .6rem; border-radius: 8px;
+  border: 2px solid var(--line); background: var(--paper);
+  font-family: inherit; font-size: .8rem; font-weight: 700;
+  color: var(--muted); cursor: pointer; transition: all .15s;
+  text-align: center; line-height: 1.35;
+}
+.pub-tab:hover { border-color: var(--ink); color: var(--ink); }
+.pub-tab.on-open    { border-color: var(--ok);  background: #f0faf4; color: var(--ok); }
+.pub-tab.on-partial { border-color: #d07010;    background: #fff8ec; color: #b05000; }
+.pub-tab.on-secret  { border-color: var(--err); background: #fff5f5; color: var(--err); }
+.pub-tab-icon { font-size: 1rem; display: block; margin-bottom: .15rem; }
+
+.pub-table-wrap { overflow-x: auto; margin-bottom: .85rem; }
+.pub-table {
+  width: 100%; border-collapse: collapse;
+  font-size: .78rem; min-width: 280px;
+}
+.pub-table th {
+  background: var(--ink); color: #fff;
+  padding: .4rem .6rem; text-align: center; font-size: .72rem; font-weight: 700;
+}
+.pub-table td {
+  padding: .45rem .6rem; text-align: center;
+  border: 1px solid var(--line); font-size: .78rem; font-weight: 700;
+}
+.pub-table .row-label {
+  background: #f0f2f8; font-weight: 700; color: var(--ink2);
+  text-align: left; padding-left: .85rem;
+}
+.pub-cell-open   { background: #e8fff2; color: #1a6a3a; }
+.pub-cell-secret { background: #fff5f5; color: #a02020; }
+.pub-cell-check  { background: #fff8ec; color: #8a4000; font-size: .7rem; }
+.pub-cell-hl     { outline: 3px solid var(--gold); outline-offset: -2px; }
+
+.pub-origin-badge {
+  display: flex; align-items: flex-start; gap: .55rem;
+  background: #fff8ec; border: 1.5px solid #e8a020;
+  border-radius: 8px; padding: .65rem .9rem;
+  font-size: .8rem; color: #7a3800; line-height: 1.65; margin-bottom: .75rem;
+}
+.pub-origin-badge .pob-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .05rem; }
+
+.pub-warn {
+  display: flex; align-items: flex-start; gap: .5rem;
+  background: #fff5f5; border: 1.5px solid #f0c0c0;
+  border-radius: 8px; padding: .6rem .85rem;
+  font-size: .8rem; color: #a02020; line-height: 1.65; margin-top: .65rem;
+}
+.pub-warn .pw-icon { font-size: 1rem; flex-shrink: 0; margin-top: .05rem; }
+
+.pub-panel { display: none; }
+.pub-panel.on { display: block; animation: pubFade .2s ease; }
+@keyframes pubFade { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:none} }
+
+/* ── B: 시뮬레이터 ── */
+.pub-sim-wrap {
+  background: var(--cream); border: 1px solid var(--line);
+  border-radius: 12px; overflow: hidden; margin-top: 1rem;
+}
+.pub-sim-title {
+  background: #2c3e6a; color: #fff;
+  padding: .6rem 1rem; font-size: .8rem; font-weight: 700;
+  display: flex; align-items: center; gap: .5rem;
+}
+.pub-sim-body {
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 580px) { .pub-sim-body { grid-template-columns: 1fr; } }
+
+.pub-sim-left  { padding: .9rem 1rem; border-right: 1px solid var(--line); }
+.pub-sim-row {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .42rem .1rem; border-bottom: 1px solid #ececf0;
+  font-size: .75rem; flex-wrap: wrap;
+}
+.pub-sim-row:last-child { border-bottom: none; }
+.pub-sim-label {
+  font-size: .7rem; font-weight: 700; color: var(--ink2); min-width: 72px; flex-shrink: 0;
+}
+.pub-radio-group { display: flex; gap: .3rem; flex-wrap: wrap; }
+.pub-radio {
+  display: flex; align-items: center; gap: .2rem;
+  font-size: .74rem; cursor: pointer; padding: .2rem .5rem;
+  border-radius: 5px; border: 1.5px solid var(--line);
+  transition: all .13s; user-select: none; white-space: nowrap;
+}
+.pub-radio:hover { border-color: var(--ink2); }
+.pub-radio.sel-open    { background: #e8fff2; border-color: var(--ok);  color: #1a6a3a; font-weight: 700; }
+.pub-radio.sel-partial { background: #fff8ec; border-color: #d07010;   color: #b05000; font-weight: 700; }
+.pub-radio.sel-secret  { background: #fff5f5; border-color: var(--err);color: #a02020; font-weight: 700; }
+.pub-radio.sel-default { background: var(--ink); border-color: var(--ink); color: #fff; font-weight: 700; }
+
+.pub-sim-right { padding: .9rem 1rem; }
+.pub-sim-result-title {
+  font-size: .7rem; font-weight: 700; color: var(--muted);
+  letter-spacing: .5px; margin-bottom: .55rem; text-transform: uppercase;
+}
+.pub-result-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .35rem .6rem; border-radius: 6px; margin-bottom: .28rem;
+  font-size: .78rem; font-weight: 700;
+  border: 1px solid transparent; transition: all .3s;
+}
+.pub-result-row .prr-label { color: var(--muted); font-weight: 500; font-size: .74rem; }
+.pub-result-open   { background: #e8fff2; border-color: #b0dfc0; color: #1a6a3a; }
+.pub-result-secret { background: #fff5f5; border-color: #f0c0c0; color: #a02020; }
+.pub-result-warn   { background: #fff8ec; border-color: #f0c880; color: #8a4000; }
+
+.pub-sim-alert {
+  margin-top: .55rem; padding: .5rem .7rem;
+  background: #fff5f5; border: 1.5px solid #f0c0c0;
+  border-radius: 7px; font-size: .74rem; color: #a02020;
+  line-height: 1.6; display: none;
+}
+.pub-sim-alert.show { display: block; }
+.pub-sim-note {
+  margin-top: .55rem; padding: .5rem .7rem;
+  background: #f0f4ff; border: 1px solid #b0c8f0;
+  border-radius: 7px; font-size: .74rem; color: var(--blue); line-height: 1.6;
+}
 
 /* ══════════ 결재선 위저드 ══════════ */
 .apv-wizard-trigger {
@@ -1062,27 +1422,39 @@ body.ann-off #ann-panel { display: none !important; }
             </div>
             <div class="ann-row" style="margin-bottom:.25rem;"><span class="ann-field">(경유)</span></div>
             <div class="ann-row ann-title-row" style="margin-bottom:.9rem;">
-              <span class="ann-field">제목</span><span class="ann-vmark">∨∨</span><span class="ann-val" style="font-weight:700;">2025학년도 현장체험학습 실시 계획 안내</span>
+              <span class="ann-field">제목</span><span class="ann-vmark">∨∨</span>
+              <span class="ann-val" style="font-weight:700;">
+                <span class="ann-hotspot" data-ann="s0-tag" onclick="openAnn('s0-tag')">[계획]<span class="ann-badge">②</span></span>&nbsp;2026학년도 현장체험학습 실시 계획
+              </span>
             </div>
             <div class="ann-body">
-              <div class="ann-bodyline ann-line1"><span class="ann-sym1">1.</span><span class="ann-vmark">∨</span><span>관련:&nbsp;학교교육과정 운영계획 44쪽</span></div>
+              <div class="ann-bodyline ann-line1"><span class="ann-sym1">1.</span><span class="ann-vmark">∨</span><span>관련:&nbsp;<span class="ann-hotspot" data-ann="s0-colon" onclick="openAnn('s0-colon')">유초등교육과-1234(<span class="ann-hotspot" data-ann="s0-date" onclick="openAnn('s0-date');event.stopPropagation()">2026.&nbsp;4.&nbsp;2.<span class="ann-badge">③</span></span>)<span class="ann-badge">④</span></span></span></div>
               <div class="ann-bodyline ann-line1" style="margin-top:.3rem;">
                 <span class="ann-sym1b">2.</span><span class="ann-vmark">∨</span>
-                <span class="ann-hotspot" data-ann="s0-indent" onclick="openAnn('s0-indent')" style="flex:1;word-break:keep-all;">2025학년도 학교폭력 예방 및 근절을 위한 교육계획을 다음과 같이 수립하여 시행하고자 합니다.<span class="ann-badge">②</span></span>
+                <span class="ann-hotspot" data-ann="s0-indent" onclick="openAnn('s0-indent')" style="flex:1;word-break:keep-all;">2026학년도 현장체험학습 실시 계획을 다음과 같이 수립하여 시행하고자 합니다.<span class="ann-badge">⑤</span></span>
               </div>
               <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s0-items" onclick="openAnn('s0-items')" style="display:contents;"><span class="ann-sym1">가.</span><span class="ann-vmark-h">∨</span>
-                  <span>일시:&nbsp;<span class="ann-hotspot" data-ann="s0-date" onclick="openAnn('s0-date');event.stopPropagation()">2025.&nbsp;10.&nbsp;8.(수)<span class="ann-badge">③</span></span><span class="ann-badge">④</span></span>
+                  <span>일시:&nbsp;<span class="ann-hotspot" data-ann="s0-range" onclick="openAnn('s0-range');event.stopPropagation()">2026.&nbsp;10.&nbsp;8.(수)∼10.&nbsp;9.(목)<span class="ann-badge">⑥</span></span><span class="ann-badge">⑦</span></span>
                 </span>
               </div>
               <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-sym1">나.</span><span class="ann-vmark-h">∨</span><span>장소:&nbsp;○○ 국립공원</span></div>
               <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-sym1">다.</span><span class="ann-vmark-h">∨</span><span>대상:&nbsp;전교생 325명</span></div>
-              <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-sym1">라.</span><span class="ann-vmark-h">∨</span><span>경비:&nbsp;<span class="ann-hotspot" data-ann="s0-money" onclick="openAnn('s0-money')">금15,000원(금일만오천원)<span class="ann-badge">⑤</span></span></span></div>
+              <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-sym1">라.</span><span class="ann-vmark-h">∨</span><span>경비:&nbsp;<span class="ann-hotspot" data-ann="s0-money" onclick="openAnn('s0-money')">금15,000원(금일만오천원)<span class="ann-badge">⑧</span></span></span></div>
             </div>
               <div class="blank-line"><span class="blank-line-icon">↵</span><span class="blank-line-rule">빈 줄</span></div>
             <div class="ann-attach" style="margin-top:.4rem;">
-              <div style="display:inline-flex;align-items:baseline;gap:0;">붙임<span class="ann-vmark">∨∨</span><span class="attach-list"><span class="attach-item"><span class="attach-num">1.</span><span class="ann-vmark-h">∨</span><span>현장체험학습 계획서 1부.</span></span><span class="attach-item"><span class="attach-num">2.</span><span class="ann-vmark-h">∨</span><span>현장체험학습 동의서 1부.<span class="ann-vmark">∨∨</span>끝.</span></span></span></div>
+              <div style="display:inline-flex;align-items:baseline;gap:0;">
+                <span class="ann-hotspot" data-ann="s0-attach" onclick="openAnn('s0-attach')" style="display:contents;">
+                  붙임<span class="ann-vmark">∨∨</span>
+                  <span class="attach-list">
+                    <span class="attach-item"><span class="attach-num">1.</span><span class="ann-vmark-h">∨</span><span>현장체험학습 계획서 1부.</span></span>
+                    <span class="attach-item"><span class="attach-num">2.</span><span class="ann-vmark-h">∨</span><span>현장체험학습 동의서 1부.<span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s0-end" onclick="openAnn('s0-end')">끝.<span class="ann-badge">⑩</span></span></span></span>
+                  </span>
+                  <span class="ann-badge">⑨</span>
+                </span>
+              </div>
               <div style="margin-top:.4rem;padding-top:.4rem;border-top:1px dashed #d4b84a;opacity:.6;"></div>
-              <div style="margin-top:.4rem;"><span class="ann-hotspot" data-ann="s0-attach" onclick="openAnn('s0-attach')">붙임<span class="ann-vmark">∨∨</span>현장체험학습 계획서 1부.<span class="ann-badge">⑥</span></span><span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s0-end" onclick="openAnn('s0-end')">끝.<span class="ann-badge">⑦</span></span></div>
+              <div style="margin-top:.4rem;">붙임<span class="ann-vmark">∨∨</span>현장체험학습 계획서 1부.<span class="ann-vmark">∨∨</span>끝.</div>
             </div>
             <div style="margin-top:1.1rem;font-size:.72rem;color:var(--muted);">기안자&nbsp;&nbsp;홍길동 &nbsp;&nbsp;&nbsp; 검토자&nbsp;&nbsp;김담당 &nbsp;&nbsp;&nbsp; 결재권자&nbsp;&nbsp;○○교장</div>
           </div>
@@ -1091,7 +1463,7 @@ body.ann-off #ann-panel { display: none !important; }
           <div class="ann-panel-inner" id="ann-panel-inner-0"></div>
         </div>
       </div>
-      <div class="cite" style="margin-top:.85rem;">💡 <strong>내부결재 핵심</strong>: 수신자란에 "내부결재" 표기 / 종결어미는 "실시하고자 합니다"(의지형) / 발신명의 불필요</div>
+      <div class="cite" style="margin-top:.85rem;">💡 <strong>내부결재 핵심</strong>: 수신자란에 "내부결재" 표기 / 성격 표시([계획] 등) / 종결어미 "시행하고자 합니다"(의지형) / 붙임 2개 이상이면 번호 구분 / 발신명의 불필요</div>
     </div>
 
     <!-- 시나리오 1: 교육청 보고 -->
@@ -1111,10 +1483,10 @@ body.ann-off #ann-panel { display: none !important; }
               </span>
             </div>
             <div class="ann-body">
-              <div class="ann-bodyline ann-line1"><span class="ann-sym1">1.</span><span class="ann-vmark">∨</span><span>관련:&nbsp;<span class="ann-hotspot" data-ann="s1-colon" onclick="openAnn('s1-colon')">○○교육지원청-2345(<span class="ann-hotspot" data-ann="s1-date" onclick="openAnn('s1-date');event.stopPropagation()">2025.&nbsp;3.&nbsp;4.<span class="ann-badge">③</span></span>)<span class="ann-badge">④</span></span></span></div>
+              <div class="ann-bodyline ann-line1"><span class="ann-sym1">1.</span><span class="ann-vmark">∨</span><span>관련:&nbsp;<span class="ann-hotspot" data-ann="s1-colon" onclick="openAnn('s1-colon')">유초등교육과-1234(<span class="ann-hotspot" data-ann="s1-date" onclick="openAnn('s1-date');event.stopPropagation()">2026.&nbsp;4.&nbsp;2.<span class="ann-badge">③</span></span>)<span class="ann-badge">④</span></span></span></div>
               <div class="ann-bodyline ann-line1" style="margin-top:.3rem;"><span class="ann-sym1b">2.</span><span class="ann-vmark">∨</span><span style="flex:1;">학교폭력 예방교육 실시 결과를 다음과 같이 보고합니다.</span></div>
               <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s1-items" onclick="openAnn('s1-items')" style="display:contents;"><span class="ann-sym1">가.</span><span class="ann-vmark-h">∨</span>
-                  <span>교육기간:&nbsp;<span class="ann-hotspot" data-ann="s1-range" onclick="openAnn('s1-range');event.stopPropagation()">2025.&nbsp;3.&nbsp;4.(화)∼3.&nbsp;28.(금)<span class="ann-badge">⑤</span></span><span class="ann-badge">⑥</span></span>
+                  <span>교육기간:&nbsp;<span class="ann-hotspot" data-ann="s1-range" onclick="openAnn('s1-range');event.stopPropagation()">2026.&nbsp;3.&nbsp;4.(화)∼3.&nbsp;28.(금)<span class="ann-badge">⑤</span></span><span class="ann-badge">⑥</span></span>
                 </span>
               </div>
               <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-sym1">나.</span><span class="ann-vmark-h">∨</span><span>교육대상:&nbsp;전교생 325명</span></div>
@@ -1146,20 +1518,20 @@ body.ann-off #ann-panel { display: none !important; }
             </div>
             <div class="ann-row" style="margin-bottom:.25rem;"><span class="ann-field">(경유)</span></div>
             <div class="ann-row ann-title-row" style="margin-bottom:.9rem;">
-              <span class="ann-field">제목</span><span class="ann-vmark">∨∨</span><span class="ann-val" style="font-weight:700;">2025학년도 가정통신문 발송 계획 안내</span>
+              <span class="ann-field">제목</span><span class="ann-vmark">∨∨</span><span class="ann-val" style="font-weight:700;">2026학년도 가정통신문 발송 계획 안내</span>
             </div>
             <div class="ann-body">
-              <div class="ann-bodyline ann-line1"><span class="ann-sym1">1.</span><span class="ann-vmark">∨</span><span>관련:&nbsp;2025학년도 학교교육계획 32쪽</span></div>
+              <div class="ann-bodyline ann-line1"><span class="ann-sym1">1.</span><span class="ann-vmark">∨</span><span>관련:&nbsp;2026학년도 학교교육계획 32쪽</span></div>
               <div class="ann-bodyline ann-line1" style="margin-top:.3rem;">
                 <span class="ann-sym1b">2.</span><span class="ann-vmark">∨</span>
                 <span class="ann-hotspot" data-ann="s2-below" onclick="openAnn('s2-below')" style="flex:1;">가정통신문 발송 계획을 다음과 같이 안내합니다.<span class="ann-badge">①</span></span>
               </div>
               <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s2-items" onclick="openAnn('s2-items')" style="display:contents;"><span class="ann-sym1">가.</span><span class="ann-vmark-h">∨</span>
-                  <span>발송일:&nbsp;<span class="ann-hotspot" data-ann="s2-date" onclick="openAnn('s2-date');event.stopPropagation()">2025.&nbsp;3.&nbsp;4.(화)<span class="ann-badge">②</span></span><span class="ann-badge">③</span></span>
+                  <span>발송일:&nbsp;<span class="ann-hotspot" data-ann="s2-date" onclick="openAnn('s2-date');event.stopPropagation()">2026.&nbsp;3.&nbsp;4.(화)<span class="ann-badge">②</span></span><span class="ann-badge">③</span></span>
                 </span>
               </div>
               <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-sym1">나.</span><span class="ann-vmark-h">∨</span><span>발송방법:&nbsp;가정통신문 앱(아이엠스쿨) 및 종이 발송</span></div>
-              <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-sym1">다.</span><span class="ann-vmark-h">∨</span><span>내용:&nbsp;2025학년도 학사일정 안내</span></div>
+              <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-sym1">다.</span><span class="ann-vmark-h">∨</span><span>내용:&nbsp;2026학년도 학사일정 안내</span></div>
               <div class="ann-bodyline ann-line1 ann-indent1" style="margin-top:.3rem;"><span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s2-ending" onclick="openAnn('s2-ending')" style="display:contents;"><span class="ann-sym1">라.</span><span class="ann-vmark-h">∨</span>
                   <span>협조사항:&nbsp;각 담임교사는 발송 전 내용을 확인하여 주시기 바랍니다.<span class="ann-badge">④</span></span>
                 </span>
@@ -1193,11 +1565,11 @@ body.ann-off #ann-panel { display: none !important; }
           <div class="cbox bad"><span class="cbox-lbl">❌ 틀린 예</span><code>2. 현장체험학습을 다음과 같이
    실시하고자 합니다.
        다 음
-1. 일시: 2025. 10. 8.(수)
+1. 일시: 2026. 10. 8.(수)
 2. 장소: ○○ 국립공원</code></div>
           <div class="cbox good"><span class="cbox-lbl">✅ 올바른 예</span><code>2. 현장체험학습을 다음과 같이
    실시하고자 합니다.
-  가. 일시: 2025. 10. 8.(수)
+  가. 일시: 2026. 10. 8.(수)
   나. 장소: ○○ 국립공원</code></div>
         </div>
         <div class="cite" style="margin-top:.6rem;">또한 <strong>"위와 관련하여(위 호와 관련하여)"</strong> 문구도 사용 금지입니다.</div>
@@ -1297,18 +1669,18 @@ body.ann-off #ann-panel { display: none !important; }
         </div>
         <div class="rule-card-body">
           <div class="compare">
-            <div class="cbox bad"><span class="cbox-lbl">❌ 잘못된 예</span><code>2025년 09월 06일 (화)
-2025.09.06
+            <div class="cbox bad"><span class="cbox-lbl">❌ 잘못된 예</span><code>2026년 09월 06일 (화)
+2026.09.06
 오후 4시 14분
 오전 7시 9분
 5. 1 ~ 6. 31
-2025. 1월~3월</code></div>
-            <div class="cbox good"><span class="cbox-lbl">✅ 올바른 예</span><code>2025. 9. 6.(화)
-2025. 9. 6.
+2026. 1월~3월</code></div>
+            <div class="cbox good"><span class="cbox-lbl">✅ 올바른 예</span><code>2026. 9. 6.(화)
+2026. 9. 6.
 16:14  ← 24시각제
 07:09  ← 0 붙이기
 5. 1.∼6. 31.
-2025. 1.∼2025. 3.</code></div>
+2026. 1.∼2026. 3.</code></div>
           </div>
           <div class="cite">
             <strong>날짜:</strong> 연·월·일 글자 대신 마침표 / 월·일 앞 <strong>0 생략</strong><br>
@@ -1409,12 +1781,12 @@ body.ann-off #ann-panel { display: none !important; }
         <div class="rule-card-body">
           <div class="compare">
             <div class="cbox bad"><span class="cbox-lbl">❌ 잘못된 예</span><code>원장 : 김갑동 (앞 띄움)
-붙임: 2025년 계획서
+붙임: 2026년 계획서
 "초중등교육법"에 따라
 15:00 ~ 17:00 (물결 앞뒤 띄움)
 장·차관 / 시·도 (한 단어에 점)</code></div>
             <div class="cbox good"><span class="cbox-lbl">✅ 올바른 예</span><code>원장: 김갑동 (앞 붙이고 뒤 1칸)
-붙임  2025년 계획서 (쌍점 없이)
+붙임  2026년 계획서 (쌍점 없이)
 「초·중등교육법」에 따라
 15:00∼17:00 (물결 앞뒤 붙임)
 장차관 / 시도 (사전 등재 단어)</code></div>
@@ -1425,27 +1797,202 @@ body.ann-off #ann-panel { display: none !important; }
 
     <!-- 붙임·끝 -->
     <div class="rule-section" id="rt-attach">
+
+      <!-- 붙임 표기 카드 -->
       <div class="rule-card open" id="rc-attach">
         <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-          <div class="rule-card-title"><span class="rc-badge">붙임·끝</span> 붙임 표기와 '끝' 위치</div>
+          <div class="rule-card-title"><span class="rc-badge">붙임</span> 붙임 표기 방법</div>
           <span class="rc-chevron">›</span>
         </div>
         <div class="rule-card-body">
           <div class="compare">
-            <div class="cbox bad"><span class="cbox-lbl">❌ 잘못된 예</span><code>붙임: 계획서 1부.
-끝 (마침표 없음)</code></div>
-            <div class="cbox good"><span class="cbox-lbl">✅ 올바른 예 (1개)</span><div style="font-family:'Noto Sans KR',sans-serif;font-size:.85rem;padding:.4rem .2rem;display:flex;align-items:baseline;">붙임<span class="ann-vmark">∨∨</span>계획서 1부.<span class="ann-vmark">∨∨</span>끝.</div></div>
-          </div>
-          <div class="cbox good" style="margin-top:.6rem;">
-            <span class="cbox-lbl">✅ 올바른 예 (2개↑)</span>
-            <div style="font-family:'Noto Sans KR',sans-serif;font-size:.85rem;padding:.4rem .2rem;">
-              <div style="display:inline-flex;align-items:baseline;">붙임<span class="ann-vmark">∨∨</span><span class="attach-list"><span class="attach-item"><span class="attach-num">1.</span><span class="ann-vmark-h">∨</span><span>계획서 1부.</span></span><span class="attach-item"><span class="attach-num">2.</span><span class="ann-vmark-h">∨</span><span>서류 1부.<span class="ann-vmark">∨∨</span>끝.</span></span></span></div>
+            <div class="cbox bad">
+              <span class="cbox-lbl">❌ 잘못된 예</span>
+              <code>붙임: 계획서 1부. (쌍점 금지)
+붙임 계획서 1부. (1타 띄움 금지)</code>
+            </div>
+            <div class="cbox good">
+              <span class="cbox-lbl">✅ 올바른 예 (1개)</span>
+              <div style="font-family:'Noto Sans KR',sans-serif;font-size:.85rem;padding:.5rem .2rem;display:flex;align-items:baseline;gap:0;">
+                붙임<span class="ann-vmark">∨∨</span>○○○계획서 1부.<span class="ann-vmark">∨∨</span><span style="color:var(--err);font-weight:700;">끝.</span>
+              </div>
             </div>
           </div>
-          <div class="cite" style="margin-top:.65rem;">붙임 <strong>10쪽 이상</strong>: 반드시 [요약] 별도 첨부<br>본문이 표로 끝날 때: 표 아래 왼쪽에서 2타 후 "끝."</div>
+          <div class="cbox good" style="margin-top:.6rem;">
+            <span class="cbox-lbl">✅ 올바른 예 (2개 이상)</span>
+            <div style="font-family:'Noto Sans KR',sans-serif;font-size:.85rem;padding:.5rem .2rem;line-height:2;">
+              <div style="display:inline-flex;align-items:baseline;gap:0;">
+                붙임<span class="ann-vmark">∨∨</span>
+                <span class="attach-list">
+                  <span class="attach-item"><span class="attach-num">1.</span><span class="ann-vmark-h">∨</span><span>○○○계획서 1부.</span></span>
+                  <span class="attach-item"><span class="attach-num">2.</span><span class="ann-vmark-h">∨</span><span>○○○서류 1부.<span class="ann-vmark">∨∨</span><span style="color:var(--err);font-weight:700;">끝.</span></span></span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="cite" style="margin-top:.65rem;">
+            • 붙임과 내용 사이: <strong>2타(∨∨)</strong> 띄우기<br>
+            • 쌍점(:) 사용 <strong>금지</strong> — "붙임:" ❌<br>
+            • 붙임 <strong>10쪽 이상</strong>: 반드시 [요약] 별도 첨부
+          </div>
         </div>
       </div>
-    </div>
+
+      <!-- '끝' 표시 탭 카드 -->
+      <div class="rule-card open" id="rc-end-cases" style="margin-top:.85rem;">
+        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
+          <div class="rule-card-title"><span class="rc-badge">끝 표시</span> 상황별 '끝' 표시 위치 — 4가지 케이스</div>
+          <span class="rc-chevron">›</span>
+        </div>
+        <div class="rule-card-body">
+
+          <!-- 케이스 탭 -->
+          <div class="end-case-tabs" id="end-case-tabs">
+            <button class="ec-tab on" onclick="showEndCase(0,this)">
+              <span class="ec-tab-num">1</span>
+              <span class="ec-tab-label">본문 끝</span>
+            </button>
+            <button class="ec-tab" onclick="showEndCase(1,this)">
+              <span class="ec-tab-num">2</span>
+              <span class="ec-tab-label">붙임 있음</span>
+            </button>
+            <button class="ec-tab" onclick="showEndCase(2,this)">
+              <span class="ec-tab-num">3</span>
+              <span class="ec-tab-label">오른쪽 끝</span>
+            </button>
+            <button class="ec-tab" onclick="showEndCase(3,this)">
+              <span class="ec-tab-num">4</span>
+              <span class="ec-tab-label">표로 끝남</span>
+            </button>
+          </div>
+
+          <!-- 케이스 패널들 -->
+          <div class="ec-panels">
+
+            <!-- 케이스 1: 본문 끝 -->
+            <div class="ec-panel on" id="ec-panel-0">
+              <div class="ec-rule-bar">
+                <span class="ec-rule-icon">📌</span>
+                <span>본문 마지막 글자에서 <strong>한 글자(2타)</strong> 띄우고 <span class="ec-end-mark">"끝."</span> 표시</span>
+              </div>
+              <div class="ec-preview">
+                <div class="ec-preview-label">미리보기</div>
+                <div class="ec-doc">
+                  <div class="ec-doc-line ec-muted">수신&nbsp;&nbsp;○○교육장</div>
+                  <div class="ec-doc-line ec-muted">(경유)</div>
+                  <div class="ec-doc-line ec-muted" style="border-bottom:1px solid #e0e0e0;padding-bottom:.5rem;margin-bottom:.5rem;">제목&nbsp;&nbsp;○○ 계획 안내</div>
+                  <div class="ec-doc-line">1.&nbsp;관련:&nbsp;○○교육청-1234(2026.&nbsp;3.&nbsp;4.)</div>
+                  <div class="ec-doc-line">2.&nbsp;○○ 계획을 다음과 같이 안내합니다.</div>
+                  <div class="ec-doc-line" style="padding-left:1.5em;">가.&nbsp;일시:&nbsp;2026.&nbsp;5.&nbsp;1.(목)</div>
+                  <div class="ec-doc-line" style="padding-left:1.5em;">나.&nbsp;장소:&nbsp;본교 강당</div>
+                  <div class="ec-blank-row"><span class="ec-blank-icon">↵</span><span class="ec-blank-txt">빈 줄</span></div>
+                  <div class="ec-doc-line">
+                    (본문)……………………… 주시기 바랍니다.<span class="ec-space-mark">∨∨</span><span class="ec-end-highlight">끝.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ec-note">
+                <strong>적용 조건</strong>: 본문이 문장으로 끝나고 붙임이 없는 경우<br>
+                본문 마지막 마침표 뒤 바로 <span class="ec-space-mark">∨∨</span>(2타)를 띄우고 <span class="ec-end-mark">"끝."</span>을 붙입니다.
+              </div>
+            </div>
+
+            <!-- 케이스 2: 붙임 있음 -->
+            <div class="ec-panel" id="ec-panel-1">
+              <div class="ec-rule-bar">
+                <span class="ec-rule-icon">📌</span>
+                <span>붙임 표시문 다음에 <strong>한 글자(2타)</strong> 띄우고 <span class="ec-end-mark">"끝."</span> 표시</span>
+              </div>
+              <div class="ec-preview">
+                <div class="ec-preview-label">미리보기 — 붙임 1개</div>
+                <div class="ec-doc">
+                  <div class="ec-doc-line">……… 주시기 바랍니다.</div>
+                  <div class="ec-blank-row"><span class="ec-blank-icon">↵</span><span class="ec-blank-txt">빈 줄</span></div>
+                  <div class="ec-doc-line">
+                    붙임<span class="ec-space-mark">∨∨</span>○○○계획서 1부.<span class="ec-space-mark">∨∨</span><span class="ec-end-highlight">끝.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ec-preview" style="margin-top:.65rem;">
+                <div class="ec-preview-label">미리보기 — 붙임 2개 이상</div>
+                <div class="ec-doc">
+                  <div class="ec-doc-line">……… 주시기 바랍니다.</div>
+                  <div class="ec-blank-row"><span class="ec-blank-icon">↵</span><span class="ec-blank-txt">빈 줄</span></div>
+                  <div class="ec-doc-line" style="display:flex;align-items:baseline;gap:0;">
+                    <span style="flex-shrink:0;">붙임<span class="ec-space-mark">∨∨</span></span>
+                    <span style="display:flex;flex-direction:column;gap:0;">
+                      <span style="display:flex;align-items:baseline;gap:0;"><span style="flex-shrink:0;">1.<span class="ec-space-mark">∨</span></span><span>○○○계획서 1부.</span></span>
+                      <span style="display:flex;align-items:baseline;gap:0;"><span style="flex-shrink:0;">2.<span class="ec-space-mark">∨</span></span><span>○○○서류 1부.<span class="ec-space-mark">∨∨</span><span class="ec-end-highlight">끝.</span></span></span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="ec-note">
+                <strong>적용 조건</strong>: 붙임 파일이 있는 경우<br>
+                붙임이 1개이면 번호 없이, 2개 이상이면 번호를 붙여 표기하며<br>마지막 붙임 항목 끝에 <span class="ec-space-mark">∨∨</span>(2타) 후 <span class="ec-end-mark">"끝."</span>을 씁니다.
+              </div>
+            </div>
+
+            <!-- 케이스 3: 오른쪽 한계선 끝 -->
+            <div class="ec-panel" id="ec-panel-2">
+              <div class="ec-rule-bar">
+                <span class="ec-rule-icon">📌</span>
+                <span>오른쪽 한계선에서 끝난 경우 → <strong>다음 줄 왼쪽 기본선</strong>에서 한 글자(2타) 띄우고 <span class="ec-end-mark">"끝."</span></span>
+              </div>
+              <div class="ec-preview">
+                <div class="ec-preview-label">미리보기</div>
+                <div class="ec-doc">
+                  <div class="ec-doc-line" style="display:flex;justify-content:space-between;align-items:baseline;">
+                    <span>(본문 내용)&nbsp;……………………………………………</span>
+                    <span style="white-space:nowrap;">주시기 바랍니다.</span>
+                  </div>
+                  <div class="ec-doc-line" style="color:#bbb;font-size:.72rem;text-align:right;margin-top:-.2rem;">← 오른쪽 한계선에서 끝남</div>
+                  <div class="ec-doc-line" style="margin-top:.15rem;">
+                    <span class="ec-space-mark">∨∨</span><span class="ec-end-highlight">끝.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ec-note">
+                <strong>적용 조건</strong>: 본문 또는 붙임 표시문이 오른쪽 한계선까지 꽉 찬 경우<br>
+                같은 줄에 "끝."을 붙일 공간이 없으므로 <strong>다음 줄로 내려서</strong> 왼쪽 기본선에서 2타 후 "끝."을 씁니다.
+              </div>
+            </div>
+
+            <!-- 케이스 4: 표로 끝남 -->
+            <div class="ec-panel" id="ec-panel-3">
+              <div class="ec-rule-bar">
+                <span class="ec-rule-icon">📌</span>
+                <span>본문이 표로 끝나는 경우 → <strong>표 아래 왼쪽 기본선</strong>에서 한 글자(2타) 띄우고 <span class="ec-end-mark">"끝."</span></span>
+              </div>
+              <div class="ec-preview">
+                <div class="ec-preview-label">미리보기</div>
+                <div class="ec-doc">
+                  <div class="ec-doc-line ec-muted">2.&nbsp;참가 신청자 명단</div>
+                  <table class="ec-table">
+                    <thead>
+                      <tr><th>응시번호</th><th>성&nbsp;&nbsp;명</th><th>생년월일</th><th>주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>10</td><td>김○○</td><td>1980.&nbsp;3.&nbsp;8.</td><td>전남광주통합특별시 북구 ○○로 12</td></tr>
+                      <tr><td>21</td><td>박○○</td><td>1982.&nbsp;5.&nbsp;1.</td><td>전남광주통합특별시 서구 ○○로 5</td></tr>
+                    </tbody>
+                  </table>
+                  <div class="ec-doc-line" style="margin-top:.3rem;">
+                    <span class="ec-space-mark">∨∨</span><span class="ec-end-highlight">끝.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ec-note">
+                <strong>적용 조건</strong>: 본문의 마지막 내용이 표(表)로 구성된 경우<br>
+                표의 마지막 칸까지 작성된 후 표 아래 다음 줄 왼쪽에서 2타 후 "끝."을 씁니다.
+              </div>
+            </div>
+
+          </div><!-- /ec-panels -->
+        </div>
+      </div>
+
+    </div><!-- /rt-attach -->
 
     <div class="step-nav">
       <button class="btn btn-out" onclick="goStep(1)">← 공문 살펴보기</button>
@@ -1465,7 +2012,7 @@ body.ann-off #ann-panel { display: none !important; }
     <!-- ★ 결재선 판단 위저드 -->
     <button class="apv-wizard-trigger" onclick="openWizard()">
       <div class="awt-row">📋 결재선 판단 도우미</div>
-      <div class="awt-sub">질문 2개로 내 문서에 맞는 결재 순서를 바로 확인</div>
+      <div class="awt-sub">행정실장 협조와 교감 검토, 무엇이 먼저일까요?</div>
     </button>
 
     <div class="apv-wizard-panel" id="apv-wizard-panel">
@@ -1579,19 +2126,176 @@ body.ann-off #ann-panel { display: none !important; }
       </div>
     </div>
 
-    <div class="rule-card" id="rc-publish">
+    <!-- ① 대국민 공개 여부 -->
+    <div class="rule-card open" id="rc-publish">
       <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">공개 설정</span> 대국민공개·직원열람 설정</div>
+        <div class="rule-card-title"><span class="rc-badge">공개 설정</span> 🌐 대국민 공개 여부 설정</div>
         <span class="rc-chevron">›</span>
       </div>
       <div class="rule-card-body">
-        <div class="cite">
-          <strong>공개</strong>: 제목·본문·붙임 모두 공개<br>
-          <strong>부분공개</strong>: 제목·본문 공개 + 붙임 비공개<br>
-          ⚠️ 부분공개 시 <strong>제목·본문은 대국민에게 공개</strong>됨 → 개인정보 노출 주의<br>
-          <strong>비공개</strong>: 붙임 1호~8호 해당 시, 본문 비공개<br><br>
-          원문공개 대상: <strong>학교장</strong>이 결재한 생산문서(내부결재 포함)
+
+        <!-- 원문공개 대상 -->
+        <div class="pub-origin-badge">
+          <span class="pob-icon">⭐</span>
+          <span><strong>원문 공개 대상</strong>: 국장 이상 / 기관장 / 교육장 / <strong>학교장</strong>이 결재한 생산문서 (내부결재 포함)<br>
+          근거: 공공기관의 정보공개에 관한 법률(정보공개법)</span>
         </div>
+
+        <!-- A: 공개 유형 탭 -->
+        <div class="pub-tabs">
+          <button class="pub-tab" id="pt-open"    onclick="showPubTab('open',this)">
+            <span class="pub-tab-icon">🟢</span>공개
+          </button>
+          <button class="pub-tab" id="pt-partial" onclick="showPubTab('partial',this)">
+            <span class="pub-tab-icon">🟡</span>부분공개
+          </button>
+          <button class="pub-tab" id="pt-secret"  onclick="showPubTab('secret',this)">
+            <span class="pub-tab-icon">🔴</span>비공개
+          </button>
+        </div>
+
+        <!-- 탭: 공개 -->
+        <div class="pub-panel" id="pp-open">
+          <div class="pub-table-wrap">
+            <table class="pub-table">
+              <thead><tr>
+                <th>구분</th>
+                <th>목록(제목)</th>
+                <th>본문(기안문)</th>
+                <th>붙임(첨부파일)</th>
+              </tr></thead>
+              <tbody><tr>
+                <td class="row-label">공개</td>
+                <td class="pub-cell-open pub-cell-hl">공개</td>
+                <td class="pub-cell-open pub-cell-hl">공개</td>
+                <td class="pub-cell-open pub-cell-hl">공개</td>
+              </tr></tbody>
+            </table>
+          </div>
+          <div class="cite" style="margin-bottom:0;">제목·본문·붙임 파일 모두 정보공개포털(<a href="https://www.open.go.kr" target="_blank" style="color:var(--blue);">www.open.go.kr</a>)을 통해 대국민 공개됩니다.</div>
+        </div>
+
+        <!-- 탭: 부분공개 -->
+        <div class="pub-panel" id="pp-partial">
+          <div class="pub-table-wrap">
+            <table class="pub-table">
+              <thead><tr>
+                <th>구분</th>
+                <th>목록(제목)</th>
+                <th>본문(기안문)</th>
+                <th>붙임(첨부파일)</th>
+              </tr></thead>
+              <tbody>
+                <tr>
+                  <td class="row-label">부분공개<br><span style="font-size:.68rem;font-weight:400;color:var(--muted);">일반문서</span></td>
+                  <td class="pub-cell-open pub-cell-hl">공개</td>
+                  <td class="pub-cell-open pub-cell-hl">공개</td>
+                  <td class="pub-cell-check">비공개<br>(첨부파일 체크 확인)</td>
+                </tr>
+                <tr>
+                  <td class="row-label">부분공개<br><span style="font-size:.68rem;font-weight:400;color:var(--muted);">재정문서</span></td>
+                  <td class="pub-cell-open pub-cell-hl">공개</td>
+                  <td class="pub-cell-open pub-cell-hl">공개</td>
+                  <td class="pub-cell-check">비공개<br>(첨부파일 체크 확인)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pub-warn">
+            <span class="pw-icon">⚠️</span>
+            <span><strong>개인정보 노출 주의</strong> — 부분공개 설정 시 <strong>제목·본문은 대국민에게 공개</strong>됩니다.<br>
+            본문에 개인정보·민감 내용이 포함된 경우 반드시 삭제 후 기안하세요.</span>
+          </div>
+        </div>
+
+        <!-- 탭: 비공개 -->
+        <div class="pub-panel" id="pp-secret">
+          <div class="pub-table-wrap">
+            <table class="pub-table">
+              <thead><tr>
+                <th>구분</th>
+                <th>목록(제목)</th>
+                <th>본문(기안문)</th>
+                <th>붙임(첨부파일)</th>
+              </tr></thead>
+              <tbody><tr>
+                <td class="row-label">비공개<br><span style="font-size:.68rem;font-weight:400;color:var(--muted);">붙임 1~8호</span></td>
+                <td class="pub-cell-open">공개<br><span style="font-size:.68rem;font-weight:400;">(원칙)</span></td>
+                <td class="pub-cell-secret pub-cell-hl">비공개</td>
+                <td class="pub-cell-secret pub-cell-hl">비공개</td>
+              </tr></tbody>
+            </table>
+          </div>
+          <div class="cite" style="margin-bottom:.5rem;">
+            비공개 문서 중 <strong>목록(제목)은 공개가 원칙</strong>이나, 비밀·기밀문서인 경우 비공개 가능합니다.
+          </div>
+          <div class="pub-warn">
+            <span class="pw-icon">⚠️</span>
+            <span>비공개 사유는 정보공개법 <strong>9조 1항 1~8호</strong> 중 해당 호를 반드시 선택해야 합니다.</span>
+          </div>
+        </div>
+
+        <!-- B: K-에듀파인 시뮬레이터 -->
+        <div class="pub-sim-wrap">
+          <div class="pub-sim-title">🖥️ K-에듀파인 설정 화면 — 직접 선택해보기</div>
+          <div class="pub-sim-body">
+            <!-- 왼쪽: 설정 패널 -->
+            <div class="pub-sim-left">
+              <div class="pub-sim-row">
+                <span class="pub-sim-label">대국민공개여부</span>
+                <div class="pub-radio-group" id="sim-pub-group">
+                  <span class="pub-radio sel-open"    onclick="simSelect('pub','open',this)">●공개</span>
+                  <span class="pub-radio"             onclick="simSelect('pub','partial',this)">○부분공개</span>
+                  <span class="pub-radio"             onclick="simSelect('pub','secret',this)">○비공개</span>
+                </div>
+              </div>
+              <div class="pub-sim-row" id="sim-row-reason" style="display:none;">
+                <span class="pub-sim-label">공개제한근거</span>
+                <div class="pub-radio-group" id="sim-reason-group">
+                  <span class="pub-radio sel-default" onclick="simSelect('reason','law',this)">관계법령</span>
+                  <span class="pub-radio"             onclick="simSelect('reason','1',this)">1호</span>
+                  <span class="pub-radio"             onclick="simSelect('reason','2',this)">2호</span>
+                  <span class="pub-radio"             onclick="simSelect('reason','6',this)">6호</span>
+                </div>
+              </div>
+              <div class="pub-sim-row">
+                <span class="pub-sim-label">직원열람범위</span>
+                <div class="pub-radio-group" id="sim-range-group">
+                  <span class="pub-radio sel-default" onclick="simSelect('range','org',this)">●기관</span>
+                  <span class="pub-radio"             onclick="simSelect('range','dept',this)">○부서</span>
+                </div>
+              </div>
+              <div class="pub-sim-row">
+                <span class="pub-sim-label">직원열람제한</span>
+                <div class="pub-radio-group" id="sim-limit-group">
+                  <span class="pub-radio sel-default" onclick="simSelect('limit','none',this)">●설정안함</span>
+                  <span class="pub-radio"             onclick="simSelect('limit','done',this)">○결재완료일까지</span>
+                  <span class="pub-radio"             onclick="simSelect('limit','date',this)">○지정날짜까지</span>
+                  <span class="pub-radio"             onclick="simSelect('limit','perm',this)">○영구</span>
+                </div>
+              </div>
+            </div>
+            <!-- 오른쪽: 결과 미리보기 -->
+            <div class="pub-sim-right">
+              <div class="pub-sim-result-title">📋 결과 미리보기</div>
+              <div class="pub-result-row pub-result-open" id="sim-r-list">
+                <span class="prr-label">목록(제목)</span><span id="sim-v-list">🟢 공개</span>
+              </div>
+              <div class="pub-result-row pub-result-open" id="sim-r-body">
+                <span class="prr-label">본문(기안문)</span><span id="sim-v-body">🟢 공개</span>
+              </div>
+              <div class="pub-result-row pub-result-open" id="sim-r-attach">
+                <span class="prr-label">붙임(첨부)</span><span id="sim-v-attach">🟢 공개</span>
+              </div>
+              <div class="pub-result-row pub-result-open" id="sim-r-staff">
+                <span class="prr-label">직원 열람</span><span id="sim-v-staff">🟢 기관 전체</span>
+              </div>
+              <div class="pub-sim-alert" id="sim-alert"></div>
+              <div class="pub-sim-note" id="sim-note">💡 설정을 변경하면 결과가 실시간으로 반영됩니다.</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1610,30 +2314,40 @@ body.ann-off #ann-panel { display: none !important; }
       <div class="hero-num">6</div>
       <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 6</div>
       <h2>회의록 작성법</h2>
-      <p>법정 회의록과 비법정 회의록은 작성 방법과 결재 방법이 다릅니다.<br>내가 작성해야 할 회의록이 어떤 종류인지 먼저 확인하세요.</p>
+      <p>법정·비법정 회의록은 작성 방법과 결재 절차가 다릅니다. 내 회의 유형을 먼저 선택하세요.</p>
     </div>
 
-    <!-- 법정 vs 비법정 선택 카드 -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
-      <div class="minutes-type-card" id="mtc-legal" onclick="showMinutes('legal')" style="border-color:var(--blue);background:#f0f4ff;">
-        <div class="mtc-icon">⚖️</div>
-        <div class="mtc-title" style="color:var(--blue);">법정 회의록</div>
-        <div class="mtc-sub">법령에 회의록 생산이<br>의무화된 회의</div>
-        <div class="mtc-examples">학교운영위원회 · 인사자문위원회 등</div>
+    <!-- ★ 위저드 -->
+    <div class="min-wizard">
+      <div class="min-wizard-q">내가 작성해야 할 회의록은 어떤 종류인가요?</div>
+      <div class="min-wizard-sub">아래 중 해당하는 유형을 선택하면 작성 방법과 체크리스트를 바로 확인할 수 있습니다.</div>
+      <div class="min-wizard-choices">
+        <button class="min-wiz-btn" id="mwb-legal" onclick="selectMinType('legal')">
+          <span class="min-wiz-icon">⚖️</span>
+          <span class="min-wiz-label">법정 회의록</span>
+          <span class="min-wiz-desc">법령에 의무화된 회의<br>학교운영위원회·인사자문위원회 등</span>
+        </button>
+        <button class="min-wiz-btn" id="mwb-non" onclick="selectMinType('non')">
+          <span class="min-wiz-icon">📋</span>
+          <span class="min-wiz-label">비법정 회의록</span>
+          <span class="min-wiz-desc">관례로 운영하는 회의<br>학년 협의회·교과 협의회 등</span>
+        </button>
       </div>
-      <div class="minutes-type-card" id="mtc-non" onclick="showMinutes('non')" style="border-color:var(--ok);background:#f0faf4;">
-        <div class="mtc-icon">📋</div>
-        <div class="mtc-title" style="color:var(--ok);">비법정 회의록</div>
-        <div class="mtc-sub">법령에 규정되어있지 않고<br>학교에서 관례로 운영하는 회의</div>
-        <div class="mtc-examples">학년 협의회 · 교과 협의회 등</div>
+      <div class="min-wiz-hint" id="min-wiz-hint">👆 위 카드를 탭하여 선택하세요</div>
+      <div class="min-type-badge legal" id="mtb-legal" onclick="selectMinType('legal')">
+        ⚖️ 법정 회의록 선택됨 — 작성 방법 보기
+        <span class="mtb-arrow">↓</span>
       </div>
+      <div class="min-type-badge non" id="mtb-non" onclick="selectMinType('non')">
+        📋 비법정 회의록 선택됨 — 작성 방법 보기
+        <span class="mtb-arrow">↓</span>
+      </div>
+      <button class="min-reset-btn" id="min-reset-btn" style="display:none;" onclick="resetMinType()">↩ 다시 선택</button>
     </div>
 
-    <!-- 법정 회의록 상세 -->
-    <div class="minutes-detail" id="md-legal" style="display:none;">
-      <div style="font-size:.82rem;font-weight:700;color:var(--blue);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;">
-        <span style="background:var(--blue);color:#fff;padding:.15rem .55rem;border-radius:4px;font-size:.72rem;">법정</span> 법정 회의록 작성 방법
-      </div>
+    <!-- 법정 상세 -->
+    <div class="min-detail-wrap" id="md-legal">
+      <div class="min-detail-header legal">⚖️ 법정 회의록 — 작성 방법</div>
 
       <div class="rule-card open">
         <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
@@ -1642,8 +2356,8 @@ body.ann-off #ann-panel { display: none !important; }
         </div>
         <div class="rule-card-body">
           <div class="cite" style="border-color:var(--err);background:#fff8f8;">
-            <strong>반드시 포함할 내용 (중요 토론·의결 사안)</strong><br>
-            중요 토론 사안이나 투표, 의결 사안 등이 있을 때는 <strong>자세히 기술</strong>
+            <strong>반드시 포함할 내용</strong><br>
+            중요 토론 사안이나 투표·의결 사안 등이 있을 때는 <strong>자세히 기술</strong>
           </div>
           <div class="cite">
             <strong>회의록 구성요소</strong><br>
@@ -1666,13 +2380,11 @@ body.ann-off #ann-panel { display: none !important; }
             <strong>학교 내·외부 위원으로 구성된 회의</strong><br>
             위원 서명 및 결재(전자 결재)<br>
             참석자 전원에 대한 확인서명은 생략하고<br>
-            <strong>대표 1인(의회록 결재라인 외의 위원) 확인서명</strong>으로 갈음 가능
+            <strong>대표 1인(결재라인 외의 위원) 확인서명</strong>으로 갈음 가능
           </div>
           <div class="cite red">
             형식적인 회의 개최를 방지하기 위해 <strong>출석서명은 필요</strong>
           </div>
-
-          <!-- 결재 다이어그램 예시 -->
           <div style="margin-top:.75rem;font-size:.78rem;font-weight:700;color:var(--ink2);margin-bottom:.35rem;">결재 예시 (학교운영위원회)</div>
           <div class="apv-box">
             <div class="apv-cell"><div class="apv-cell-top">기안자</div><div class="apv-cell-name">담당자</div><div class="apv-cell-date"></div></div>
@@ -1695,13 +2407,33 @@ body.ann-off #ann-panel { display: none !important; }
           </div>
         </div>
       </div>
+
+      <!-- 법정 체크리스트 -->
+      <div class="min-checklist">
+        <div class="min-checklist-title">✅ 법정 회의록 작성 전 확인사항</div>
+        <div class="min-cs-item" id="mcs-l0">
+          <div class="min-cs-q">외부 위원이 참석하는 회의인가?</div>
+          <div class="min-cs-btns">
+            <button class="min-cs-btn min-cs-y" onclick="minCsAnswer(this,'y','l0')">예</button>
+            <button class="min-cs-btn min-cs-n" onclick="minCsAnswer(this,'n','l0')">아니오</button>
+          </div>
+          <div class="min-cs-ans" id="mca-l0"></div>
+        </div>
+        <div class="min-cs-item" id="mcs-l1">
+          <div class="min-cs-q">중요 토론 사안이나 표결이 있는가?</div>
+          <div class="min-cs-btns">
+            <button class="min-cs-btn min-cs-y" onclick="minCsAnswer(this,'y','l1')">예</button>
+            <button class="min-cs-btn min-cs-n" onclick="minCsAnswer(this,'n','l1')">아니오</button>
+          </div>
+          <div class="min-cs-ans" id="mca-l1"></div>
+        </div>
+        <div class="cite" style="margin-top:.65rem;">💡 <strong>법정 원칙</strong>: 구성요소 빠짐없이 작성 / 위원 서명 + 전자결재 / 출석서명 필수</div>
+      </div>
     </div>
 
-    <!-- 비법정 회의록 상세 -->
-    <div class="minutes-detail" id="md-non" style="display:none;">
-      <div style="font-size:.82rem;font-weight:700;color:var(--ok);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;">
-        <span style="background:var(--ok);color:#fff;padding:.15rem .55rem;border-radius:4px;font-size:.72rem;">비법정</span> 비법정 회의록 작성 방법
-      </div>
+    <!-- 비법정 상세 -->
+    <div class="min-detail-wrap" id="md-non">
+      <div class="min-detail-header non">📋 비법정 회의록 — 작성 방법</div>
 
       <div class="rule-card open">
         <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
@@ -1709,9 +2441,7 @@ body.ann-off #ann-panel { display: none !important; }
           <span class="rc-chevron">›</span>
         </div>
         <div class="rule-card-body">
-          <div class="cite">
-            관행적이고 의례적인 회의 → <strong>회의록 작성 생략 가능</strong>
-          </div>
+          <div class="cite">관행적이고 의례적인 회의 → <strong>회의록 작성 생략 가능</strong></div>
           <div class="cite blue">
             필요시, 회의결과만 간략히 보고<br>
             (예: K-에듀파인 <strong>메모관리 기능</strong> 이용)
@@ -1725,9 +2455,7 @@ body.ann-off #ann-panel { display: none !important; }
           <span class="rc-chevron">›</span>
         </div>
         <div class="rule-card-body">
-          <div class="cite">
-            기타 운영하는 각종 회의 → <strong>개조식으로 간략히 작성(1~2쪽 이내)</strong>, 전자문서로 작성·관리
-          </div>
+          <div class="cite">기타 운영하는 각종 회의 → <strong>개조식으로 간략히 작성(1~2쪽 이내)</strong>, 전자문서로 작성·관리</div>
           <div class="compare">
             <div class="cbox bad"><span class="cbox-lbl">❌ 과도한 작성</span><code>회의 진행 절차 전체 기술
 인사말, 자기소개 내용
@@ -1769,10 +2497,40 @@ body.ann-off #ann-panel { display: none !important; }
           </div>
         </div>
       </div>
+
+      <!-- 비법정 체크리스트 -->
+      <div class="min-checklist">
+        <div class="min-checklist-title">✅ 비법정 회의록 작성 전 확인사항</div>
+        <div class="min-cs-item" id="mcs-n0">
+          <div class="min-cs-q">관행적·의례적 성격의 회의인가?</div>
+          <div class="min-cs-btns">
+            <button class="min-cs-btn min-cs-y" onclick="minCsAnswer(this,'y','n0')">예</button>
+            <button class="min-cs-btn min-cs-n" onclick="minCsAnswer(this,'n','n0')">아니오</button>
+          </div>
+          <div class="min-cs-ans" id="mca-n0"></div>
+        </div>
+        <div class="min-cs-item" id="mcs-n1">
+          <div class="min-cs-q">외부 위원이 참석하는가?</div>
+          <div class="min-cs-btns">
+            <button class="min-cs-btn min-cs-y" onclick="minCsAnswer(this,'y','n1')">예</button>
+            <button class="min-cs-btn min-cs-n" onclick="minCsAnswer(this,'n','n1')">아니오</button>
+          </div>
+          <div class="min-cs-ans" id="mca-n1"></div>
+        </div>
+        <div class="min-cs-item" id="mcs-n2">
+          <div class="min-cs-q">인사·예산 관련 중요 사안을 다루는가?</div>
+          <div class="min-cs-btns">
+            <button class="min-cs-btn min-cs-y" onclick="minCsAnswer(this,'y','n2')">예</button>
+            <button class="min-cs-btn min-cs-n" onclick="minCsAnswer(this,'n','n2')">아니오</button>
+          </div>
+          <div class="min-cs-ans" id="mca-n2"></div>
+        </div>
+        <div class="cite" style="margin-top:.65rem;">💡 <strong>비법정 원칙</strong>: 법정은 철저히, 비법정은 간략하게. 모든 회의록은 <strong>전자문서로 작성·관리</strong>합니다.</div>
+      </div>
     </div>
 
-    <!-- 비교표 -->
-    <div class="rule-card" style="margin-top:1rem;">
+    <!-- 법정 vs 비법정 비교표 (항상 표시) -->
+    <div class="rule-card" style="margin-top:1.25rem;">
       <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
         <div class="rule-card-title"><span class="rc-badge">비교</span> 법정 vs 비법정 한눈에 비교</div>
         <span class="rc-chevron">›</span>
@@ -1792,25 +2550,23 @@ body.ann-off #ann-panel { display: none !important; }
               <td>
                 <div style="margin-bottom:.4rem;"><strong>중요 토론·의결 사안: 자세히 기술</strong></div>
                 <div style="font-size:.78rem;color:var(--muted);">구성요소: 회의명·개최기관·일시·장소·참석자·진행순서·상정안건·발언요지·결정사항·표결내용</div>
-                <div style="margin-top:.4rem;font-size:.78rem;">통상 진행절차·인사말·단순질문 등은 생략하고 개조식으로 간략 작성</div>
               </td>
               <td>
                 <div style="margin-bottom:.35rem;">• 위원 서명 및 전자결재</div>
-                <div style="margin-bottom:.35rem;">• 참석자 전원 확인서명 생략 → <strong>대표 1인 확인서명</strong>으로 갈음</div>
-                <div style="color:var(--err);font-weight:700;font-size:.8rem;">• 출석서명은 필요</div>
-                <div style="margin-top:.35rem;font-size:.78rem;color:var(--muted);">내부직원 구성 시: 병렬협조(결재)로 갈음</div>
+                <div style="margin-bottom:.35rem;">• <strong>대표 1인 확인서명</strong>으로 갈음</div>
+                <div style="color:var(--err);font-weight:700;font-size:.8rem;">• 출석서명은 필수</div>
               </td>
             </tr>
             <tr>
               <td style="font-weight:700;color:var(--ok);font-size:.8rem;">비법정 회의록<br><span style="font-weight:400;font-size:.75rem;color:var(--muted);">학년 협의회<br>교과 협의회 등</span></td>
               <td>
-                <div style="margin-bottom:.35rem;">• 관행적·의례적 회의 → <strong>작성 생략 가능</strong></div>
-                <div>• 기타 각종 회의 → <strong>개조식 간략 작성(1~2쪽 이내)</strong>, 전자문서 관리</div>
+                <div style="margin-bottom:.35rem;">• 관행적·의례적 → <strong>작성 생략 가능</strong></div>
+                <div>• 기타 회의 → <strong>개조식 간략 작성(1~2쪽)</strong></div>
               </td>
               <td>
-                <div style="margin-bottom:.35rem;">• 전자결재 + <strong>결재단계 축소</strong> (위임전결규정 반영)</div>
-                <div style="margin-bottom:.35rem;">• 내부위원: 병렬협조(결재)</div>
-                <div>• 외부위원: 전자우편·문자 등으로 통보</div>
+                <div style="margin-bottom:.35rem;">• 전자결재 + <strong>결재단계 축소</strong></div>
+                <div style="margin-bottom:.35rem;">• 내부위원: 병렬협조</div>
+                <div>• 외부위원: 전자우편·문자 통보</div>
               </td>
             </tr>
           </tbody>
@@ -1818,24 +2574,8 @@ body.ann-off #ann-panel { display: none !important; }
       </div>
     </div>
 
-    <!-- 체크리스트 -->
-    <div class="rule-card" style="margin-top:.5rem;">
-      <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">체크</span> 회의록 작성 전 확인사항</div>
-        <span class="rc-chevron">›</span>
-      </div>
-      <div class="rule-card-body">
-        <div class="checklist-simple">
-          <div class="cs-item"><span class="cs-q">이 회의가 법령에 의해 의무화된 회의인가?</span><div class="cs-btns"><button class="cs-btn cs-y" onclick="csAnswer(this,'y')">예 → 법정</button><button class="cs-btn cs-n" onclick="csAnswer(this,'n')">아니오 → 비법정</button></div><div class="cs-ans" style="display:none;"></div></div>
-          <div class="cs-item"><span class="cs-q">외부 위원이 참석하는 회의인가?</span><div class="cs-btns"><button class="cs-btn cs-y" onclick="csAnswer(this,'y')">예</button><button class="cs-btn cs-n" onclick="csAnswer(this,'n')">아니오</button></div><div class="cs-ans" style="display:none;"></div></div>
-          <div class="cs-item"><span class="cs-q">중요 토론 사안이나 표결이 있는가?</span><div class="cs-btns"><button class="cs-btn cs-y" onclick="csAnswer(this,'y')">예</button><button class="cs-btn cs-n" onclick="csAnswer(this,'n')">아니오</button></div><div class="cs-ans" style="display:none;"></div></div>
-        </div>
-        <div class="cite" style="margin-top:.75rem;">💡 <strong>핵심 원칙</strong>: 법정은 철저히, 비법정은 간략하게. 모든 회의록은 <strong>전자문서로 작성·관리</strong>합니다.</div>
-      </div>
-    </div>
-
     <div class="step-nav">
-      <button class="btn btn-out" onclick="goStep(5)">← 발송 전 점검</button>
+      <button class="btn btn-out" onclick="showView('workflow')">← 공문 쓰는 법으로</button>
       <button class="btn btn-ink" onclick="showView('quiz')">📝 퀴즈로 실력 확인</button>
     </div>
   </div>
@@ -1902,10 +2642,133 @@ body.ann-off #ann-panel { display: none !important; }
 
 <script>
 // ══════════════════════════════════
+// 공개 설정 — A: 탭 전환
+// ══════════════════════════════════
+const PUB_TAB_CLS = { open:'on-open', partial:'on-partial', secret:'on-secret' };
+
+function showPubTab(type, btn) {
+  // 탭 버튼 상태
+  ['pt-open','pt-partial','pt-secret'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('on-open','on-partial','on-secret');
+  });
+  btn.classList.add(PUB_TAB_CLS[type]);
+  // 패널 전환
+  ['pp-open','pp-partial','pp-secret'].forEach(id =>
+    document.getElementById(id).classList.remove('on')
+  );
+  document.getElementById('pp-' + type).classList.add('on');
+  // 시뮬레이터 공개 여부도 연동
+  const map = { open:'open', partial:'partial', secret:'secret' };
+  const grp = document.getElementById('sim-pub-group');
+  if (grp) {
+    const radios = grp.querySelectorAll('.pub-radio');
+    const idx = { open:0, partial:1, secret:2 }[type];
+    radios.forEach((r,i) => {
+      r.classList.remove('sel-open','sel-partial','sel-secret','sel-default');
+      if (i === idx) r.classList.add('sel-' + type);
+    });
+    simUpdate();
+  }
+}
+
+// ══════════════════════════════════
+// 공개 설정 — B: 시뮬레이터
+// ══════════════════════════════════
+const simState = {
+  pub:   'open',   // open | partial | secret
+  range: 'org',    // org | dept
+  limit: 'none',   // none | done | date | perm
+};
+
+function simSelect(group, val, el) {
+  simState[group] = val;
+  // 해당 그룹 라디오 스타일 초기화
+  const grpEl = el.closest('.pub-radio-group');
+  grpEl.querySelectorAll('.pub-radio').forEach(r =>
+    r.classList.remove('sel-open','sel-partial','sel-secret','sel-default')
+  );
+  // 공개 여부는 색상 구분
+  if (group === 'pub') {
+    el.classList.add('sel-' + val);
+    // 공개제한근거 행 표시/숨김
+    const reasonRow = document.getElementById('sim-row-reason');
+    if (reasonRow) reasonRow.style.display = (val === 'secret') ? 'flex' : 'none';
+    // A 탭도 연동
+    const tabMap = { open:'pt-open', partial:'pt-partial', secret:'pt-secret' };
+    ['pt-open','pt-partial','pt-secret'].forEach(id => {
+      const t = document.getElementById(id);
+      if (t) t.classList.remove('on-open','on-partial','on-secret');
+    });
+    const targetTab = document.getElementById(tabMap[val]);
+    if (targetTab) {
+      targetTab.classList.add(PUB_TAB_CLS[val]);
+      ['pp-open','pp-partial','pp-secret'].forEach(id =>
+        document.getElementById(id).classList.remove('on')
+      );
+      document.getElementById('pp-' + val).classList.add('on');
+    }
+  } else {
+    el.classList.add('sel-default');
+  }
+  simUpdate();
+}
+
+function simUpdate() {
+  const p = simState.pub;
+  const r = simState.range;
+  const l = simState.limit;
+
+  // 결과 계산
+  const results = {
+    list:   p === 'secret' ? { cls:'pub-result-open', val:'🟢 공개 (원칙)' } : { cls:'pub-result-open', val:'🟢 공개' },
+    body:   p === 'open'   ? { cls:'pub-result-open', val:'🟢 공개' }
+          : p === 'partial'? { cls:'pub-result-warn', val:'🟡 공개 (주의)' }
+          :                  { cls:'pub-result-secret', val:'🔴 비공개' },
+    attach: p === 'open'   ? { cls:'pub-result-open', val:'🟢 공개' }
+          : p === 'partial'? { cls:'pub-result-secret', val:'🔴 비공개' }
+          :                  { cls:'pub-result-secret', val:'🔴 비공개' },
+    staff:  r === 'org'
+          ? (l === 'none' ? { cls:'pub-result-open', val:'🟢 기관 전체' }
+          : l === 'done'  ? { cls:'pub-result-warn', val:'🟡 기관 (결재완료일까지)' }
+          : l === 'date'  ? { cls:'pub-result-warn', val:'🟡 기관 (지정날짜까지)' }
+          :                 { cls:'pub-result-secret', val:'🔴 기관 (영구제한)' })
+          : (l === 'none' ? { cls:'pub-result-warn', val:'🟡 부서만 열람' }
+          : l === 'done'  ? { cls:'pub-result-warn', val:'🟡 부서 (결재완료일까지)' }
+          : l === 'date'  ? { cls:'pub-result-warn', val:'🟡 부서 (지정날짜까지)' }
+          :                 { cls:'pub-result-secret', val:'🔴 부서 (영구제한)' }),
+  };
+
+  ['list','body','attach','staff'].forEach(k => {
+    const row = document.getElementById('sim-r-' + k);
+    const val = document.getElementById('sim-v-' + k);
+    if (!row || !val) return;
+    row.className = 'pub-result-row ' + results[k].cls;
+    val.textContent = results[k].val;
+  });
+
+  // 경고
+  const alert = document.getElementById('sim-alert');
+  if (!alert) return;
+  let alertMsg = '';
+  if (p === 'partial') alertMsg = '⚠️ 부분공개: 제목·본문이 대국민에게 공개됩니다. 본문에 개인정보가 없는지 반드시 확인하세요.';
+  else if (p === 'secret' && l === 'none') alertMsg = '⚠️ 비공개 설정이라도 직원 열람 제한을 설정하지 않으면 기관 내 직원은 열람할 수 있습니다.';
+  alert.textContent = alertMsg;
+  alert.classList.toggle('show', alertMsg !== '');
+
+  // 노트
+  const note = document.getElementById('sim-note');
+  if (!note) return;
+  if (p === 'open') note.textContent = '💡 공개: 정보공개포털(www.open.go.kr)을 통해 제목·본문·붙임 전체가 공개됩니다.';
+  else if (p === 'partial') note.textContent = '💡 부분공개: 붙임 파일은 비공개되지만 제목과 본문은 공개되므로 주의가 필요합니다.';
+  else note.textContent = '💡 비공개: 공개 제한 근거(정보공개법 9조 1항 해당 호)를 반드시 선택해야 합니다.';
+}
+
+// ══════════════════════════════════
 // 검색 데이터
 // ══════════════════════════════════
 const searchDB = [
-  {tag:"날짜 표기", text:"연·월·일 글자 대신 마침표. 월·일 앞 0 생략. 2025. 9. 6.(화)", step:3, card:"rc-date"},
+  {tag:"날짜 표기", text:"연·월·일 글자 대신 마침표. 월·일 앞 0 생략. 2026. 9. 6.(화)", step:3, card:"rc-date"},
   {tag:"시간 표기", text:"24시각제 사용. 오후 4시 → 16:14. 오전 시간도 앞에 0 붙이기. 07:09", step:3, card:"rc-date"},
   {tag:"물결표", text:"물결표 ∼ 앞뒤에 붙여 씁니다. 15:00∼17:00. 키보드 ~ 사용 금지", step:3, card:"rc-date"},
   {tag:"금액", text:"345천원 금지. 345,000원. 금13,560원(금일만삼천오백육십원). 단위 명사 띄어쓰기 296억 원", step:3, card:"rc-num"},
@@ -1995,12 +2858,12 @@ function applyState(v, n, push) {
   document.querySelectorAll('.view').forEach(el => el.classList.remove('on'));
   document.getElementById('view-'+v).classList.add('on');
   document.querySelectorAll('.nav-tab').forEach((b,i) => {
-    b.classList.toggle('on', (i===0&&v==='workflow')||(i===1&&v==='quiz'));
+    b.classList.toggle('on', (i===0&&v==='workflow')||(i===1&&v==='minutes')||(i===2&&v==='quiz'));
   });
   if (v === 'quiz') {
     initQuiz();
-  } else {
-    document.querySelectorAll('.step-view').forEach(el => el.classList.remove('on'));
+  } else if (v === 'workflow') {
+    document.querySelectorAll('#view-workflow .step-view').forEach(el => el.classList.remove('on'));
     const sv = document.getElementById('sv'+n);
     if (sv) sv.classList.add('on');
     document.querySelectorAll('.step-btn').forEach((b,i) => b.classList.toggle('on', i===n-1));
@@ -2015,6 +2878,7 @@ function applyState(v, n, push) {
 function showView(v) {
   const step = v === 'quiz' ? 0 : 1;
   applyState(v, step, true);
+  if (v === 'minutes') restoreMinType();
 }
 
 function goStep(n) {
@@ -2079,15 +2943,15 @@ function clReset() {
 // 퀴즈
 // ══════════════════════════════════
 const QDB = [
-  {cat:'date',catL:'📅 날짜·시간',q:'다음 중 올바른 날짜 표기는?',opts:['2025년 09월 06일 (화)','2025.09.06(화)','2025. 9. 6.(화)','2025. 09. 06. (화)'],a:2,exp:'월·일 앞의 0은 생략합니다. 연·월·일 글자 대신 마침표를 찍고, 요일은 마침표 뒤 괄호 안에 넣습니다. → 2025. 9. 6.(화)',goto:{step:3,card:'rc-date'}},
-  {cat:'date',catL:'📅 날짜·시간',q:'"2025년 11월 1일 금요일"의 올바른 공문서 표기는?',opts:['2025. 11. 01.(금)','2025. 11. 1.(금)','2025.11.1(금)','2025년 11월 1일(금)'],a:1,exp:'월, 일 앞 0을 표기하지 않습니다. → 2025. 11. 1.(금)',goto:{step:3,card:'rc-date'}},
+  {cat:'date',catL:'📅 날짜·시간',q:'다음 중 올바른 날짜 표기는?',opts:['2026년 09월 06일 (화)','2026.09.06(화)','2026. 9. 6.(화)','2026. 09. 06. (화)'],a:2,exp:'월·일 앞의 0은 생략합니다. 연·월·일 글자 대신 마침표를 찍고, 요일은 마침표 뒤 괄호 안에 넣습니다. → 2026. 9. 6.(화)',goto:{step:3,card:'rc-date'}},
+  {cat:'date',catL:'📅 날짜·시간',q:'"2026년 11월 1일 금요일"의 올바른 공문서 표기는?',opts:['2026. 11. 01.(금)','2026. 11. 1.(금)','2026.11.1(금)','2026년 11월 1일(금)'],a:1,exp:'월, 일 앞 0을 표기하지 않습니다. → 2026. 11. 1.(금)',goto:{step:3,card:'rc-date'}},
   {cat:'date',catL:'📅 날짜·시간',q:'기간 표기로 올바른 것은?',opts:['5. 1 ~ 6. 30','5. 1.~6. 30.','5. 1.∼6. 30.','5월 1일∼6월 30일'],a:2,exp:'물결표(∼)는 앞뒤에 붙여 씁니다. 키보드 ~ 대신 문자표의 ∼를 사용합니다.',goto:{step:3,card:'rc-date'}},
   {cat:'date',catL:'📅 날짜·시간',q:'"오후 4시 14분"의 올바른 시간 표기는?',opts:['4:14','16:14','오후 4:14','16시 14분'],a:1,exp:'24시각제를 사용합니다. 오후 4시 → 16시. → 16:14',goto:{step:3,card:'rc-date'}},
   {cat:'date',catL:'📅 날짜·시간',q:'"오전 7시 9분"의 올바른 시간 표기는?',opts:['7:9','7:09','07:09','07:9'],a:2,exp:'오전 시간도 앞에 0을 붙입니다. 분이 한 자리여도 0을 붙입니다. → 07:09',goto:{step:3,card:'rc-date'}},
   {cat:'num',catL:'🔢 숫자·금액',q:'"345천원"의 올바른 표기는?',opts:['345천원','3,450원','345,000원','34만 5천 원 또는 345,000원'],a:3,exp:"'천 원' 단위는 혼동을 유발하므로 일반 숫자로 표기합니다.",goto:{step:3,card:'rc-num'}},
   {cat:'num',catL:'🔢 숫자·금액',q:'"296억원"의 올바른 표기는?',opts:['296억원','296억 원','2억9천6백만원','296,000,000원'],a:1,exp:'단위 명사는 띄어 쓰는 것이 원칙입니다. → 296억 원',goto:{step:3,card:'rc-num'}},
   {cat:'num',catL:'🔢 숫자·금액',q:'아라비아 숫자 50과 단위 "명" 사이 표기로 옳은 것은?',opts:['50명만 맞다','50 명만 맞다','50명, 50 명 모두 허용','항상 붙여야 한다'],a:2,exp:'아라비아 숫자와 단위는 붙여 쓸 수 있고 띄어 써도 됩니다. 둘 다 허용.',goto:{step:3,card:'rc-num'}},
-  {cat:'punct',catL:'「」 문장 부호',q:'붙임 다음 표기로 올바른 것은?',opts:['붙임: 2025년 계획서','붙임 : 2025년 계획서','붙임  2025년 계획서','붙임. 2025년 계획서'],a:2,exp:"'붙임' 표시에는 쌍점을 붙이지 않습니다. '붙임' 다음 2타 띄우고 내용을 씁니다.",goto:{step:3,card:'rc-punct'}},
+  {cat:'punct',catL:'「」 문장 부호',q:'붙임 다음 표기로 올바른 것은?',opts:['붙임: 2026년 계획서','붙임 : 2026년 계획서','붙임  2026년 계획서','붙임. 2026년 계획서'],a:2,exp:"'붙임' 표시에는 쌍점을 붙이지 않습니다. '붙임' 다음 2타 띄우고 내용을 씁니다.",goto:{step:3,card:'rc-punct'}},
   {cat:'punct',catL:'「」 문장 부호',q:'"원장: 김갑동"에서 쌍점 사용이 올바른가요?',opts:['올바르다 (앞 붙이고 뒤 띄우기)','틀리다 (원장 : 김갑동)','틀리다 (원장:김갑동)','쌍점을 쓰면 안 된다'],a:0,exp:'쌍점(:)은 앞은 붙여 쓰고 뒤는 1타 띄어 씁니다. → 원장: 김갑동 ✅',goto:{step:3,card:'rc-punct'}},
   {cat:'punct',catL:'「」 문장 부호',q:'법령 이름 인용 시 올바른 표기는?',opts:['"초·중등교육법"에 따라','「초·중등교육법」에 따라','(초·중등교육법)에 따라','초중등교육법에 따라'],a:1,exp:'법령·규정 이름 인용 시 홑낫표 「 」 사용이 원칙입니다.',goto:{step:3,card:'rc-punct'}},
   {cat:'punct',catL:'「」 문장 부호',q:'"융복합"의 올바른 표기는?',opts:['융복합','융·복합','융 복합','융,복합'],a:1,exp:'대등한 단어 사이에 가운뎃점을 씁니다. 장차관·시도는 사전 등재 단어라 붙여 씁니다.',goto:{step:3,card:'rc-punct'}},
@@ -2223,56 +3087,75 @@ function restartQ() {
 // ── 시나리오별 주석 데이터 ──
 const ANN_DATA = {
   // ── 시나리오 0: 내부결재 ──
-  's0-indent': {
-    num:'②', title:'가장 흔한 실수 — 하위 항목 기호',
-    rule:'"2. 다음과 같이 실시하고자 합니다." 다음에 오는 하위 항목은 <strong>1., 2.가 아닌 가., 나.</strong>를 씁니다. 본문 첫째 항목 기호(1., 2.)는 이미 위에서 쓰였기 때문에 다시 쓸 수 없습니다.<br>또한 "가."는 "2."의 내용 첫 글자에서 <strong>오른쪽 2타</strong> 들여써서 시작합니다.',
-    bad:  '2. 다음과 같이\n   실시하고자 합니다.\n1. 일시: 2025. 10. 8.  ← 1.이 두 번!\n2. 장소: ○○ 국립공원  ← 2.도 두 번!',
-    good: '2. 실시하고자 합니다.\n  가. 일시: 2025. 10. 8.(수)\n  나. 장소: ○○ 국립공원',
-    goto: {step:3, card:'rc-items'}
-  },
-
-
   's0-recv': {
     num:'①', title:'내부결재 수신자 표기',
-    rule:'수신자가 없는 내부결재 문서의 수신란에는 <strong>"내부결재"</strong>로 표시합니다. 외부 기관을 쓰지 않습니다.',
+    rule:'수신자가 없는 내부결재 문서의 수신란에는 <strong>"내부결재"</strong>로 표시합니다. 외부 기관명을 쓰지 않습니다.',
     bad:'수신  ○○초등학교(교장)',
     good:'수신자  내부결재',
     goto:null
   },
+  's0-tag': {
+    num:'②', title:'공문 성격 표시제',
+    rule:'제목 서두에 <strong>[계획] [안내] [협조] [보고] [긴급] [참석] [설문] [이첩]</strong> 중 하나를 표기합니다. 내부결재도 성격 표시를 붙여야 합니다.',
+    bad:'2026학년도 현장체험학습 실시 계획',
+    good:'[계획] 2026학년도 현장체험학습 실시 계획',
+    goto:{step:2,card:'rc-tag'}
+  },
   's0-date': {
-    num:'②', title:'날짜 표기',
-    rule:'연·월·일 글자 대신 <strong>마침표</strong>로 구분. 월·일 앞 <strong>0 생략</strong>. 마침표 뒤 <strong>1칸 띄움</strong>. 요일은 마침표 뒤 괄호 안에.',
-    bad:'2025.10.8(수)  또는  2025. 10. 08.(수)',
-    good:'2025. 10. 8.(수)',
+    num:'③', title:'날짜 표기',
+    rule:'월·일 앞 <strong>0 생략</strong>. 마침표 뒤 <strong>1칸 띄움</strong>. 연·월·일 글자 대신 마침표.',
+    bad:'2026.04.02  또는  2026. 04. 02.',
+    good:'2026. 4. 2.',
+    goto:{step:3,card:'rc-date'}
+  },
+  's0-colon': {
+    num:'④', title:'쌍점(:) 규정',
+    rule:'쌍점 <strong>앞은 붙이고</strong>, 뒤는 <strong>1칸 띄웁니다</strong>.',
+    bad:'관련 : 유초등교육과-1234(2026. 4. 2.)',
+    good:'관련: 유초등교육과-1234(2026. 4. 2.)',
+    goto:{step:3,card:'rc-punct'}
+  },
+  's0-indent': {
+    num:'⑤', title:'가장 흔한 실수 — 하위 항목 기호',
+    rule:'"2. 다음과 같이 시행하고자 합니다." 다음에 오는 하위 항목은 <strong>1., 2.가 아닌 가., 나.</strong>를 씁니다. 본문 첫째 항목 기호(1., 2.)는 이미 위에서 쓰였기 때문에 다시 쓸 수 없습니다.',
+    bad:  '2. 다음과 같이\n   시행하고자 합니다.\n1. 일시: 2026. 10. 8.  ← 1.이 두 번!\n2. 장소: ○○ 국립공원  ← 2.도 두 번!',
+    good: '2. 시행하고자 합니다.\n  가. 일시: 2026. 10. 8.(수)\n  나. 장소: ○○ 국립공원',
+    goto: {step:3, card:'rc-items'}
+  },
+  's0-range': {
+    num:'⑥', title:'기간·물결표',
+    rule:'물결표(∼)는 앞뒤에 <strong>붙여</strong> 씁니다. 키보드 ~ ❌ → 문자표 ∼ ✅',
+    bad:'2026. 10. 8.(수) ~ 10. 9.(목)',
+    good:'2026. 10. 8.(수)∼10. 9.(목)',
     goto:{step:3,card:'rc-date'}
   },
   's0-items': {
-    num:'③', title:'항목 들여쓰기',
-    rule:'첫째 항목(1., 2.)은 <strong>왼쪽 기본선</strong>. 둘째 항목(가., 나.)부터는 위 항목에서 <strong>오른쪽 2타</strong>씩 이동. 항목기호와 내용 사이 <strong>1타 띄움</strong>.',
-    bad:'가.일시: 2025. 10. 8.(수)  (기호-내용 붙임)',
-    good:'가. 일시: 2025. 10. 8.(수)  (기호 뒤 1타)',
+    num:'⑦', title:'항목 들여쓰기',
+    rule:'둘째 항목(가., 나.)은 첫째 항목(1., 2.)에서 <strong>오른쪽 2타</strong> 이동. 항목기호 뒤 <strong>1타</strong>.',
+    bad:'가.일시: …  (기호-내용 붙임)',
+    good:'가. 일시: …  (기호 뒤 1타)',
     goto:{step:3,card:'rc-items'}
   },
   's0-money': {
-    num:'④', title:'금액 표기',
+    num:'⑧', title:'금액 표기',
     rule:'아라비아 숫자로 쓰되, 숫자 다음에 괄호를 하고 한글로 기재합니다.',
     bad:'15,000원(금만오천원정)',
     good:'금15,000원(금일만오천원)',
     goto:{step:3,card:'rc-num'}
   },
   's0-attach': {
-    num:'⑥', title:'붙임 표기 (1개)',
-    rule:'붙임이 <strong>하나이면 번호를 붙이지 않습니다</strong>. "붙임" 다음 <strong>2타 띄움</strong>. 쌍점(:) 사용 금지.',
-    bad:'붙임: 1. 현장체험학습 계획서 1부.',
-    good:'붙임  현장체험학습 계획서 1부.',
+    num:'⑨', title:'붙임 표기 (2개)',
+    rule:'붙임이 <strong>2개 이상이면 번호를 붙입니다</strong>. "붙임" 다음 <strong>2타</strong>. 끝은 마지막 항목 뒤 2타.',
+    bad:'붙임: 1. 계획서 1부. 2. 동의서 1부. 끝.',
+    good:'붙임  1. 계획서 1부.\n       2. 동의서 1부.  끝.',
     goto:{step:3,card:'rc-attach'}
   },
   's0-end': {
-    num:'⑦', title:"'끝' 위치",
-    rule:'붙임 표시 다음 <strong>2타(한 칸) 띄우고</strong> "끝."을 표기합니다.',
-    bad:'붙임  계획서 1부.\n끝',
-    good:'붙임  계획서 1부.  끝.',
-    goto:null
+    num:'⑩', title:"'끝' 위치 + 종결어미",
+    rule:'붙임 표시 다음 <strong>2타 띄우고</strong> "끝."을 표기합니다. 내부결재 문서 종결어미는 <strong>의지형</strong>("-하고자 합니다"). "합니다" ❌ → "하고자 합니다" ✅',
+    bad:'시행합니다.\n붙임  계획서 1부.\n끝',
+    good:'시행하고자 합니다.\n붙임  계획서 1부.  끝.',
+    goto:{step:3,card:'rc-attach'}
   },
 
   // ── 시나리오 1: 교육청 보고 ──
@@ -2293,22 +3176,22 @@ const ANN_DATA = {
   's1-date': {
     num:'③', title:'날짜 표기',
     rule:'월·일 앞 <strong>0 생략</strong>. 마침표 뒤 <strong>1칸 띄움</strong>.',
-    bad:'2025.03.04  또는  2025. 03. 04.',
-    good:'2025. 3. 4.',
+    bad:'2026.04.02  또는  2026. 04. 02.',
+    good:'2026. 4. 2.',
     goto:{step:3,card:'rc-date'}
   },
   's1-colon': {
     num:'④', title:'쌍점(:) 규정',
     rule:'쌍점 <strong>앞은 붙이고</strong>, 뒤는 <strong>1칸 띄웁니다</strong>.',
-    bad:'관련 : ○○교육지원청-2345',
-    good:'관련: ○○교육지원청-2345',
+    bad:'관련 : 유초등교육과-1234',
+    good:'관련: 유초등교육과-1234(2026. 4. 2.)',
     goto:{step:3,card:'rc-punct'}
   },
   's1-range': {
     num:'⑤', title:'기간·물결표',
     rule:'물결표(∼)는 앞뒤에 <strong>붙여</strong> 씁니다. 키보드 ~ ❌ → 문자표 ∼ ✅',
-    bad:'2025. 3. 4.(화) ~ 3. 28.(금)',
-    good:'2025. 3. 4.(화)∼3. 28.(금)',
+    bad:'2026. 3. 4.(화) ~ 3. 28.(금)',
+    good:'2026. 3. 4.(화)∼3. 28.(금)',
     goto:{step:3,card:'rc-date'}
   },
   's1-items': {
@@ -2344,15 +3227,15 @@ const ANN_DATA = {
   's2-date': {
     num:'②', title:'날짜 표기',
     rule:'월·일 앞 <strong>0 생략</strong>. 연·월·일 글자 대신 마침표. 요일은 괄호 안에.',
-    bad:'2025.03.04(화)',
-    good:'2025. 3. 4.(화)',
+    bad:'2026.03.04(화)',
+    good:'2026. 3. 4.(화)',
     goto:{step:3,card:'rc-date'}
   },
   's2-items': {
     num:'③', title:'항목 들여쓰기',
     rule:'둘째 항목(가., 나.)은 <strong>2타</strong> 들여씁니다. 항목기호 뒤 <strong>1타</strong>.',
-    bad:'가.발송일: 2025. 3. 4.(화)',
-    good:'가. 발송일: 2025. 3. 4.(화)',
+    bad:'가.발송일: 2026. 3. 4.(화)',
+    good:'가. 발송일: 2026. 3. 4.(화)',
     goto:{step:3,card:'rc-items'}
   },
   's2-ending': {
@@ -2492,8 +3375,8 @@ const VIS_MAP = {
   'vc2-good': { off: '붙임  봄 운동회 계획 1부.  끝.',           on: '붙임··봄 운동회 계획 1부.··끝.' },
   'vc3-bad':  { off: '붙임: 1. 봄 운동회 계획 1부.',             on: '붙임:·1. 봄 운동회 계획 1부.' },
   'vc3-good': { off: '붙임  1. 봄 운동회 계획 1부.',             on: '붙임··1. 봄 운동회 계획 1부.' },
-  'vc4-bad':  { off: '  가. 일시: 2025. 5. 1.(월)',              on: '··가.·일시: 2025.·5.·1.(월)' },
-  'vc4-good': { off: '1. 운동회 계획\n  가. 일시: 2025. 5. 1.(월)\n  나. 장소: 본교 운동장', on: '1.·운동회 계획\n··가.·일시: 2025.·5.·1.(월)\n··나.·장소: 본교 운동장' },
+  'vc4-bad':  { off: '  가. 일시: 2026. 5. 1.(월)',              on: '··가.·일시: 2026.·5.·1.(월)' },
+  'vc4-good': { off: '1. 운동회 계획\n  가. 일시: 2026. 5. 1.(월)\n  나. 장소: 본교 운동장', on: '1.·운동회 계획\n··가.·일시: 2026.·5.·1.(월)\n··나.·장소: 본교 운동장' },
 };
 
 function toggleVis() {
@@ -2590,43 +3473,91 @@ function checkDrill(i) {
 // ══════════════════════════════════
 // Step6 회의록
 // ══════════════════════════════════
-function showMinutes(type) {
-  // 카드 active 상태
-  document.getElementById('mtc-legal').classList.toggle('active', type === 'legal');
-  document.getElementById('mtc-non').classList.toggle('active', type === 'non');
-  // 상세 패널 표시
-  document.getElementById('md-legal').style.display = type === 'legal' ? 'block' : 'none';
-  document.getElementById('md-non').style.display   = type === 'non'   ? 'block' : 'none';
-  // 선택된 카드로 스크롤
+// ══════════════════════════════════
+// 회의록 위저드
+// ══════════════════════════════════
+let minTypeSelected = null; // 'legal' | 'non' | null
+
+function selectMinType(type) {
+  minTypeSelected = type;
+
+  // 위저드 버튼 강조
+  ['legal','non'].forEach(t => {
+    const btn = document.getElementById('mwb-' + t);
+    btn.classList.remove('picked-legal','picked-non');
+  });
+  document.getElementById('mwb-' + type).classList.add('picked-' + type);
+
+  // 힌트 숨기기
+  document.getElementById('min-wiz-hint').classList.add('hidden');
+
+  // 배지 표시
+  document.getElementById('mtb-legal').classList.toggle('show', type === 'legal');
+  document.getElementById('mtb-non').classList.toggle('show', type === 'non');
+
+  // 리셋 버튼 표시
+  document.getElementById('min-reset-btn').style.display = 'inline-flex';
+
+  // 상세 영역 전환
+  const showLegal = type === 'legal';
+  document.getElementById('md-legal').classList.toggle('show', showLegal);
+  document.getElementById('md-non').classList.toggle('show', !showLegal);
+
+  // 스크롤
   setTimeout(() => {
     const el = document.getElementById('md-' + type);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, 50);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
 }
 
-const CS_ANSWERS = {
-  0: {
-    y: '법정 회의록입니다. 회의록 구성요소를 빠짐없이 작성하고, 위원 서명 및 전자결재를 받아야 합니다.',
-    n: '비법정 회의록입니다. 관행적·의례적 회의라면 작성 생략이 가능하고, 기타 회의는 개조식으로 간략히 작성합니다.',
+function resetMinType() {
+  minTypeSelected = null;
+  ['legal','non'].forEach(t => {
+    document.getElementById('mwb-' + t).classList.remove('picked-legal','picked-non');
+    document.getElementById('mtb-' + t).classList.remove('show');
+    document.getElementById('md-' + t).classList.remove('show');
+  });
+  document.getElementById('min-wiz-hint').classList.remove('hidden');
+  document.getElementById('min-reset-btn').style.display = 'none';
+  window.scrollTo({ top: 56, behavior: 'smooth' });
+}
+
+// 탭 이동 후 돌아와도 선택 상태 복원
+function restoreMinType() {
+  if (minTypeSelected) selectMinType(minTypeSelected);
+}
+
+const MIN_CS_ANSWERS = {
+  'l0': {
+    y: '외부 위원 참석 시 — 참석자 전원 서명 대신 대표 1인 확인서명으로 갈음 가능. 단, 출석서명은 반드시 필요합니다.',
+    n: '내부 직원으로만 구성 시 — 위원 확인 서명을 병렬협조(결재)로 갈음할 수 있습니다.',
   },
-  1: {
-    y: '외부 위원 참석 시: 법정 회의록은 대표 1인 확인서명으로 갈음 가능. 비법정은 전자우편·문자 등으로 통보합니다.',
-    n: '내부 직원만 구성된 경우: 위원 확인 서명을 병렬협조(결재)로 갈음할 수 있습니다.',
+  'l1': {
+    y: '중요 토론·표결 사안은 발언요지와 표결내용을 포함하여 반드시 자세히 기술합니다.',
+    n: '통상적 진행절차·인사말·단순 질문은 생략하고 최종결과를 중심으로 개조식으로 간략히 작성합니다.',
   },
-  2: {
-    y: '중요 토론·표결 사안은 반드시 자세히 기술합니다. 발언요지와 표결내용을 포함해야 합니다.',
-    n: '통상적 진행절차·인사말·단순 질문 등은 생략하고, 최종결과를 중심으로 개조식으로 간략히 작성합니다.',
+  'n0': {
+    y: '관행적·의례적 회의는 회의록 작성을 생략할 수 있습니다. 필요시 K-에듀파인 메모관리 기능으로 결과만 기록하세요.',
+    n: '각종 운영 회의는 개조식으로 간략히 작성(1~2쪽 이내)하고 전자문서로 관리합니다.',
+  },
+  'n1': {
+    y: '외부 위원에게는 전자우편·문자 등으로 회의결과를 통보합니다. (중요 회의는 확인 회신 받기)',
+    n: '내부 직원만 참석하는 경우 병렬협조(결재)로 확인서명을 갈음합니다.',
+  },
+  'n2': {
+    y: '인사·예산 관련 중요 사안은 비법정이라도 확인서명을 받아야 합니다. 내부위원은 병렬협조, 외부위원은 전자우편·문자 확인.',
+    n: '일반적인 운영 회의는 전자결재 + 결재단계 축소로 처리합니다.',
   },
 };
 
-function csAnswer(btn, ans) {
-  const item = btn.closest('.cs-item');
-  const idx  = [...document.querySelectorAll('.cs-item')].indexOf(item);
-  item.querySelectorAll('.cs-btn').forEach(b => b.classList.remove('picked'));
+function minCsAnswer(btn, ans, id) {
+  const item = document.getElementById('mcs-' + id);
+  item.querySelectorAll('.min-cs-btn').forEach(b => b.classList.remove('picked'));
   btn.classList.add('picked');
-  const ansEl = item.querySelector('.cs-ans');
-  ansEl.textContent = CS_ANSWERS[idx][ans];
-  ansEl.style.display = 'block';
+  item.classList.add('answered');
+  const ansEl = document.getElementById('mca-' + id);
+  ansEl.textContent = MIN_CS_ANSWERS[id][ans];
+  ansEl.classList.add('show');
 }
 
 function goHome() {
@@ -2635,6 +3566,19 @@ function goHome() {
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
+
+// ══════════════════════════════════
+// 붙임·끝 케이스 탭 전환
+// ══════════════════════════════════
+function showEndCase(idx, btn) {
+  // 탭 활성화
+  document.querySelectorAll('.ec-tab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  // 패널 전환
+  document.querySelectorAll('.ec-panel').forEach(p => p.classList.remove('on'));
+  const panel = document.getElementById('ec-panel-' + idx);
+  if (panel) panel.classList.add('on');
+}
 
 // ══════════════════════════════════
 // 결재선 위저드
@@ -2931,6 +3875,6 @@ if (window.matchMedia('(pointer: coarse)').matches) {
   if (hint) { hint.style.display = 'block'; setTimeout(()=>hint.style.display='none', 3000); }
 }
 </script>
-<footer style="text-align:center;padding:.6rem .75rem;font-size:.72rem;color:rgba(0,0,0,.32);letter-spacing:.3px;border-top:1px solid rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;"><span>출처: 2025 올바른 공문서 작성 방법 안내 (광주광역시교육청)</span><span style="color:rgba(0,0,0,.15);">|</span><span>만든이 2026 최창훈</span></footer>
+<footer style="text-align:center;padding:.6rem .75rem;font-size:.72rem;color:rgba(0,0,0,.32);letter-spacing:.3px;border-top:1px solid rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;"><span>출처: 2026 올바른 공문서 작성 방법 안내 (전남광주통합특별시교육청)</span><span style="color:rgba(0,0,0,.15);">|</span><span>만든이 2026 최창훈</span></footer>
 </body>
 </html>
