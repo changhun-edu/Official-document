@@ -3099,6 +3099,8 @@ const ANN_DATA = {
   's0-tag': {
     num:'①', title:'공문 성격 표시제 <span style="font-size:.72rem;background:rgba(212,150,10,.2);color:var(--gold-l);border-radius:4px;padding:.1rem .4rem;margin-left:.3rem;">권장사항</span>',
     rule:'법적 의무는 아니지만, 제목 서두에 성격을 표기하면 수신자가 <strong>공문을 열기 전에</strong> 할 일을 즉시 파악할 수 있어 업무 효율이 높아집니다.<br><br>표기 가능 유형: <strong>[계획] [안내] [협조] [보고] [긴급] [참석] [설문] [이첩]</strong>',
+    badLbl:  '💬 표시 없어도 무방',
+    goodLbl: '✨ 성격 표시 시 더 좋음',
     bad:'2026학년도 현장체험학습 실시 계획<br><span style="font-size:.75rem;color:#888;font-weight:400;">→ 표시 없어도 무방합니다</span>',
     good:'[계획] 2026학년도 현장체험학습 실시 계획<br><span style="font-size:.75rem;color:#888;font-weight:400;">→ 성격 표시 시 더 좋습니다</span>',
     goto:{step:2,card:'rc-tag'}
@@ -3171,6 +3173,8 @@ const ANN_DATA = {
   's1-tag': {
     num:'②', title:'공문 성격 표시제 <span style="font-size:.72rem;background:rgba(212,150,10,.2);color:var(--gold-l);border-radius:4px;padding:.1rem .4rem;margin-left:.3rem;">권장사항</span>',
     rule:'법적 의무는 아니지만, 제목 서두에 성격을 표기하면 수신자가 <strong>공문을 열기 전에</strong> 할 일을 즉시 파악할 수 있어 업무 효율이 높아집니다.<br><br>표기 가능 유형: <strong>[보고] [제출] [안내] [협조] [긴급] [참석] [설문] [이첩]</strong>',
+    badLbl:  '💬 표시 없어도 무방',
+    goodLbl: '✨ 성격 표시 시 더 좋음',
     bad:'학교폭력 예방교육 실시 결과 보고<br><span style="font-size:.75rem;color:#888;font-weight:400;">→ 표시 없어도 무방합니다</span>',
     good:'[보고] 학교폭력 예방교육 실시 결과 보고<br><span style="font-size:.75rem;color:#888;font-weight:400;">→ 성격 표시 시 더 좋습니다</span>',
     goto:{step:2,card:'rc-tag'}
@@ -3322,8 +3326,8 @@ function openAnn(key) {
     </div>
     <div class="ap-rule">${d.rule}</div>
     <div class="ap-compare">
-      <div class="ap-bad"><div class="ap-bad-lbl">❌ 틀린 예</div><div class="ap-code">${d.bad}</div></div>
-      <div class="ap-good"><div class="ap-good-lbl">✅ 올바른 예</div><div class="ap-code">${d.good}</div></div>
+      <div class="ap-bad"><div class="ap-bad-lbl">${d.badLbl  || '❌ 틀린 예'}</div><div class="ap-code">${d.bad}</div></div>
+      <div class="ap-good"><div class="ap-good-lbl">${d.goodLbl || '✅ 올바른 예'}</div><div class="ap-code">${d.good}</div></div>
     </div>
     ${d.goto && d.goto.card
       ? `<div class="ap-goto" onclick="annGoto(${d.goto.step},'${d.goto.card}')">→ 가이드에서 더 보기</div>`
