@@ -790,6 +790,197 @@ body.ann-off #ann-panel { display: none !important; }
 .rule-section { display: none; }
 .rule-section.on { display: block; }
 
+/* ══════════ 결재선 위저드 ══════════ */
+.apv-wizard-trigger {
+  display: flex; align-items: center; justify-content: center; gap: .6rem;
+  width: 100%; padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink2) 100%);
+  color: #fff; border: none; border-radius: 12px;
+  font-family: inherit; font-size: .97rem; font-weight: 700;
+  cursor: pointer; transition: all .2s;
+  box-shadow: 0 3px 14px rgba(22,33,58,.3);
+  margin-bottom: 1.25rem; flex-direction: column;
+}
+.apv-wizard-trigger:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(22,33,58,.4); }
+.apv-wizard-trigger .awt-row { display: flex; align-items: center; gap: .6rem; }
+.apv-wizard-trigger .awt-sub { font-size: .76rem; font-weight: 400; opacity: .65; margin-top: .2rem; }
+
+.apv-wizard-panel {
+  background: var(--paper); border: 1.5px solid var(--line);
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,.1);
+  margin-bottom: 1.25rem; display: none;
+}
+.apv-wizard-panel.open { display: block; }
+
+.awp-header {
+  background: var(--ink); color: #fff;
+  padding: .85rem 1.25rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.awp-header-title { font-size: .9rem; font-weight: 700; display: flex; align-items: center; gap: .5rem; }
+.awp-close {
+  background: rgba(255,255,255,.15); border: none; color: #fff;
+  width: 28px; height: 28px; border-radius: 50%; font-size: 1rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background .15s;
+}
+.awp-close:hover { background: rgba(255,255,255,.3); }
+.awp-body { padding: 1.25rem; }
+
+.awp-steps-indicator { display: flex; gap: .35rem; margin-bottom: 1.1rem; }
+.awp-step-dot { flex: 1; height: 4px; border-radius: 99px; background: var(--line); transition: background .3s; }
+.awp-step-dot.done { background: var(--gold); }
+.awp-step-dot.active { background: var(--ink2); }
+
+.awp-q-block { display: none; }
+.awp-q-block.on { display: block; }
+.awp-q-label { font-size: .72rem; font-weight: 700; color: var(--muted); letter-spacing: .8px; margin-bottom: .5rem; }
+.awp-q-text { font-size: .97rem; font-weight: 700; color: var(--ink); line-height: 1.5; margin-bottom: .5rem; }
+.awp-q-sub { font-size: .8rem; color: var(--muted); margin-bottom: .9rem; line-height: 1.6; }
+.awp-choices { display: flex; flex-direction: column; gap: .5rem; }
+.awp-choice {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .75rem 1rem; border: 2px solid var(--line); border-radius: 10px;
+  cursor: pointer; transition: all .15s; background: var(--paper);
+  font-family: inherit; font-size: .88rem; font-weight: 500; text-align: left;
+}
+.awp-choice:hover { border-color: var(--ink2); background: #f0f4ff; }
+.awp-choice.picked { border-color: var(--ink); background: var(--ink); color: #fff; }
+.awp-choice .awc-icon { font-size: 1.1rem; flex-shrink: 0; }
+.awp-choice .awc-desc { font-size: .76rem; opacity: .65; margin-top: .1rem; }
+
+/* 결과 */
+.awp-result { display: none; }
+.awp-result.on { display: block; }
+.awr-recommend {
+  background: linear-gradient(135deg, #1a2f6a 0%, var(--ink2) 100%);
+  border-radius: 12px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; color: #fff;
+}
+.awr-label { font-size: .7rem; font-weight: 700; color: var(--gold-l); letter-spacing: .8px; margin-bottom: .5rem; }
+.awr-title { font-size: 1rem; font-weight: 700; margin-bottom: .75rem; }
+.awr-badge {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .28rem .75rem; border-radius: 99px; font-size: .78rem; font-weight: 700; margin-bottom: .75rem;
+}
+.awr-badge.rec  { background: rgba(212,150,10,.25); color: var(--gold-l); border: 1px solid rgba(212,150,10,.5); }
+.awr-badge.warn { background: rgba(255,160,0,.15); color: #ffb830; border: 1px solid rgba(255,160,0,.35); }
+.awr-basis {
+  background: rgba(255,255,255,.08); border-radius: 8px;
+  padding: .65rem .9rem; font-size: .8rem; color: rgba(255,255,255,.8);
+  line-height: 1.7; margin-top: .75rem;
+}
+.awr-basis strong { color: var(--gold-l); }
+
+/* 플로우 (결과 안) */
+.awf-flow { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin: .35rem 0 .6rem; }
+.awf-node { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.awf-box {
+  padding: .4rem .65rem; border-radius: 8px;
+  font-size: .77rem; font-weight: 700; line-height: 1.35; min-width: 60px;
+  transition: all .3s;
+}
+.awf-box.role-main      { background: rgba(255,255,255,.15); color: #fff; border: 1.5px solid rgba(255,255,255,.3); }
+.awf-box.role-review    { background: #e8f0ff; color: var(--blue); border: 1.5px solid #a0b8e0; }
+.awf-box.role-coop      { background: #f0e0ff; color: #6030a0; border: 1.5px solid #c0a0e0; }
+.awf-box.role-final     { background: var(--gold); color: var(--ink); border: 1.5px solid var(--gold-l); }
+.awf-box.role-skip      { background: rgba(255,255,255,.06); color: rgba(255,255,255,.3); border: 1.5px dashed rgba(255,255,255,.2); font-weight: 400; font-size: .7rem; }
+.awf-box.role-highlight { background: #ffe066; color: #5a3a00; border: 2px solid var(--gold-l); box-shadow: 0 0 0 3px rgba(212,150,10,.3); }
+.awf-role-tag { font-size: .6rem; color: rgba(255,255,255,.45); margin-top: .25rem; }
+.awf-arrow { font-size: 1rem; color: rgba(255,255,255,.4); flex-shrink: 0; align-self: flex-start; padding-top: .55rem; }
+
+/* 대안 박스 */
+.awr-alt {
+  background: var(--cream); border: 1px solid var(--line);
+  border-radius: 10px; padding: .9rem 1.1rem; margin-bottom: .75rem;
+}
+.awr-alt-title { font-size: .78rem; font-weight: 700; color: var(--muted); margin-bottom: .65rem; display: flex; align-items: center; gap: .4rem; }
+.alt-flow { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin: .3rem 0; }
+.alt-node { padding: .3rem .6rem; border-radius: 6px; font-size: .76rem; font-weight: 700; background: #e8e8f0; color: var(--ink2); border: 1px solid #c8c8d8; }
+.alt-node.coop  { background: #f0e8ff; color: #6030a0; border-color: #c0a0e0; }
+.alt-node.final { background: #fff3cc; color: #5a3a00; border-color: #d4b060; }
+.alt-arrow { color: var(--muted); font-size: .9rem; }
+.awr-alt-note { font-size: .76rem; color: var(--muted); line-height: 1.6; margin-top: .45rem; }
+
+/* 복사/리셋 */
+.awr-copy-btn {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .5rem .95rem; border-radius: 8px;
+  background: none; border: 1.5px solid rgba(255,255,255,.25);
+  color: rgba(255,255,255,.8); font-family: inherit; font-size: .8rem; font-weight: 700;
+  cursor: pointer; transition: all .15s; margin-top: .6rem;
+}
+.awr-copy-btn:hover { background: rgba(255,255,255,.1); color: #fff; }
+.awr-copy-btn.copied { border-color: var(--gold); color: var(--gold-l); }
+.awr-reset {
+  display: inline-flex; align-items: center; gap: .35rem;
+  background: none; border: none; font-family: inherit; font-size: .8rem;
+  color: var(--muted); cursor: pointer; padding: .4rem .6rem; border-radius: 7px;
+  transition: background .13s; margin-top: .5rem;
+}
+.awr-reset:hover { background: var(--line); color: var(--ink); }
+
+/* 전체 인터랙티브 플로우 */
+.awp-fullflow {
+  background: var(--cream); border: 1px solid var(--line);
+  border-radius: 12px; padding: 1.1rem 1.25rem; margin-top: 1rem;
+}
+.awpf-title { font-size: .78rem; font-weight: 700; color: var(--ink2); margin-bottom: 1rem; display: flex; align-items: center; gap: .4rem; }
+.awpf-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: .4rem;
+  align-items: start;
+}
+.awpf-col { display: flex; flex-direction: column; align-items: center; gap: 0; }
+.awpf-box {
+  padding: .5rem .5rem; border-radius: 8px; text-align: center;
+  font-size: .76rem; font-weight: 700; line-height: 1.35;
+  border: 2px solid transparent; transition: all .35s; width: 100%;
+}
+.awpf-box.pf-idle     { background: #f0f2f8; color: #9090a0; border-color: var(--line); }
+.awpf-box.pf-active   { background: #1a2f6a; color: #fff; border-color: #1a2f6a; box-shadow: 0 2px 10px rgba(26,47,106,.3); }
+.awpf-box.pf-coop     { background: #f0e8ff; color: #6030a0; border-color: #c0a0e0; box-shadow: 0 2px 8px rgba(96,48,160,.2); }
+.awpf-box.pf-final    { background: var(--gold); color: var(--ink); border-color: var(--gold-l); box-shadow: 0 2px 10px rgba(212,150,10,.3); }
+.awpf-box.pf-skip     { background: #f5f5f7; color: #c0c0c8; border-color: #e4e4e8; border-style: dashed; font-weight: 400; font-size: .7rem; }
+.awpf-box.pf-highlight{ background: #fff3cd; color: #5a3a00; border-color: #d4b060; box-shadow: 0 0 0 3px rgba(212,150,10,.25); }
+.awpf-role { font-size: .6rem; color: var(--muted); margin-top: .3rem; text-align: center; line-height: 1.3; }
+.awpf-connector {
+  display: flex; align-items: center; justify-content: center;
+  padding-top: .55rem; font-size: .95rem; color: var(--line);
+  transition: color .35s;
+}
+.awpf-connector.active { color: var(--ink2); }
+.awpf-connector.coop-c { color: #c0a0e0; }
+.awpf-arrow-row {
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: repeat(5,1fr);
+  align-items: center; gap: .4rem; margin: .15rem 0;
+}
+.awpf-arr-cell {
+  display: flex; align-items: center; justify-content: center;
+  font-size: .9rem; color: var(--line); transition: color .35s; height: 20px;
+}
+.awpf-arr-cell.active { color: var(--ink2); }
+.awpf-arr-cell.coop-c { color: #c0a0e0; }
+
+.awpf-legend {
+  display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .85rem; padding-top: .75rem;
+  border-top: 1px solid var(--line);
+}
+.awpf-lg-item {
+  display: flex; align-items: center; gap: .3rem; font-size: .72rem; color: var(--muted);
+}
+.awpf-lg-dot {
+  width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0;
+}
+
+@media (max-width: 580px) {
+  .awpf-grid { grid-template-columns: repeat(5,1fr); gap: .2rem; }
+  .awpf-box { font-size: .66rem; padding: .4rem .3rem; }
+  .awf-box  { font-size: .7rem; min-width: 50px; padding: .35rem .4rem; }
+}
+
 </style>
 </head>
 <body>
@@ -1270,6 +1461,99 @@ body.ann-off #ann-panel { display: none !important; }
       <h2>결재 올리기</h2>
       <p>내가 기안자일 때 어떤 결재 방식이 적용되는지, 서명란에 뭘 써야 하는지 알 수 있습니다.</p>
     </div>
+
+    <!-- ★ 결재선 판단 위저드 -->
+    <button class="apv-wizard-trigger" onclick="openWizard()">
+      <div class="awt-row">📋 결재선 판단 도우미</div>
+      <div class="awt-sub">질문 2개로 내 문서에 맞는 결재 순서를 바로 확인</div>
+    </button>
+
+    <div class="apv-wizard-panel" id="apv-wizard-panel">
+      <div class="awp-header">
+        <div class="awp-header-title">📋 결재선 판단 도우미</div>
+        <button class="awp-close" onclick="closeWizard()">✕</button>
+      </div>
+      <div class="awp-body">
+
+        <!-- 진행 표시 -->
+        <div class="awp-steps-indicator" id="awp-dots">
+          <div class="awp-step-dot active" id="awp-dot-0"></div>
+          <div class="awp-step-dot" id="awp-dot-1"></div>
+        </div>
+
+        <!-- Q1 -->
+        <div class="awp-q-block on" id="awp-q0">
+          <div class="awp-q-label">STEP 1 / 2</div>
+          <div class="awp-q-text">행정실장 협조가 필요한 문서인가요?</div>
+          <div class="awp-q-sub">예산·시설·물품·인사 등 행정업무가 포함되어 있으면 '예'를 선택하세요.</div>
+          <div class="awp-choices">
+            <button class="awp-choice" onclick="wizardPick(0,'y',this)">
+              <span class="awc-icon">✅</span>
+              <div><div>예 — 행정실장 협조가 필요합니다</div><div class="awc-desc">예산·물품·시설 관련 내용 포함</div></div>
+            </button>
+            <button class="awp-choice" onclick="wizardPick(0,'n',this)">
+              <span class="awc-icon">❌</span>
+              <div><div>아니요 — 교육·교수 활동 관련 문서</div><div class="awc-desc">수업·생활지도·교육과정 등 행정실 무관</div></div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="awp-q-block" id="awp-q1">
+          <div class="awp-q-label">STEP 2 / 2</div>
+          <div class="awp-q-text">부장교사의 검토가 필요한가요?</div>
+          <div class="awp-q-sub">업무 분장상 부장 관할이거나, 학교 내규에 부장 검토가 규정된 경우 '예'를 선택하세요.</div>
+          <div class="awp-choices">
+            <button class="awp-choice" onclick="wizardPick(1,'y',this)">
+              <span class="awc-icon">✅</span>
+              <div><div>예 — 부장교사 검토가 필요합니다</div><div class="awc-desc">업무 분장상 부장 관할 / 내규에 규정됨</div></div>
+            </button>
+            <button class="awp-choice" onclick="wizardPick(1,'n',this)">
+              <span class="awc-icon">❌</span>
+              <div><div>아니요 — 부장 검토 없이 바로 올립니다</div><div class="awc-desc">업무 성격상 부장 불필요 또는 위임전결</div></div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 결과 -->
+        <div class="awp-result" id="awp-result">
+
+          <div class="awr-recommend" id="awr-recommend-box">
+            <div class="awr-label">✅ 권장 결재선</div>
+            <div class="awr-title" id="awr-title-text"></div>
+            <div id="awr-badge-area"></div>
+            <!-- 미니 플로우 -->
+            <div class="awf-flow" id="awf-mini-flow"></div>
+            <div class="awr-basis" id="awr-basis-text"></div>
+            <button class="awr-copy-btn" id="awr-copy-btn" onclick="copyResult()">📋 결재선 복사</button>
+          </div>
+
+          <!-- 대안 -->
+          <div class="awr-alt" id="awr-alt-box" style="display:none;">
+            <div class="awr-alt-title" id="awr-alt-title"></div>
+            <div class="alt-flow" id="awr-alt-flow"></div>
+            <div class="awr-alt-note" id="awr-alt-note"></div>
+          </div>
+
+          <!-- 전체 인터랙티브 플로우 다이어그램 -->
+          <div class="awp-fullflow">
+            <div class="awpf-title">🔎 전체 결재 경로 — 선택된 경로 강조 표시</div>
+            <div class="awpf-grid" id="awpf-grid">
+              <!-- JS로 렌더링 -->
+            </div>
+            <div class="awpf-legend">
+              <div class="awpf-lg-item"><div class="awpf-lg-dot" style="background:#1a2f6a;"></div> 검토 경로</div>
+              <div class="awpf-lg-item"><div class="awpf-lg-dot" style="background:#c0a0e0;border:1px solid #9060c0;"></div> 협조(수평)</div>
+              <div class="awpf-lg-item"><div class="awpf-lg-dot" style="background:var(--gold);"></div> 최종 결재</div>
+              <div class="awpf-lg-item"><div class="awpf-lg-dot" style="background:#f5f5f7;border:1px dashed #ccc;"></div> 생략 가능</div>
+            </div>
+          </div>
+
+          <button class="awr-reset" onclick="resetWizard()">↩ 처음부터 다시 선택</button>
+        </div>
+
+      </div><!-- /awp-body -->
+    </div><!-- /apv-wizard-panel -->
 
     <div class="rule-card" id="rc-review">
       <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
@@ -2351,6 +2635,275 @@ function goHome() {
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
+
+// ══════════════════════════════════
+// 결재선 위저드
+// ══════════════════════════════════
+const WIZ_ANSWERS = {};
+
+function openWizard() {
+  const panel = document.getElementById('apv-wizard-panel');
+  panel.classList.add('open');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  resetWizard();
+}
+function closeWizard() {
+  document.getElementById('apv-wizard-panel').classList.remove('open');
+}
+
+function wizardPick(qIdx, val, btn) {
+  WIZ_ANSWERS[qIdx] = val;
+  // 버튼 선택 표시
+  btn.closest('.awp-choices').querySelectorAll('.awp-choice').forEach(b => b.classList.remove('picked'));
+  btn.classList.add('picked');
+
+  setTimeout(() => {
+    if (qIdx === 0) {
+      // Q2로 이동
+      document.getElementById('awp-q0').classList.remove('on');
+      document.getElementById('awp-q1').classList.add('on');
+      document.getElementById('awp-dot-0').classList.remove('active');
+      document.getElementById('awp-dot-0').classList.add('done');
+      document.getElementById('awp-dot-1').classList.add('active');
+    } else {
+      // 결과 표시
+      document.getElementById('awp-dot-1').classList.remove('active');
+      document.getElementById('awp-dot-1').classList.add('done');
+      document.getElementById('awp-q1').classList.remove('on');
+      showWizardResult();
+    }
+  }, 280);
+}
+
+// 결재선 경우의 수: needCoop(행정실장), needBujang(부장)
+function getWizardResult(needCoop, needBujang) {
+  if (needCoop && needBujang) {
+    return {
+      title: '기안자 → 부장 검토 → 행정실장 협조 → 교감 검토 → 교장 결재',
+      badge: '원칙적 권장 결재선',
+      badgeCls: 'rec',
+      flow: [
+        { label: '기안자\n(교사)', cls: 'role-main', tag: '기안' },
+        { arrow: true },
+        { label: '부장교사', cls: 'role-review', tag: '검토' },
+        { arrow: true },
+        { label: '행정실장', cls: 'role-highlight', tag: '협조 ★' },
+        { arrow: true },
+        { label: '교감', cls: 'role-review', tag: '검토' },
+        { arrow: true },
+        { label: '교장', cls: 'role-final', tag: '결재' },
+      ],
+      basis: '<strong>근거:</strong> 행정업무운영 혁신에 관한 규정 제9조 — 협조는 검토 전에 완료되어야 하며, 수직 검토선(부장→교감) 사이에 수평 협조(행정실장)가 선행합니다.',
+      copyText: '기안자(교사) → 부장교사 검토 → 행정실장 협조 → 교감 검토 → 교장 결재',
+      altTitle: '⚠️ 조건부 대안 — 교감 검토 후 행정실장 협조',
+      altFlow: ['기안자', '부장교사', '교감 검토', '행정실장 협조', '교장 결재'],
+      altFlowCls: ['','','','coop','final'],
+      altNote: '학교 위임전결규정 또는 K-에듀파인 결재경로 설정에 따라 "교감 검토 → 행정실장 협조" 순서도 위법하지 않습니다. 단, 원칙은 협조가 검토 앞에 위치합니다.',
+      gridPath: { bujang: true, coop: true, gamil: true },
+    };
+  } else if (needCoop && !needBujang) {
+    return {
+      title: '기안자 → 행정실장 협조 → 교감 검토 → 교장 결재',
+      badge: '원칙적 권장 결재선',
+      badgeCls: 'rec',
+      flow: [
+        { label: '기안자\n(교사)', cls: 'role-main', tag: '기안' },
+        { arrow: true },
+        { label: '행정실장', cls: 'role-highlight', tag: '협조 ★' },
+        { arrow: true },
+        { label: '교감', cls: 'role-review', tag: '검토' },
+        { arrow: true },
+        { label: '교장', cls: 'role-final', tag: '결재' },
+      ],
+      basis: '<strong>근거:</strong> 행정업무운영 혁신에 관한 규정 제9조 — 협조(수평)는 최종 결재권자 결재 전에만 이루어지면 됩니다. 부장 검토가 불필요한 경우 행정실장 협조가 먼저 진행됩니다.',
+      copyText: '기안자(교사) → 행정실장 협조 → 교감 검토 → 교장 결재',
+      altTitle: '⚠️ 조건부 대안 — 교감 검토 후 행정실장 협조',
+      altFlow: ['기안자', '교감 검토', '행정실장 협조', '교장 결재'],
+      altFlowCls: ['','','coop','final'],
+      altNote: '위임전결 설정에 따라 "교감 → 행정실장" 순서도 허용됩니다. 학교 내규 우선 확인하세요.',
+      gridPath: { bujang: false, coop: true, gamil: true },
+    };
+  } else if (!needCoop && needBujang) {
+    return {
+      title: '기안자 → 부장교사 검토 → 교감 검토 → 교장 결재',
+      badge: '행정실장 협조 불필요',
+      badgeCls: 'rec',
+      flow: [
+        { label: '기안자\n(교사)', cls: 'role-main', tag: '기안' },
+        { arrow: true },
+        { label: '부장교사', cls: 'role-highlight', tag: '검토 ★' },
+        { arrow: true },
+        { label: '교감', cls: 'role-review', tag: '검토' },
+        { arrow: true },
+        { label: '교장', cls: 'role-final', tag: '결재' },
+      ],
+      basis: '<strong>근거:</strong> 행정업무가 없으므로 수평 협조(행정실장) 불필요. 기안자 → 부장(하위 보조기관) → 교감(상위 보조기관) → 교장 순서의 수직 검토 경로를 따릅니다.',
+      copyText: '기안자(교사) → 부장교사 검토 → 교감 검토 → 교장 결재',
+      gridPath: { bujang: true, coop: false, gamil: true },
+    };
+  } else {
+    return {
+      title: '기안자 → 교감 검토 → 교장 결재',
+      badge: '간소 결재선',
+      badgeCls: 'rec',
+      flow: [
+        { label: '기안자\n(교사)', cls: 'role-main', tag: '기안' },
+        { arrow: true },
+        { label: '교감', cls: 'role-highlight', tag: '검토 ★' },
+        { arrow: true },
+        { label: '교장', cls: 'role-final', tag: '결재' },
+      ],
+      basis: '<strong>근거:</strong> 행정실장 협조 및 부장 검토가 모두 불필요한 교수·교육 활동 문서. 교감(하위 보조기관) → 교장(결재권자) 최소 결재선을 적용합니다.',
+      copyText: '기안자(교사) → 교감 검토 → 교장 결재',
+      gridPath: { bujang: false, coop: false, gamil: true },
+    };
+  }
+}
+
+function showWizardResult() {
+  const needCoop   = WIZ_ANSWERS[0] === 'y';
+  const needBujang = WIZ_ANSWERS[1] === 'y';
+  const r = getWizardResult(needCoop, needBujang);
+
+  // 제목
+  document.getElementById('awr-title-text').textContent = r.title;
+  // 배지
+  document.getElementById('awr-badge-area').innerHTML =
+    `<span class="awr-badge ${r.badgeCls}">${r.badge}</span>`;
+  // 미니 플로우
+  const flowEl = document.getElementById('awf-mini-flow');
+  flowEl.innerHTML = r.flow.map(n => {
+    if (n.arrow) return `<span class="awf-arrow">→</span>`;
+    return `<div class="awf-node">
+      <div class="awf-box ${n.cls}">${n.label.replace('\n','<br>')}</div>
+      <div class="awf-role-tag">${n.tag}</div>
+    </div>`;
+  }).join('');
+  // 근거
+  document.getElementById('awr-basis-text').innerHTML = r.basis;
+  // 복사 버튼 데이터
+  document.getElementById('awr-copy-btn').dataset.text = r.copyText;
+  document.getElementById('awr-copy-btn').classList.remove('copied');
+  document.getElementById('awr-copy-btn').textContent = '📋 결재선 복사';
+
+  // 대안
+  const altBox = document.getElementById('awr-alt-box');
+  if (r.altTitle) {
+    altBox.style.display = 'block';
+    document.getElementById('awr-alt-title').textContent = r.altTitle;
+    document.getElementById('awr-alt-flow').innerHTML = r.altFlow.map((n, i) => {
+      const cls = r.altFlowCls[i] || '';
+      const parts = [];
+      if (i > 0) parts.push(`<span class="alt-arrow">→</span>`);
+      parts.push(`<span class="alt-node ${cls}">${n}</span>`);
+      return parts.join('');
+    }).join('');
+    document.getElementById('awr-alt-note').textContent = r.altNote;
+  } else {
+    altBox.style.display = 'none';
+  }
+
+  // 전체 플로우 다이어그램
+  renderFullFlow(r.gridPath);
+
+  document.getElementById('awp-result').classList.add('on');
+}
+
+function renderFullFlow(path) {
+  // 5단계 컬럼: 기안자, 부장, 행정실장, 교감, 교장
+  const cols = [
+    { id:'pf-kian',   label:'기안자\n(교사)',   role:'기안' },
+    { id:'pf-bujang', label:'부장교사',         role:'검토' },
+    { id:'pf-admin',  label:'행정실장',         role:'협조(수평)' },
+    { id:'pf-gamil',  label:'교감',             role:'검토' },
+    { id:'pf-jang',   label:'교장',             role:'최종 결재' },
+  ];
+  // 각 노드 상태 결정
+  function nodeClass(idx) {
+    if (idx === 0) return 'pf-active';   // 기안자 항상 활성
+    if (idx === 4) return 'pf-final';    // 교장 항상 최종
+    if (idx === 1) return path.bujang ? 'pf-active'  : 'pf-skip';
+    if (idx === 2) return path.coop   ? 'pf-highlight': 'pf-skip';
+    if (idx === 3) return 'pf-active';   // 교감 항상 활성
+    return 'pf-idle';
+  }
+  // 화살표 상태 (idx→idx+1)
+  function arrowClass(from) {
+    if (from === 0 && !path.bujang && !path.coop) return 'active'; // →교감 직행
+    if (from === 0 && path.bujang)  return 'active';
+    if (from === 0 && !path.bujang && path.coop) return 'active';
+    if (from === 1) return path.bujang ? 'active' : '';
+    if (from === 2) return path.coop   ? 'coop-c' : '';
+    if (from === 3) return 'active';
+    return '';
+  }
+
+  const grid = document.getElementById('awpf-grid');
+  let html = '';
+  cols.forEach((col, i) => {
+    const nc = nodeClass(i);
+    const labelHtml = col.label.replace('\n', '<br>');
+    const isSkip = nc === 'pf-skip';
+    html += `<div class="awpf-col">
+      <div class="awpf-box ${nc}">${labelHtml}</div>
+      <div class="awpf-role">${isSkip ? '생략' : col.role}</div>
+    </div>`;
+  });
+
+  // 화살표 행
+  html += `<div class="awpf-arrow-row">`;
+  for (let i = 0; i < 5; i++) {
+    let cls = '';
+    let sym = '';
+    if (i < 4) {
+      // 특수 처리: 부장 skip & coop skip → 0→3 직통
+      if (i === 0 && !path.bujang && !path.coop) { cls = 'active'; sym = '→→→'; }
+      else if (i === 0 && !path.bujang && path.coop) { cls = 'active'; sym = '→→'; }
+      else if (i === 0) { cls = arrowClass(0); sym = '→'; }
+      else if (i === 1 && !path.bujang) { cls = ''; sym = ''; }
+      else if (i === 1) { cls = arrowClass(1); sym = '→'; }
+      else if (i === 2 && !path.coop)  { cls = ''; sym = ''; }
+      else if (i === 2) { cls = arrowClass(2); sym = '→'; }
+      else if (i === 3) { cls = 'active'; sym = '→'; }
+      else sym = '';
+    }
+    html += `<div class="awpf-arr-cell ${cls}">${sym}</div>`;
+  }
+  html += `</div>`;
+
+  grid.innerHTML = html;
+}
+
+function copyResult() {
+  const btn = document.getElementById('awr-copy-btn');
+  const text = btn.dataset.text;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.textContent = '✅ 복사 완료!';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = '📋 결재선 복사';
+    }, 2000);
+  }).catch(() => {
+    btn.textContent = '복사 실패 (수동 복사 필요)';
+  });
+}
+
+function resetWizard() {
+  WIZ_ANSWERS[0] = null; WIZ_ANSWERS[1] = null;
+  ['awp-q0','awp-q1'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.classList.remove('on');
+      el.querySelectorAll('.awp-choice').forEach(b => b.classList.remove('picked'));
+    }
+  });
+  document.getElementById('awp-result').classList.remove('on');
+  document.getElementById('awp-dot-0').className = 'awp-step-dot active';
+  document.getElementById('awp-dot-1').className = 'awp-step-dot';
+  document.getElementById('awp-q0').classList.add('on');
+}
 
 // ── 작성 규칙 소탭 ──
 function showRuleTab(id, btn) {
