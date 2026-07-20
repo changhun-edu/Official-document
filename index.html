@@ -769,6 +769,27 @@ body.ann-off #ann-panel { display: none !important; }
   letter-spacing: .3px;
 }
 
+
+/* ── 작성 규칙 소탭 ── */
+.rule-tabs {
+  display: flex; flex-wrap: wrap; gap: .35rem;
+  margin-bottom: 1.25rem;
+  padding: .75rem 1rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.rule-tab {
+  font-family: inherit; font-size: .78rem; font-weight: 700;
+  padding: .3rem .8rem; border-radius: 7px;
+  border: 1.5px solid var(--line); background: none;
+  color: var(--muted); cursor: pointer; transition: all .13s;
+}
+.rule-tab:hover { border-color: var(--ink); color: var(--ink); }
+.rule-tab.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.rule-section { display: none; }
+.rule-section.on { display: block; }
+
 </style>
 </head>
 <body>
@@ -782,6 +803,7 @@ body.ann-off #ann-panel { display: none !important; }
   </div>
   <div class="nav-tabs">
     <button class="nav-tab on" onclick="showView('workflow')">✍️ 공문 쓰는 법</button>
+    <button class="nav-tab" onclick="showView('minutes')">📋 회의록</button>
     <button class="nav-tab" onclick="showView('quiz')">📝 실력 확인</button>
   </div>
   <div style="position:relative;">
@@ -800,22 +822,13 @@ body.ann-off #ann-panel { display: none !important; }
   <div class="steps-bar">
   <div class="steps-bar-inner">
     <button class="step-btn on" onclick="goStep(1)">
-      <span class="step-dot">1</span> 공문 지도 읽기
+      <span class="step-dot">1</span> 공문 살펴보기
     </button>
     <button class="step-btn" onclick="goStep(2)">
-      <span class="step-dot">2</span> 제목 짓기
-    </button>
-    <button class="step-btn" onclick="goStep(3)">
-      <span class="step-dot">3</span> 본문 쓰기
+      <span class="step-dot">2</span> 작성 규칙
     </button>
     <button class="step-btn" onclick="goStep(4)">
       <span class="step-dot">4</span> 결재 올리기
-    </button>
-    <button class="step-btn" onclick="goStep(5)">
-      <span class="step-dot">5</span> 발송 전 점검
-    </button>
-    <button class="step-btn" onclick="goStep(6)">
-      <span class="step-dot">6</span> 회의록 작성
     </button>
   </div><!-- /steps-bar-inner -->
   </div>
@@ -825,7 +838,7 @@ body.ann-off #ann-panel { display: none !important; }
     <div class="step-hero sh1">
       <div class="hero-num">1</div>
       <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 1</div>
-      <h2>공문서 한 장, 한눈에 보기</h2>
+      <h2>공문 살펴보기</h2>
       <p>학교에서 실제로 쓰는 공문 3가지입니다.<br>번호를 클릭하면 해당 규칙을 바로 설명해 드립니다.</p>
     </div>
 
@@ -1026,26 +1039,7 @@ body.ann-off #ann-panel { display: none !important; }
       </div>
     </div>
 
-    <div class="rule-card" id="rc-neis">
-      <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">나이스</span> 나이스 복무 — 장소·사유 구체 기재</div>
-        <span class="rc-chevron">›</span>
-      </div>
-      <div class="rule-card-body">
-        <div class="compare">
-          <div class="cbox bad"><span class="cbox-lbl">❌ 불충분한 예</span><code>장소: 병원
-사유: 병원 진단
 
-장소: 자택
-사유: 자율연수</code></div>
-          <div class="cbox good"><span class="cbox-lbl">✅ 구체적인 예</span><code>장소: 풍암동 김내과
-사유: 복통으로 인한 진료
-
-장소: ○○시 주월동 ○○아파트
-사유: 스마트교육의 이론과 실제 연수</code></div>
-        </div>
-      </div>
-    </div>
 
     <div class="step-nav">
       <div></div>
@@ -1053,231 +1047,217 @@ body.ann-off #ann-panel { display: none !important; }
     </div>
   </div>
 
-  <!-- STEP 2: 제목 짓기 -->
+  <!-- STEP 2: 작성 규칙 -->
   <div class="step-view" id="sv2">
     <div class="step-hero sh2">
       <div class="hero-num">2</div>
       <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 2</div>
-      <h2>제목 짓기</h2>
-      <p>제목은 수신자가 공문을 열기 전에 "내가 뭘 해야 하는지" 알 수 있어야 합니다.</p>
+      <h2>작성 규칙</h2>
+      <p>아래 탭에서 주제를 선택하세요. 제목·날짜·항목·맞춤법·부호·붙임 규칙을 한 곳에서 확인할 수 있습니다.</p>
     </div>
 
-    <div class="rule-card open" id="rc-tag">
-      <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">성격 표시</span> 제목 앞에 [성격] 반드시 표기</div>
-        <span class="rc-chevron">›</span>
-      </div>
-      <div class="rule-card-body">
-        <div class="cite">공문 제목 서두에 문서 성격을 표기하면 수신자가 <strong>공문을 열기 전에</strong> 자신이 해야 할 일을 즉시 파악할 수 있습니다.</div>
-        <div class="tag-chips">
-          <span class="chip ch-s">[제출]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">100% 제출 필요</span>
-          <span class="chip ch-c">[협조]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">학교 선택적 판단</span>
-          <span class="chip ch-i">[안내]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">단순 정보 전달</span>
-          <span class="chip ch-a">[참석]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">회의·행사 참석</span>
-          <span class="chip ch-u">[긴급]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">보고기일 시급</span>
-          <span class="chip ch-q">[설문]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">의견 수렴</span>
-          <span class="chip ch-r">[보고]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">보고 요청</span>
-          <span class="chip ch-f">[이첩]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">상급기관 공문 전달</span>
+    <!-- 소탭 -->
+    <div class="rule-tabs">
+      <button class="rule-tab on"  onclick="showRuleTab('rt-title',this)">🏷️ 제목</button>
+      <button class="rule-tab"     onclick="showRuleTab('rt-date',this)">📅 날짜·시간</button>
+      <button class="rule-tab"     onclick="showRuleTab('rt-num',this)">🔢 숫자·금액</button>
+      <button class="rule-tab"     onclick="showRuleTab('rt-items',this)">📐 항목 기호</button>
+      <button class="rule-tab"     onclick="showRuleTab('rt-spell',this)">✏️ 맞춤법</button>
+      <button class="rule-tab"     onclick="showRuleTab('rt-punct',this)">「」부호</button>
+      <button class="rule-tab"     onclick="showRuleTab('rt-attach',this)">📎 붙임·끝</button>
+    </div>
+
+    <!-- 제목 -->
+    <div class="rule-section on" id="rt-title">
+      <div class="rule-card open" id="rc-tag">
+        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
+          <div class="rule-card-title"><span class="rc-badge">성격 표시</span> 제목 앞에 [성격] 반드시 표기</div>
+          <span class="rc-chevron">›</span>
         </div>
-        <div class="compare">
-          <div class="cbox bad"><span class="cbox-lbl">❌ 성격 표시 없음</span><code>지방공무원 전보내신서
+        <div class="rule-card-body">
+          <div class="cite">공문 제목 서두에 문서 성격을 표기하면 수신자가 <strong>공문을 열기 전에</strong> 자신이 해야 할 일을 즉시 파악할 수 있습니다.</div>
+          <div class="tag-chips">
+            <span class="chip ch-s">[제출]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">100% 제출 필요</span>
+            <span class="chip ch-c">[협조]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">학교 선택적 판단</span>
+            <span class="chip ch-i">[안내]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">단순 정보 전달</span>
+            <span class="chip ch-a">[참석]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">회의·행사 참석</span>
+            <span class="chip ch-u">[긴급]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">보고기일 시급</span>
+            <span class="chip ch-q">[설문]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">의견 수렴</span>
+            <span class="chip ch-r">[보고]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">보고 요청</span>
+            <span class="chip ch-f">[이첩]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">상급기관 공문 전달</span>
+          </div>
+          <div class="compare">
+            <div class="cbox bad"><span class="cbox-lbl">❌ 성격 표시 없음</span><code>지방공무원 전보내신서
 제출 안내</code></div>
-          <div class="cbox good"><span class="cbox-lbl">✅ 성격 표시 후</span><code>[인사/제출] 지방공무원
+            <div class="cbox good"><span class="cbox-lbl">✅ 성격 표시 후</span><code>[인사/제출] 지방공무원
 전보내신서 제출 안내</code></div>
-        </div>
-        <div class="cite" style="margin-top:.75rem;">💡 복합 성격은 <strong>[인사/제출]</strong>처럼 병기할 수 있습니다.</div>
-      </div>
-    </div>
-
-    <div class="rule-card" id="rc-wed">
-      <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">수요일 규정</span> 수요일에는 공문 발송 금지</div>
-        <span class="rc-chevron">›</span>
-      </div>
-      <div class="rule-card-body">
-        <div class="cite red">매주 수요일은 기관 ↔ 학교 간 <strong>공문 발송 및 보고 금지</strong></div>
-        <div class="cite">
-          예외: <strong>긴급 사안</strong>(재해·재난·현안사업 등 보고기일이 시급한 경우) 또는 <strong>공문게시</strong>인 경우<br><br>
-          ⚠️ 긴급하지 않은 공문에 <strong>[긴급]을 붙여 수요일 발송</strong>하는 사례가 지적 대상입니다.
+          </div>
+          <div class="cite" style="margin-top:.75rem;">💡 복합 성격은 <strong>[인사/제출]</strong>처럼 병기할 수 있습니다.</div>
         </div>
       </div>
     </div>
 
-    <div class="rule-card" id="rc-pubpost">
-      <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">공문게시제</span> 단순 안내는 공문 대신 게시판 활용</div>
-        <span class="rc-chevron">›</span>
-      </div>
-      <div class="rule-card-body">
-        <div class="cite blue">K-에듀파인 <strong>공문게시판</strong>에 게시하면 학교는 별도 접수 절차 없이 열람 가능 — 학교 행정 부담 경감</div>
-        <div class="compare">
-          <div class="cbox bad"><span class="cbox-lbl">❌ 공문게시 대상인데 공문 발송</span><code>학교 신입생 모집 홍보
-문화예술행사 안내
-전화번호 변경 안내
-자료(리플렛) 배부 등</code></div>
-          <div class="cbox good"><span class="cbox-lbl">✅ 공문게시 대상 → 게시판으로</span><code>단순 알림, 홍보, 행사,
-모집, 공지, 단순지시 등
-→ 공문게시 지정</code></div>
+    <!-- 날짜·시간 -->
+    <div class="rule-section" id="rt-date">
+      <div class="rule-card open" id="rc-date">
+        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
+          <div class="rule-card-title"><span class="rc-badge">날짜·시간</span> 날짜·시간 표기법</div>
+          <span class="rc-chevron">›</span>
         </div>
-        <div class="cite red">공문 게시 <strong>불가</strong>: 중요 보고문서 / 주요사항 안내 / <strong>개인정보 포함 문서</strong></div>
-      </div>
-    </div>
-
-    <div class="step-nav">
-      <button class="btn btn-out" onclick="goStep(1)">← 공문 지도</button>
-      <button class="btn btn-gold" onclick="goStep(3)">다음: 본문 쓰기 →</button>
-    </div>
-  </div>
-
-  <!-- STEP 3: 본문 쓰기 -->
-  <div class="step-view" id="sv3">
-    <div class="step-hero sh3">
-      <div class="hero-num">3</div>
-      <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 3</div>
-      <h2>본문 쓰기</h2>
-      <p>날짜·숫자·항목 기호·맞춤법 — 본문에서 자주 틀리는 4가지를 집중적으로 확인합니다.</p>
-    </div>
-
-    <div class="rule-card open" id="rc-date">
-      <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">날짜</span> 날짜·시간 표기법</div>
-        <span class="rc-chevron">›</span>
-      </div>
-      <div class="rule-card-body">
-        <div class="compare">
-          <div class="cbox bad"><span class="cbox-lbl">❌ 잘못된 예</span><code>2025년 09월 06일 (화)
+        <div class="rule-card-body">
+          <div class="compare">
+            <div class="cbox bad"><span class="cbox-lbl">❌ 잘못된 예</span><code>2025년 09월 06일 (화)
 2025.09.06
 오후 4시 14분
 오전 7시 9분
 5. 1 ~ 6. 31
 2025. 1월~3월</code></div>
-          <div class="cbox good"><span class="cbox-lbl">✅ 올바른 예</span><code>2025. 9. 6.(화)
+            <div class="cbox good"><span class="cbox-lbl">✅ 올바른 예</span><code>2025. 9. 6.(화)
 2025. 9. 6.
 16:14  ← 24시각제
 07:09  ← 0 붙이기
 5. 1.∼6. 31.
 2025. 1.∼2025. 3.</code></div>
-        </div>
-        <div class="cite">
-          <strong>날짜:</strong> 연·월·일 글자 대신 마침표 / 월·일 앞 <strong>0 생략</strong><br>
-          <strong>시간:</strong> 24시각제, 쌍점(:) 구분, 한 자리 시간도 앞에 0<br>
-          <strong>기간:</strong> 물결표 <strong>∼ (앞뒤 붙임)</strong> / 키보드 ~ ❌ 문자표 ∼ ✅
+          </div>
+          <div class="cite">
+            <strong>날짜:</strong> 연·월·일 글자 대신 마침표 / 월·일 앞 <strong>0 생략</strong><br>
+            <strong>시간:</strong> 24시각제, 쌍점(:) 구분, 한 자리 시간도 앞에 0<br>
+            <strong>기간:</strong> 물결표 <strong>∼ (앞뒤 붙임)</strong> / 키보드 ~ ❌ 문자표 ∼ ✅
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="rule-card" id="rc-num">
-      <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">숫자·금액</span> 금액·수량 표기법</div>
-        <span class="rc-chevron">›</span>
-      </div>
-      <div class="rule-card-body">
-        <div class="compare">
-          <div class="cbox bad"><span class="cbox-lbl">❌ 잘못된 예</span><code>345천원
+    <!-- 숫자·금액 -->
+    <div class="rule-section" id="rt-num">
+      <div class="rule-card open" id="rc-num">
+        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
+          <div class="rule-card-title"><span class="rc-badge">숫자·금액</span> 금액·수량 표기법</div>
+          <span class="rc-chevron">›</span>
+        </div>
+        <div class="rule-card-body">
+          <div class="compare">
+            <div class="cbox bad"><span class="cbox-lbl">❌ 잘못된 예</span><code>345천원
 296억원 (단위 붙이기)
 ￦13,560원(금만삼천…)</code></div>
-          <div class="cbox good"><span class="cbox-lbl">✅ 올바른 예</span><code>345,000원 / 34만 5천 원
+            <div class="cbox good"><span class="cbox-lbl">✅ 올바른 예</span><code>345,000원 / 34만 5천 원
 296억 원 (단위 띄우기)
 금13,560원(금일만삼천오백육십원)</code></div>
+          </div>
+          <div class="cite">"천 원" 단위는 혼동 유발 → 일반 숫자 표기.<br>단위 명사(<strong>억, 원, 명</strong> 등)는 숫자와 <strong>띄어</strong> 씁니다.</div>
         </div>
-        <div class="cite">"천 원" 단위는 혼동 유발 → 일반 숫자 표기. <br>단위 명사(<strong>억, 원, 명</strong> 등)는 숫자와 <strong>띄어</strong> 씁니다.</div>
       </div>
     </div>
 
-    <div class="rule-card" id="rc-items">
-      <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">항목 기호</span> 항목 기호 순서와 위치</div>
-        <span class="rc-chevron">›</span>
-      </div>
-      <div class="rule-card-body">
-        <div class="cite"><strong>8단계 순서:</strong> 1. → 가. → 1) → 가) → (1) → (가) → ① → ㉮<br>⚠️ 항목이 <strong>하나뿐</strong>이면 기호를 붙이지 않습니다.</div>
-        <div style="background:var(--cream);border-radius:8px;padding:1rem 1.25rem;font-size:.83rem;line-height:2.2;margin:.6rem 0;">
-          <div>1. 첫째 항목</div>
-          <div style="margin-left:1.5em;">가. 둘째 항목</div>
-          <div style="margin-left:3em;">1) 셋째 항목</div>
-          <div style="margin-left:4.5em;">가) 넷째 항목</div>
+    <!-- 항목 기호 -->
+    <div class="rule-section" id="rt-items">
+      <div class="rule-card open" id="rc-items">
+        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
+          <div class="rule-card-title"><span class="rc-badge">항목 기호</span> 항목 기호 순서와 위치</div>
+          <span class="rc-chevron">›</span>
         </div>
-        <div class="cite">• 첫째 항목: <strong>왼쪽 기본선</strong>에서 시작<br>• 둘째 항목부터: 위 항목에서 <strong>오른쪽 2타</strong>씩 이동<br>• 항목기호와 내용 사이: <strong>1타</strong> 띄우기</div>
+        <div class="rule-card-body">
+          <div class="cite"><strong>8단계 순서:</strong> 1. → 가. → 1) → 가) → (1) → (가) → ① → ㉮<br>⚠️ 항목이 <strong>하나뿐</strong>이면 기호를 붙이지 않습니다.</div>
+          <div style="background:var(--cream);border-radius:8px;padding:1rem 1.25rem;font-size:.83rem;line-height:2.2;margin:.6rem 0;">
+            <div>1. 첫째 항목</div>
+            <div style="margin-left:1.5em;">가. 둘째 항목</div>
+            <div style="margin-left:3em;">1) 셋째 항목</div>
+            <div style="margin-left:4.5em;">가) 넷째 항목</div>
+          </div>
+          <div class="cite">• 첫째 항목: <strong>왼쪽 기본선</strong>에서 시작<br>• 둘째 항목부터: 위 항목에서 <strong>오른쪽 2타</strong>씩 이동<br>• 항목기호와 내용 사이: <strong>1타</strong> 띄우기</div>
+        </div>
       </div>
     </div>
 
-    <div class="rule-card" id="rc-spell">
-      <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">맞춤법</span> 자주 틀리는 표현</div>
-        <span class="rc-chevron">›</span>
-      </div>
-      <div class="rule-card-body">
-        <div class="compare">
-          <div class="cbox bad"><span class="cbox-lbl">❌ 틀린 표기</span><code>그 동안 / 첫 해 / 이 날
+    <!-- 맞춤법 -->
+    <div class="rule-section" id="rt-spell">
+      <div class="rule-card open" id="rc-spell">
+        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
+          <div class="rule-card-title"><span class="rc-badge">맞춤법</span> 자주 틀리는 표현</div>
+          <span class="rc-chevron">›</span>
+        </div>
+        <div class="rule-card-body">
+          <div class="compare">
+            <div class="cbox bad"><span class="cbox-lbl">❌ 틀린 표기</span><code>그 동안 / 첫 해 / 이 날
 수 차례 / 방과후 / 안됩니다
 두가지 / 귀 교 / 향후
 금일 / 의거하여 / 홍길동씨
 교육부장관 / 융복합</code></div>
-          <div class="cbox good"><span class="cbox-lbl">✅ 올바른 표기</span><code>그동안 / 첫해 / 이날
+            <div class="cbox good"><span class="cbox-lbl">✅ 올바른 표기</span><code>그동안 / 첫해 / 이날
 수차례 / 방과 후 / 안 됩니다
 두 가지 / 귀교 / 앞으로
 오늘 / 따라 / 홍길동 씨
 교육부 장관 / 융·복합</code></div>
+          </div>
+          <div class="rule-card" id="rc-terms" style="margin-top:1rem;">
+            <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
+              <div class="rule-card-title"><span class="rc-badge">용어</span> 헷갈리는 용어</div>
+              <span class="rc-chevron">›</span>
+            </div>
+            <div class="rule-card-body">
+              <div class="cite">
+                <strong>이상/이하</strong> — 기준 숫자 <strong>포함</strong><br>
+                <strong>초과/미만</strong> — 기준 숫자 <strong>미포함</strong><br>
+                <strong>이전/이후</strong> — 기준 일시 <strong>포함</strong><br>
+                <strong>전/후</strong> — 기준 일시 <strong>미포함</strong><br>
+                <strong>○○ 외 10명</strong> — 총 <strong>11명</strong> (○○ 포함)
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="rule-card" id="rc-punct">
-      <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">문장 부호</span> 쌍점·낫표·가운뎃점</div>
-        <span class="rc-chevron">›</span>
-      </div>
-      <div class="rule-card-body">
-        <div class="compare">
-          <div class="cbox bad"><span class="cbox-lbl">❌ 잘못된 예</span><code>원장 : 김갑동 (앞 띄움)
+    <!-- 문장 부호 -->
+    <div class="rule-section" id="rt-punct">
+      <div class="rule-card open" id="rc-punct">
+        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
+          <div class="rule-card-title"><span class="rc-badge">문장 부호</span> 쌍점·낫표·가운뎃점</div>
+          <span class="rc-chevron">›</span>
+        </div>
+        <div class="rule-card-body">
+          <div class="compare">
+            <div class="cbox bad"><span class="cbox-lbl">❌ 잘못된 예</span><code>원장 : 김갑동 (앞 띄움)
 붙임: 2025년 계획서
 "초중등교육법"에 따라
 15:00 ~ 17:00 (물결 앞뒤 띄움)
 장·차관 / 시·도 (한 단어에 점)</code></div>
-          <div class="cbox good"><span class="cbox-lbl">✅ 올바른 예</span><code>원장: 김갑동 (앞 붙이고 뒤 1칸)
+            <div class="cbox good"><span class="cbox-lbl">✅ 올바른 예</span><code>원장: 김갑동 (앞 붙이고 뒤 1칸)
 붙임  2025년 계획서 (쌍점 없이)
 「초·중등교육법」에 따라
 15:00∼17:00 (물결 앞뒤 붙임)
 장차관 / 시도 (사전 등재 단어)</code></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="rule-card" id="rc-terms">
-      <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">용어</span> 헷갈리는 용어</div>
-        <span class="rc-chevron">›</span>
-      </div>
-      <div class="rule-card-body">
-        <div class="cite">
-          <strong>이상/이하</strong> — 기준 숫자 <strong>포함</strong> (예: 5명 이상 = 5명부터)<br>
-          <strong>초과/미만</strong> — 기준 숫자 <strong>미포함</strong> (예: 5명 초과 = 6명부터)<br>
-          <strong>이전/이후</strong> — 기준 일시 <strong>포함</strong> (예: 3월 31일 이전 = 3월 31일 포함)<br>
-          <strong>전/후</strong> — 기준 일시 <strong>미포함</strong><br>
-          <strong>○○ 외 10명</strong> — 총 <strong>11명</strong> (○○ 포함)
+    <!-- 붙임·끝 -->
+    <div class="rule-section" id="rt-attach">
+      <div class="rule-card open" id="rc-attach">
+        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
+          <div class="rule-card-title"><span class="rc-badge">붙임·끝</span> 붙임 표기와 '끝' 위치</div>
+          <span class="rc-chevron">›</span>
         </div>
-      </div>
-    </div>
-
-    <div class="rule-card" id="rc-attach">
-      <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">붙임·끝</span> 붙임 표기와 '끝' 위치</div>
-        <span class="rc-chevron">›</span>
-      </div>
-      <div class="rule-card-body">
-        <div class="compare">
-          <div class="cbox bad"><span class="cbox-lbl">❌ 잘못된 예</span><code>붙임: 계획서 1부.
+        <div class="rule-card-body">
+          <div class="compare">
+            <div class="cbox bad"><span class="cbox-lbl">❌ 잘못된 예</span><code>붙임: 계획서 1부.
 끝 (마침표 없음)</code></div>
-          <div class="cbox good"><span class="cbox-lbl">✅ 올바른 예 (1개)</span><code>붙임  계획서 1부.  끝.</code></div>
+            <div class="cbox good"><span class="cbox-lbl">✅ 올바른 예 (1개)</span><div style="font-family:'Noto Sans KR',sans-serif;font-size:.85rem;padding:.4rem .2rem;display:flex;align-items:baseline;">붙임<span class="ann-vmark">∨∨</span>계획서 1부.<span class="ann-vmark">∨∨</span>끝.</div></div>
+          </div>
+          <div class="cbox good" style="margin-top:.6rem;">
+            <span class="cbox-lbl">✅ 올바른 예 (2개↑)</span>
+            <div style="font-family:'Noto Sans KR',sans-serif;font-size:.85rem;padding:.4rem .2rem;">
+              <div style="display:inline-flex;align-items:baseline;">붙임<span class="ann-vmark">∨∨</span><span class="attach-list"><span class="attach-item"><span class="attach-num">1.</span><span class="ann-vmark-h">∨</span><span>계획서 1부.</span></span><span class="attach-item"><span class="attach-num">2.</span><span class="ann-vmark-h">∨</span><span>서류 1부.<span class="ann-vmark">∨∨</span>끝.</span></span></span></div>
+            </div>
+          </div>
+          <div class="cite" style="margin-top:.65rem;">붙임 <strong>10쪽 이상</strong>: 반드시 [요약] 별도 첨부<br>본문이 표로 끝날 때: 표 아래 왼쪽에서 2타 후 "끝."</div>
         </div>
-        <div class="cbox good" style="margin-top:.6rem;"><span class="cbox-lbl">✅ 올바른 예 (2개↑)</span><code>붙임  1. 계획서 1부.
-     2. 서류 1부.  끝.</code></div>
-        <div class="cite" style="margin-top:.65rem;">붙임 <strong>10쪽 이상</strong>: 반드시 [요약] 별도 첨부<br>본문이 표로 끝날 때: 표 아래 왼쪽에서 2타 후 "끝."</div>
       </div>
     </div>
 
     <div class="step-nav">
-      <button class="btn btn-out" onclick="goStep(2)">← 제목 짓기</button>
+      <button class="btn btn-out" onclick="goStep(1)">← 공문 살펴보기</button>
       <button class="btn btn-gold" onclick="goStep(4)">다음: 결재 올리기 →</button>
     </div>
   </div>
@@ -1289,47 +1269,6 @@ body.ann-off #ann-panel { display: none !important; }
       <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 4</div>
       <h2>결재 올리기</h2>
       <p>내가 기안자일 때 어떤 결재 방식이 적용되는지, 서명란에 뭘 써야 하는지 알 수 있습니다.</p>
-    </div>
-
-    <div class="rule-card open" id="rc-apv">
-      <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">결재</span> 결재 vs 전결 vs 대결 — 한눈에 비교</div>
-        <span class="rc-chevron">›</span>
-      </div>
-      <div class="rule-card-body">
-        <div class="cite">
-          <strong>결재</strong>: 기관장이 <strong>직접</strong> 의사를 결정. 결재란에 서명 날짜 함께 표시.<br>
-          <strong>전결</strong>: 기관장이 <strong>위임한 자</strong>가 결재. 서명란에 "전결" 표시 후 서명.<br>
-          <strong>대결</strong>: 결재권자 <strong>부재 시</strong> 직무대리자가 결재. "대결" 표시 후 서명. 중요 문서는 사후 보고 필수.
-        </div>
-
-        <div style="font-size:.8rem;font-weight:700;color:var(--ink2);margin:.75rem 0 .3rem;">① 결재 (기관장 직접)</div>
-        <div class="apv-box">
-          <div class="apv-cell"><div class="apv-cell-top">★주무관</div><div class="apv-cell-name">홍길동</div><div class="apv-cell-date"></div></div>
-          <div class="apv-cell"><div class="apv-cell-top">○○담당</div><div class="apv-cell-name">김담당</div><div class="apv-cell-date"></div></div>
-          <div class="apv-cell"><div class="apv-cell-top">○○과장</div><div class="apv-cell-name">이과장</div><div class="apv-cell-date"></div></div>
-          <div class="apv-cell"><div class="apv-cell-top">○○국장</div><div class="apv-cell-name">박국장</div><div class="apv-cell-date"></div></div>
-          <div class="apv-cell"><div class="apv-cell-top">교육감</div><div class="apv-cell-name">임교육</div><div class="apv-cell-date">2025. 1. 30.</div></div>
-        </div>
-
-        <div style="font-size:.8rem;font-weight:700;color:var(--ink2);margin:.75rem 0 .3rem;">② 전결 (국장에게 위임된 경우)</div>
-        <div class="apv-box">
-          <div class="apv-cell"><div class="apv-cell-top">★주무관</div><div class="apv-cell-name">홍길동</div><div class="apv-cell-date"></div></div>
-          <div class="apv-cell"><div class="apv-cell-top">○○담당</div><div class="apv-cell-name">김담당</div><div class="apv-cell-date"></div></div>
-          <div class="apv-cell"><div class="apv-cell-top">○○과장</div><div class="apv-cell-name">이과장</div><div class="apv-cell-date"></div></div>
-          <div class="apv-cell apv-jeonjul"><div class="apv-cell-top">○○국장 🔑전결</div><div class="apv-cell-name">박국장</div><div class="apv-cell-date">2025. 1. 30.</div></div>
-        </div>
-
-        <div style="font-size:.8rem;font-weight:700;color:var(--ink2);margin:.75rem 0 .3rem;">③ 대결 (교육감 부재 시)</div>
-        <div class="apv-box">
-          <div class="apv-cell"><div class="apv-cell-top">★주무관</div><div class="apv-cell-name">홍길동</div><div class="apv-cell-date"></div></div>
-          <div class="apv-cell"><div class="apv-cell-top">○○담당</div><div class="apv-cell-name">김담당</div><div class="apv-cell-date"></div></div>
-          <div class="apv-cell"><div class="apv-cell-top">○○과장</div><div class="apv-cell-name">이과장</div><div class="apv-cell-date"></div></div>
-          <div class="apv-cell"><div class="apv-cell-top">○○국장</div><div class="apv-cell-name">박국장</div><div class="apv-cell-date"></div></div>
-          <div class="apv-cell apv-daegyul"><div class="apv-cell-top">교육감 ✋대결</div><div class="apv-cell-name">이순신</div><div class="apv-cell-date">2025. 1. 30.</div></div>
-        </div>
-        <div class="cite">📌 위임전결 사항을 대결하는 경우: 전결권자 서명란 <strong>"전결"</strong> + 대결자 서명란 <strong>"대결"</strong> 동시 표시</div>
-      </div>
     </div>
 
     <div class="rule-card" id="rc-review">
@@ -1374,60 +1313,15 @@ body.ann-off #ann-panel { display: none !important; }
 
     <div class="step-nav">
       <button class="btn btn-out" onclick="goStep(3)">← 본문 쓰기</button>
-      <button class="btn btn-gold" onclick="goStep(5)">다음: 발송 전 점검 →</button>
+      <button class="btn btn-ink" onclick="showView('quiz')">📝 퀴즈로 실력 확인</button>
     </div>
   </div>
+</div><!-- /view-workflow -->
 
-  <!-- STEP 5: 체크리스트 -->
-  <div class="step-view" id="sv5">
-    <div class="step-hero sh5">
-      <div class="hero-num">5</div>
-      <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 5</div>
-      <h2>발송 전 최종 점검</h2>
-      <p>클릭으로 체크하세요. 완료 상태는 브라우저에 저장됩니다.</p>
-    </div>
-
-    <div class="cl-bar">
-      <span class="cl-count" id="cl-count">0 / 17</span>
-      <div class="cl-bar-track"><div class="cl-bar-fill" id="cl-fill" style="width:0%"></div></div>
-      <button class="cl-reset" onclick="clReset()">초기화</button>
-    </div>
-
-    <div class="cl-section-label">📅 날짜·시간</div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl0"><div class="cl-box">✓</div><div><strong>날짜 표기</strong> — 0 제거, 마침표 사용 <code style="font-size:.82rem;background:#f4f4f8;padding:1px 5px;border-radius:4px;">2025. 9. 6.(화)</code></div></div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl1"><div class="cl-box">✓</div><div><strong>시간 표기</strong> — 24시각제, 쌍점 사용 <code style="font-size:.82rem;background:#f4f4f8;padding:1px 5px;border-radius:4px;">09:00∼17:00</code></div></div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl2"><div class="cl-box">✓</div><div><strong>물결표 사용</strong> — 키보드 ~ ❌ → 문자표 ∼ ✅ (앞뒤 붙여쓰기)</div></div>
-
-    <div class="cl-section-label" style="margin-top:.75rem;">📄 제목·수신</div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl3"><div class="cl-box">✓</div><div><strong>공문 성격 표시</strong> — 제목 앞에 [협조][제출][안내][긴급] 등 표기</div></div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl4"><div class="cl-box">✓</div><div><strong>수신자 표기</strong> — <code style="font-size:.82rem;background:#f4f4f8;padding:1px 5px;border-radius:4px;">○○초등학교(교장)</code> 형태</div></div>
-
-    <div class="cl-section-label" style="margin-top:.75rem;">📝 본문 내용</div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl5"><div class="cl-box">✓</div><div><strong>핵심내용 명시</strong> — 일시·대상·장소·제출방법·기한 모두 포함</div></div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl6"><div class="cl-box">✓</div><div><strong>항목 기호 순서</strong> — 1.→가.→1)→가) / 항목 하나면 기호 없이</div></div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl7"><div class="cl-box">✓</div><div><strong>법령명 낫표</strong> — <code style="font-size:.82rem;background:#f4f4f8;padding:1px 5px;border-radius:4px;">「초·중등교육법」</code></div></div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl8"><div class="cl-box">✓</div><div><strong>금액 단위</strong> — '345천원' ❌ → '345,000원' ✅</div></div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl9"><div class="cl-box">✓</div><div><strong>용어 순화</strong> — 향후→앞으로 / 금일→오늘 / 의거→따라</div></div>
-
-    <div class="cl-section-label" style="margin-top:.75rem;">📎 붙임·끝·발신</div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl10"><div class="cl-box">✓</div><div><strong>붙임 쌍점 제거</strong> — '붙임:' ❌ → '붙임  ○○' ✅</div></div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl11"><div class="cl-box">✓</div><div><strong>'끝' 표시</strong> — 붙임 다음 2타 띄우고 '끝.' 표기</div></div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl12"><div class="cl-box">✓</div><div><strong>붙임 파일명 일치</strong> — 본문 언급 파일명 = 실제 첨부 파일명</div></div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl13"><div class="cl-box">✓</div><div><strong>붙임 분량</strong> — 본문 2쪽 이내, 붙임 10쪽 이내 / 초과 시 [요약] 첨부</div></div>
-
-    <div class="cl-section-label" style="margin-top:.75rem;">🏷️ 발송 기준</div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl14"><div class="cl-box">✓</div><div><strong>수신처 적정성</strong> — 반드시 필요한 기관에만 / 파급 범위 본문 하단 명시</div></div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl15"><div class="cl-box">✓</div><div><strong>제출 기한</strong> — 5일 이상(휴일 제외) 확보 / 수요일 불필요한 [긴급] 없음</div></div>
-    <div class="cl-item" onclick="clToggle(this)" data-key="cl16"><div class="cl-box">✓</div><div><strong>해당 없을 시 문구</strong> — "보고생략" 또는 "해당사항 없음으로 간주" 기재</div></div>
-
-    <div class="step-nav">
-      <button class="btn btn-out" onclick="goStep(4)">← 결재 올리기</button>
-      <button class="btn btn-gold" onclick="goStep(6)">다음: 회의록 작성 →</button>
-    </div>
-  </div>
-
-  <!-- STEP 6: 회의록 작성 -->
-  <div class="step-view" id="sv6">
+<!-- ══════ 회의록 뷰 ══════ -->
+<div class="view" id="view-minutes">
+<!-- STEP 6: 회의록 작성 -->
+  <div class="step-view on" id="sv6">
     <div class="step-hero sh3">
       <div class="hero-num">6</div>
       <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 6</div>
@@ -1661,8 +1555,7 @@ body.ann-off #ann-panel { display: none !important; }
       <button class="btn btn-ink" onclick="showView('quiz')">📝 퀴즈로 실력 확인</button>
     </div>
   </div>
-
-</div><!-- /view-workflow -->
+</div><!-- /view-minutes -->
 
 <!-- ══════ 퀴즈 뷰 ══════ -->
 <div class="view" id="view-quiz">
@@ -2456,6 +2349,16 @@ function goHome() {
   showView('workflow');
   goStep(1);
   window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+
+// ── 작성 규칙 소탭 ──
+function showRuleTab(id, btn) {
+  document.querySelectorAll('.rule-section').forEach(el => el.classList.remove('on'));
+  document.querySelectorAll('.rule-tab').forEach(b => b.classList.remove('on'));
+  const sec = document.getElementById(id);
+  if (sec) sec.classList.add('on');
+  if (btn) btn.classList.add('on');
 }
 
 // ── 초기화 ──
