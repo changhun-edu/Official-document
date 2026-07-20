@@ -9,6 +9,8 @@
 <style>
 /* ── 토큰 ── */
 :root {
+  --max-w: 1100px;
+  --side-pad: 2rem;
   --ink:    #16213a;
   --ink2:   #2d3f6b;
   --gold:   #d4960a;
@@ -34,10 +36,15 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--cream); color:
 nav {
   position: sticky; top: 0; z-index: 200;
   background: var(--ink);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 1.5rem;
   height: 56px;
   box-shadow: 0 2px 16px rgba(0,0,0,.35);
+}
+.nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--side-pad);
+  height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
 }
 .nav-logo {
   display: flex; align-items: center; gap: .6rem;
@@ -73,7 +80,7 @@ nav {
 
 /* ── 검색 결과 드롭다운 ── */
 #search-results {
-  position: absolute; top: 56px; right: 1.5rem;
+  position: absolute; top: 56px; right: 0;
   background: var(--paper); border: 1px solid var(--line);
   border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,.15);
   width: 320px; max-height: 320px; overflow-y: auto;
@@ -99,8 +106,13 @@ nav {
 .steps-bar {
   background: var(--paper);
   border-bottom: 1px solid var(--line);
-  padding: .75rem 2rem;
-  display: flex; gap: 0; overflow-x: auto;
+  overflow-x: auto;
+}
+.steps-bar-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: .75rem var(--side-pad);
+  display: flex; gap: 0;
 }
 .steps-bar::-webkit-scrollbar { display: none; }
 .step-btn {
@@ -128,7 +140,7 @@ nav {
 .step-btn.on .step-dot { background: var(--gold); color: var(--ink); }
 
 /* 스텝 콘텐츠 */
-.step-view { display: none; padding: 2rem; max-width: 1100px; margin: 0 auto; }
+.step-view { display: none; padding: 2rem var(--side-pad); max-width: var(--max-w); margin: 0 auto; }
 .step-view.on { display: block; }
 
 .step-hero {
@@ -332,7 +344,7 @@ nav {
 .btn:disabled { opacity: .35; cursor: default; }
 
 /* ══════════ 퀴즈 탭 ══════════ */
-.quiz-wrap { max-width: 720px; margin: 0 auto; padding: 2rem; }
+.quiz-wrap { max-width: var(--max-w); margin: 0 auto; padding: 2rem var(--side-pad); }
 .quiz-filter-bar {
   display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.5rem;
   padding: .75rem 1rem; background: var(--paper); border: 1px solid var(--line);
@@ -414,12 +426,11 @@ nav {
   .dm-zone.active { background: rgba(212,150,10,.22) !important; }
 
   /* steps-bar: 모바일에서 세로 2열 그리드 */
-  .steps-bar {
+  .steps-bar-inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: .4rem;
     padding: .6rem .8rem;
-    overflow-x: unset;
   }
   .step-btn { font-size: .78rem; padding: .45rem .6rem; border-radius: 7px; border: 1.5px solid var(--line); }
   .step-btn.on { background: var(--ink); color: #fff; border-color: var(--ink); }
@@ -726,7 +737,7 @@ body.ann-off #ann-panel { display: none !important; }
 /* 붙임 번호 정렬 */
 .attach-list { display: flex; flex-direction: column; gap: 0; }
 .attach-item { display: flex; align-items: baseline; }
-.attach-num  { flex-shrink: 0; min-width: 1.8em; }
+.attach-num  { flex-shrink: 0; }
 
 
 /* 빈 줄 표시 */
@@ -764,7 +775,8 @@ body.ann-off #ann-panel { display: none !important; }
 
 <!-- ── 상단 탐색 ── -->
 <nav>
-  <div class="nav-logo">
+  <div class="nav-inner">
+  <div class="nav-logo" onclick="goHome()" style="cursor:pointer;">
     <div class="seal">관</div>
     공문서 작성 가이드
   </div>
@@ -779,12 +791,14 @@ body.ann-off #ann-panel { display: none !important; }
     </div>
     <div id="search-results"></div>
   </div>
+  </div><!-- /nav-inner -->
 </nav>
 
 <!-- ══════ 워크플로우 뷰 ══════ -->
 <div class="view on" id="view-workflow">
   <div id="steps-hint" style="display:none;text-align:center;font-size:.72rem;color:var(--muted);padding:.3rem;background:var(--paper);">← 단계를 탭해 이동하세요 →</div>
   <div class="steps-bar">
+  <div class="steps-bar-inner">
     <button class="step-btn on" onclick="goStep(1)">
       <span class="step-dot">1</span> 공문 지도 읽기
     </button>
@@ -803,6 +817,7 @@ body.ann-off #ann-panel { display: none !important; }
     <button class="step-btn" onclick="goStep(6)">
       <span class="step-dot">6</span> 회의록 작성
     </button>
+  </div><!-- /steps-bar-inner -->
   </div>
 
   <!-- STEP 1: 주석 달린 공문 전체 보기 -->
@@ -861,7 +876,7 @@ body.ann-off #ann-panel { display: none !important; }
             </div>
               <div class="blank-line"><span class="blank-line-icon">↵</span><span class="blank-line-rule">빈 줄</span></div>
             <div class="ann-attach" style="margin-top:.4rem;">
-              <div style="display:inline-flex;align-items:baseline;gap:0;">붙임<span class="ann-vmark">∨∨</span><span class="attach-list"><span class="attach-item"><span class="attach-num">1.</span><span>현장체험학습 계획서 1부.</span></span><span class="attach-item"><span class="attach-num">2.</span><span>현장체험학습 동의서 1부.<span class="ann-vmark">∨∨</span>끝.</span></span></span></div>
+              <div style="display:inline-flex;align-items:baseline;gap:0;">붙임<span class="ann-vmark">∨∨</span><span class="attach-list"><span class="attach-item"><span class="attach-num">1.</span><span class="ann-vmark-h">∨</span><span>현장체험학습 계획서 1부.</span></span><span class="attach-item"><span class="attach-num">2.</span><span class="ann-vmark-h">∨</span><span>현장체험학습 동의서 1부.<span class="ann-vmark">∨∨</span>끝.</span></span></span></div>
               <div style="margin-top:.4rem;padding-top:.4rem;border-top:1px dashed #d4b84a;opacity:.6;"></div>
               <div style="margin-top:.4rem;"><span class="ann-hotspot" data-ann="s0-attach" onclick="openAnn('s0-attach')">붙임<span class="ann-vmark">∨∨</span>현장체험학습 계획서 1부.<span class="ann-badge">⑥</span></span><span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s0-end" onclick="openAnn('s0-end')">끝.<span class="ann-badge">⑦</span></span></div>
             </div>
@@ -904,7 +919,7 @@ body.ann-off #ann-panel { display: none !important; }
             </div>
               <div class="blank-line"><span class="blank-line-icon">↵</span><span class="blank-line-rule">빈 줄</span></div>
             <div class="ann-attach" style="margin-top:.4rem;">
-              <div style="display:inline-flex;align-items:baseline;gap:0;"><span class="ann-hotspot" data-ann="s1-attach" onclick="openAnn('s1-attach')" style="display:contents;">붙임<span class="ann-vmark">∨∨</span><span class="attach-list"><span class="attach-item"><span class="attach-num">1.</span><span>교육 실시 사진 1부.</span></span><span class="attach-item"><span class="attach-num">2.</span><span>교육 일지 1부.<span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s1-end" onclick="openAnn('s1-end')">끝.<span class="ann-badge">⑧</span></span></span></span></span><span class="ann-badge">⑦</span></span></div>
+              <div style="display:inline-flex;align-items:baseline;gap:0;"><span class="ann-hotspot" data-ann="s1-attach" onclick="openAnn('s1-attach')" style="display:contents;">붙임<span class="ann-vmark">∨∨</span><span class="attach-list"><span class="attach-item"><span class="attach-num">1.</span><span class="ann-vmark-h">∨</span><span>교육 실시 사진 1부.</span></span><span class="attach-item"><span class="attach-num">2.</span><span class="ann-vmark-h">∨</span><span>교육 일지 1부.<span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s1-end" onclick="openAnn('s1-end')">끝.<span class="ann-badge">⑧</span></span></span></span></span><span class="ann-badge">⑦</span></span></div>
             </div>
             <div style="margin-top:1.1rem;font-size:.72rem;color:var(--muted);">수신자&nbsp;&nbsp;○○교육장</div>
           </div>
@@ -948,7 +963,7 @@ body.ann-off #ann-panel { display: none !important; }
             </div>
               <div class="blank-line"><span class="blank-line-icon">↵</span><span class="blank-line-rule">빈 줄</span></div>
             <div class="ann-attach" style="margin-top:.4rem;">
-              <div style="display:inline-flex;align-items:baseline;gap:0;"><span class="ann-hotspot" data-ann="s2-attach" onclick="openAnn('s2-attach')" style="display:contents;">붙임<span class="ann-vmark">∨∨</span><span class="attach-list"><span class="attach-item"><span class="attach-num">1.</span><span>가정통신문 초안 1부.</span></span><span class="attach-item"><span class="attach-num">2.</span><span>가정통신문 배부 계획 1부.<span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s2-end" onclick="openAnn('s2-end')">끝.<span class="ann-badge">⑥</span></span></span></span></span><span class="ann-badge">⑤</span></span></div>
+              <div style="display:inline-flex;align-items:baseline;gap:0;"><span class="ann-hotspot" data-ann="s2-attach" onclick="openAnn('s2-attach')" style="display:contents;">붙임<span class="ann-vmark">∨∨</span><span class="attach-list"><span class="attach-item"><span class="attach-num">1.</span><span class="ann-vmark-h">∨</span><span>가정통신문 초안 1부.</span></span><span class="attach-item"><span class="attach-num">2.</span><span class="ann-vmark-h">∨</span><span>가정통신문 배부 계획 1부.<span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s2-end" onclick="openAnn('s2-end')">끝.<span class="ann-badge">⑥</span></span></span></span></span><span class="ann-badge">⑤</span></span></div>
               <div style="margin-top:.4rem;padding-top:.4rem;border-top:1px dashed #d4b84a;opacity:.6;"></div>
               <div style="margin-top:.4rem;">붙임<span class="ann-vmark">∨∨</span>가정통신문 초안 1부.<span class="ann-vmark">∨∨</span>끝.</div>
             </div>
@@ -2435,6 +2450,12 @@ function csAnswer(btn, ans) {
   const ansEl = item.querySelector('.cs-ans');
   ansEl.textContent = CS_ANSWERS[idx][ans];
   ansEl.style.display = 'block';
+}
+
+function goHome() {
+  showView('workflow');
+  goStep(1);
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 // ── 초기화 ──
