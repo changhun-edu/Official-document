@@ -1022,6 +1022,49 @@ body.ann-off #ann-panel { display: none !important; }
   .ec-tab-num { width: 22px; height: 22px; }
 }
 
+/* ── 들여쓰기 정렬선 시각화 ── */
+.indent-demo {
+  font-family: 'Noto Serif KR', serif;
+  font-size: .82rem; line-height: 2;
+  padding: .6rem .75rem; border-radius: 7px;
+  background: #1a1f2e;
+  color: #d8dde8;
+}
+.indent-line {
+  display: flex; align-items: baseline;
+  white-space: pre;
+}
+.indent-num {
+  flex-shrink: 0; color: #a0b0d0; font-weight: 700;
+}
+.indent-bar {
+  display: inline-block;
+  width: 2px; align-self: stretch;
+  background: #4a9eff; opacity: .7;
+  margin: 0 1px; flex-shrink: 0;
+}
+.indent-bar.wrong { background: #ff6060; }
+.indent-content { color: #e8eef8; }
+.indent-arrow {
+  color: #ff6060; font-size: .72rem; margin-left: .4rem;
+  font-family: 'Noto Sans KR', sans-serif; font-weight: 700;
+  white-space: nowrap;
+}
+.indent-arrow.ok { color: #4a9eff; }
+.indent-pad {
+  display: inline-block; flex-shrink: 0;
+}
+.indent-gap {
+  display: inline-block;
+  background: rgba(255,100,100,.25);
+  border-bottom: 2px solid #ff6060;
+  min-width: 1em; flex-shrink: 0;
+}
+.indent-gap.ok {
+  background: rgba(74,158,255,.2);
+  border-bottom: 2px solid #4a9eff;
+}
+
 /* ══════════ 공개 설정 카드 ══════════ */
 
 .pub-tabs {
@@ -3122,8 +3165,48 @@ const ANN_DATA = {
   's0-indent': {
     num:'④', title:'가장 흔한 실수 — 하위 항목 기호',
     rule:'"2. 다음과 같이 시행하고자 합니다." 다음에 오는 하위 항목은 <strong>1., 2.가 아닌 가., 나.</strong>를 씁니다. 본문 첫째 항목 기호(1., 2.)는 이미 위에서 쓰였기 때문에 다시 쓸 수 없습니다.',
-    bad:  '2. 다음과 같이\n   시행하고자 합니다.\n1. 일시: 2026. 10. 8.  ← 1.이 두 번!\n2. 장소: ○○ 국립공원  ← 2.도 두 번!',
-    good: '2. 시행하고자 합니다.\n  가. 일시: 2026. 10. 8.(수)\n  나. 장소: ○○ 국립공원',
+    bad: '', good: '',
+    badHTML: `<div class="indent-demo">
+      <div class="indent-line">
+        <span class="indent-num">1.&nbsp;</span><span class="indent-content">관련: 유초등교육과-1234</span>
+      </div>
+      <div class="indent-line">
+        <span class="indent-num">2.&nbsp;</span><span class="indent-content">현장체험학습 실시 계획을</span>
+      </div>
+      <div class="indent-line" style="align-items:center;">
+        <span class="indent-gap" style="width:1.6em;">&nbsp;&nbsp;</span>
+        <span class="indent-content">다음과 같이 시행하고자 합니다.</span>
+        <span class="indent-arrow">← 왼쪽 기본선으로 내려옴 ❌</span>
+      </div>
+      <div class="indent-line" style="margin-top:.3rem;">
+        <span class="indent-num">1.&nbsp;</span><span class="indent-content" style="color:#ff9090;">일시: 2026. 10. 8. &nbsp;← 1.이 두 번!</span>
+      </div>
+      <div class="indent-line">
+        <span class="indent-num">2.&nbsp;</span><span class="indent-content" style="color:#ff9090;">장소: ○○ 국립공원 &nbsp;← 2.도 두 번!</span>
+      </div>
+    </div>`,
+    goodHTML: `<div class="indent-demo">
+      <div class="indent-line">
+        <span class="indent-num">1.&nbsp;</span><span class="indent-content">관련: 유초등교육과-1234</span>
+      </div>
+      <div class="indent-line">
+        <span class="indent-num">2.</span><span class="indent-bar"></span><span class="indent-content">현장체험학습 실시 계획을</span>
+      </div>
+      <div class="indent-line" style="align-items:center;">
+        <span class="indent-pad" style="width:1.05em;">&nbsp;&nbsp;</span><span class="indent-bar"></span>
+        <span class="indent-gap ok" style="width:0;">&nbsp;</span>
+        <span class="indent-content">다음과 같이 시행하고자 합니다.</span>
+        <span class="indent-arrow ok">← "2." 다음 위치에 맞춤 ✅</span>
+      </div>
+      <div class="indent-line" style="margin-top:.3rem;">
+        <span class="indent-pad" style="display:inline-block;width:1.05em;"></span><span class="indent-bar"></span>
+        <span class="indent-content" style="color:#90d0ff;">가.&nbsp;일시: 2026. 10. 8.(수)</span>
+      </div>
+      <div class="indent-line">
+        <span class="indent-pad" style="display:inline-block;width:1.05em;"></span><span class="indent-bar"></span>
+        <span class="indent-content" style="color:#90d0ff;">나.&nbsp;장소: ○○ 국립공원</span>
+      </div>
+    </div>`,
     goto: {step:3, card:'rc-items'}
   },
   's0-range': {
@@ -3151,7 +3234,16 @@ const ANN_DATA = {
     num:'⑧', title:'붙임 표기 (2개)',
     rule:'붙임이 <strong>2개 이상이면 번호를 붙입니다</strong>. "붙임" 다음 <strong>2타</strong>. 끝은 마지막 항목 뒤 2타.',
     bad:'붙임: 1. 계획서 1부. 2. 동의서 1부. 끝.',
-    good:'붙임  1. 계획서 1부.\n       2. 동의서 1부.  끝.',
+    good:'',
+    goodHTML:`<div class="ap-code" style="font-family:'Noto Serif KR',serif;line-height:2;">
+      <div style="display:flex;align-items:baseline;gap:0;">
+        <span style="flex-shrink:0;">붙임&nbsp;&nbsp;</span>
+        <span style="display:flex;flex-direction:column;gap:0;">
+          <span style="display:flex;align-items:baseline;gap:0;"><span style="flex-shrink:0;">1.&nbsp;</span><span>현장체험학습 계획서 1부.</span></span>
+          <span style="display:flex;align-items:baseline;gap:0;"><span style="flex-shrink:0;">2.&nbsp;</span><span>현장체험학습 동의서 1부.&nbsp;&nbsp;끝.</span></span>
+        </span>
+      </div>
+    </div>`,
     goto:{step:3,card:'rc-attach'}
   },
   's0-end': {
@@ -3326,8 +3418,8 @@ function openAnn(key) {
     </div>
     <div class="ap-rule">${d.rule}</div>
     <div class="ap-compare">
-      <div class="ap-bad"><div class="ap-bad-lbl">${d.badLbl  || '❌ 틀린 예'}</div><div class="ap-code">${d.bad}</div></div>
-      <div class="ap-good"><div class="ap-good-lbl">${d.goodLbl || '✅ 올바른 예'}</div><div class="ap-code">${d.good}</div></div>
+      <div class="ap-bad"><div class="ap-bad-lbl">${d.badLbl  || '❌ 틀린 예'}</div>${d.badHTML  ? d.badHTML  : `<div class="ap-code">${d.bad}</div>`}</div>
+      <div class="ap-good"><div class="ap-good-lbl">${d.goodLbl || '✅ 올바른 예'}</div>${d.goodHTML ? d.goodHTML : `<div class="ap-code">${d.good}</div>`}</div>
     </div>
     ${d.goto && d.goto.card
       ? `<div class="ap-goto" onclick="annGoto(${d.goto.step},'${d.goto.card}')">→ 가이드에서 더 보기</div>`
