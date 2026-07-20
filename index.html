@@ -128,29 +128,26 @@ nav {
 .step-btn.on .step-dot { background: var(--gold); color: var(--ink); }
 
 /* 스텝 콘텐츠 */
-.step-view { display: none; padding: 2rem; max-width: 860px; margin: 0 auto; }
+.step-view { display: none; padding: 2rem; max-width: 1100px; margin: 0 auto; }
 .step-view.on { display: block; }
 
 .step-hero {
-  border-radius: 14px; padding: 2rem 2.5rem; margin-bottom: 2rem;
-  position: relative; overflow: hidden;
+  border-left: 4px solid var(--ink2);
+  padding: .6rem 0 .6rem 1rem;
+  margin-bottom: 1.5rem;
 }
 .step-hero h2 {
-  font-family: 'Noto Serif KR', serif;
-  font-size: 1.5rem; font-weight: 700; margin-bottom: .4rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.05rem; font-weight: 700; margin-bottom: .15rem; color: var(--ink);
 }
-.step-hero p { font-size: .9rem; line-height: 1.7; opacity: .75; max-width: 500px; }
-.step-hero .hero-num {
-  position: absolute; right: 2rem; top: 50%; transform: translateY(-50%);
-  font-size: 7rem; font-weight: 900; opacity: .07; line-height: 1;
-  font-family: 'Noto Serif KR', serif; user-select: none;
-}
+.step-hero p { font-size: .8rem; line-height: 1.6; color: var(--muted); }
+.step-hero .hero-num { display: none; }
 
-.sh1 { background: #1a2f6a; color: #fff; }
-.sh2 { background: #5c3200; color: #fff; }
-.sh3 { background: #0d4d2a; color: #fff; }
-.sh4 { background: #5c0033; color: #fff; }
-.sh5 { background: #330d5c; color: #fff; }
+.sh1 { border-left-color: #1a2f6a; }
+.sh2 { border-left-color: #c06020; }
+.sh3 { border-left-color: #1a7a4a; }
+.sh4 { border-left-color: #a02060; }
+.sh5 { border-left-color: #6030a0; }
 
 /* 규칙 카드 */
 .rule-card {
@@ -533,8 +530,8 @@ body.vis-on #vis-knob   { left: 22px; }
   grid-template-columns: 1fr;
   gap: 1rem;
 }
-@media (min-width: 720px) {
-  .ann-wrap { grid-template-columns: 1fr 340px; align-items: start; }
+@media (min-width: 860px) {
+  .ann-wrap { grid-template-columns: 1fr 300px; align-items: start; }
 }
 
 /* 공문 박스 */
@@ -548,21 +545,21 @@ body.vis-on #vis-knob   { left: 22px; }
 .ann-doc-inner {
   padding: 1.75rem 2rem;
   font-family: 'Noto Serif KR', serif;
-  font-size: .82rem;
-  line-height: 2.1;
+  font-size: .95rem;
+  line-height: 2.2;
 }
 .ann-row { display: flex; gap: .5rem; }
 .ann-field { color: var(--muted); width: 52px; flex-shrink: 0; font-family: 'Noto Sans KR', sans-serif; font-size: .78rem; }
 .ann-val { flex: 1; }
 .ann-title-row { border-bottom: 1px solid #ddd; padding-bottom: .4rem; }
 .ann-body { margin-top: .5rem; }
-.ann-bodyline { font-family: 'Noto Sans KR', sans-serif; font-size: .83rem; line-height: 2; }
-.ann-line1 { display: flex; align-items: baseline; }
-.ann-sym1    { flex-shrink: 0; width: 2ch; }
-.ann-sym1b   { flex-shrink: 0; width: 2ch; }
-.ann-indent1 { padding-left: 2ch; }
+.ann-bodyline { font-family: 'Noto Sans KR', sans-serif; font-size: .95rem; line-height: 2.2; }
+.ann-line1 { display: flex; align-items: baseline; gap: .4em; }
+.ann-sym1    { flex-shrink: 0; width: 2ch; padding-right: .35em; }
+.ann-sym1b   { flex-shrink: 0; width: 2ch; padding-right: .35em; }
+.ann-indent1 { padding-left: 2.6em; }
 .ann-indent2 { padding-left: 3.0em; }
-.ann-attach { font-family: 'Noto Sans KR', sans-serif; font-size: .83rem; }
+.ann-attach { font-family: 'Noto Sans KR', sans-serif; font-size: .95rem; line-height: 2.2; }
 
 /* 클릭 가능한 핫스팟 */
 .ann-hotspot {
@@ -652,7 +649,7 @@ body.ann-off #ann-panel { display: none !important; }
 .ap-close:hover { color: #fff; }
 
 /* 모바일: 패널을 공문 아래로 */
-@media (max-width: 719px) {
+@media (max-width: 859px) {
   .ann-panel { position: static; }
 }
 
@@ -771,7 +768,7 @@ body.ann-off #ann-panel { display: none !important; }
   <div class="step-view on" id="sv1">
     <div class="step-hero sh1">
       <div class="hero-num">1</div>
-      <div style="font-size:.72rem;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.6);margin-bottom:.4rem;">STEP 1</div>
+      <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 1</div>
       <h2>공문서 한 장, 한눈에 보기</h2>
       <p>학교에서 실제로 쓰는 공문 3가지입니다.<br>번호를 클릭하면 해당 규칙을 바로 설명해 드립니다.</p>
     </div>
@@ -999,7 +996,7 @@ body.ann-off #ann-panel { display: none !important; }
   <div class="step-view" id="sv2">
     <div class="step-hero sh2">
       <div class="hero-num">2</div>
-      <div style="font-size:.72rem;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.6);margin-bottom:.4rem;">STEP 2</div>
+      <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 2</div>
       <h2>제목 짓기</h2>
       <p>제목은 수신자가 공문을 열기 전에 "내가 뭘 해야 하는지" 알 수 있어야 합니다.</p>
     </div>
@@ -1075,7 +1072,7 @@ body.ann-off #ann-panel { display: none !important; }
   <div class="step-view" id="sv3">
     <div class="step-hero sh3">
       <div class="hero-num">3</div>
-      <div style="font-size:.72rem;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.6);margin-bottom:.4rem;">STEP 3</div>
+      <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 3</div>
       <h2>본문 쓰기</h2>
       <p>날짜·숫자·항목 기호·맞춤법 — 본문에서 자주 틀리는 4가지를 집중적으로 확인합니다.</p>
     </div>
@@ -1228,7 +1225,7 @@ body.ann-off #ann-panel { display: none !important; }
   <div class="step-view" id="sv4">
     <div class="step-hero sh4">
       <div class="hero-num">4</div>
-      <div style="font-size:.72rem;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.6);margin-bottom:.4rem;">STEP 4</div>
+      <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 4</div>
       <h2>결재 올리기</h2>
       <p>내가 기안자일 때 어떤 결재 방식이 적용되는지, 서명란에 뭘 써야 하는지 알 수 있습니다.</p>
     </div>
@@ -1324,7 +1321,7 @@ body.ann-off #ann-panel { display: none !important; }
   <div class="step-view" id="sv5">
     <div class="step-hero sh5">
       <div class="hero-num">5</div>
-      <div style="font-size:.72rem;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.6);margin-bottom:.4rem;">STEP 5</div>
+      <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 5</div>
       <h2>발송 전 최종 점검</h2>
       <p>클릭으로 체크하세요. 완료 상태는 브라우저에 저장됩니다.</p>
     </div>
@@ -1372,7 +1369,7 @@ body.ann-off #ann-panel { display: none !important; }
   <div class="step-view" id="sv6">
     <div class="step-hero" style="background:#1a3a2a;color:#fff;">
       <div class="hero-num">6</div>
-      <div style="font-size:.72rem;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.6);margin-bottom:.4rem;">STEP 6</div>
+      <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 6</div>
       <h2>회의록 작성법</h2>
       <p>법정 회의록과 비법정 회의록은 작성 방법과 결재 방법이 다릅니다.<br>내가 작성해야 할 회의록이 어떤 종류인지 먼저 확인하세요.</p>
     </div>
@@ -2160,7 +2157,6 @@ function switchScenario(idx, btn) {
   document.querySelectorAll('.ann-hotspot').forEach(el => el.classList.remove('active'));
 }
 
-let annOn = true;
 let currentAnn = null;
 
 function toggleAnn() {
