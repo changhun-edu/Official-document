@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>공문서 작성 가이드 — 신규 교사용</title>
+<title>공문서 작성 가이드</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
 <style>
@@ -563,7 +563,7 @@ body.vis-on #vis-knob   { left: 22px; }
   line-height: 2.2;
 }
 .ann-row { display: flex; gap: .5rem; }
-.ann-field { color: var(--muted); width: 52px; flex-shrink: 0; font-family: 'Noto Sans KR', sans-serif; font-size: .78rem; }
+.ann-field { color: var(--muted); flex-shrink: 0; font-family: 'Noto Sans KR', sans-serif; font-size: .78rem; white-space: nowrap; }
 .ann-val { flex: 1; }
 .ann-title-row { border-bottom: 1px solid #ddd; padding-bottom: .4rem; }
 .ann-body { margin-top: .5rem; }
@@ -1465,10 +1465,7 @@ body.ann-off #ann-panel { display: none !important; }
             </div>
             <div class="ann-row" style="margin-bottom:.25rem;"><span class="ann-field">(경유)</span></div>
             <div class="ann-row ann-title-row" style="margin-bottom:.9rem;">
-              <span class="ann-field">제목</span><span class="ann-vmark">∨∨</span>
-              <span class="ann-val" style="font-weight:700;">
-                <span class="ann-hotspot" data-ann="s0-tag" onclick="openAnn('s0-tag')">[계획]<span class="ann-badge">①</span></span>&nbsp;2026학년도 현장체험학습 실시 계획
-              </span>
+              <span class="ann-field">제목</span><span class="ann-vmark">∨∨</span><span class="ann-val" style="font-weight:700;"><span class="ann-hotspot" data-ann="s0-tag" onclick="openAnn('s0-tag')">[계획]<span class="ann-badge">①</span></span>&nbsp;2026학년도 현장체험학습 실시 계획</span>
             </div>
             <div class="ann-body">
               <div class="ann-bodyline ann-line1"><span class="ann-sym1">1.</span><span class="ann-vmark">∨</span><span>관련:&nbsp;<span class="ann-hotspot" data-ann="s0-colon" onclick="openAnn('s0-colon')">유초등교육과-1234(<span class="ann-hotspot" data-ann="s0-date" onclick="openAnn('s0-date');event.stopPropagation()">2026.&nbsp;4.&nbsp;2.<span class="ann-badge">②</span></span>)<span class="ann-badge">③</span></span></span></div>
@@ -1522,8 +1519,7 @@ body.ann-off #ann-panel { display: none !important; }
             </div>
             <div class="ann-row" style="margin-bottom:.25rem;"><span class="ann-field">(경유)</span></div>
             <div class="ann-row ann-title-row" style="margin-bottom:.9rem;">
-              <span class="ann-field">제목</span><span class="ann-vmark">∨∨</span><span class="ann-val" style="font-weight:700;"><span class="ann-hotspot" data-ann="s1-tag" onclick="openAnn('s1-tag')">[보고]<span class="ann-badge">②</span></span>&nbsp;학교폭력 예방교육 실시 결과 보고
-              </span>
+              <span class="ann-field">제목</span><span class="ann-vmark">∨∨</span><span class="ann-val" style="font-weight:700;"><span class="ann-hotspot" data-ann="s1-tag" onclick="openAnn('s1-tag')">[보고]<span class="ann-badge">②</span></span>&nbsp;학교폭력 예방교육 실시 결과 보고</span>
             </div>
             <div class="ann-body">
               <div class="ann-bodyline ann-line1"><span class="ann-sym1">1.</span><span class="ann-vmark">∨</span><span>관련:&nbsp;<span class="ann-hotspot" data-ann="s1-colon" onclick="openAnn('s1-colon')">유초등교육과-1234(<span class="ann-hotspot" data-ann="s1-date" onclick="openAnn('s1-date');event.stopPropagation()">2026.&nbsp;4.&nbsp;2.<span class="ann-badge">③</span></span>)<span class="ann-badge">④</span></span></span></div>
