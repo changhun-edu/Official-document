@@ -1774,7 +1774,7 @@ body.ann-off #ann-panel { display: none !important; }
               <span class="ann-field">제목</span><span class="ann-vmark">∨∨</span><span class="ann-val" style="font-weight:700;"><span class="ann-hotspot" data-ann="s0-tag" onclick="openAnn('s0-tag')">[계획]<span class="ann-badge">①</span></span>&nbsp;2026학년도 현장체험학습 실시 계획</span>
             </div>
             <div class="ann-body">
-              <div class="ann-bodyline ann-line1"><span class="ann-sym1">1.</span><span class="ann-vmark">∨</span><span>관련:&nbsp;<span class="ann-hotspot" data-ann="s0-colon" onclick="openAnn('s0-colon')">유초등교육과-1234(<span class="ann-hotspot" data-ann="s0-date" onclick="openAnn('s0-date');event.stopPropagation()">2026.&nbsp;4.&nbsp;2.<span class="ann-badge">③</span></span>)<span class="ann-badge">②</span></span></span></div>
+              <div class="ann-bodyline ann-line1"><span class="ann-sym1">1.</span><span class="ann-vmark">∨</span><span><span class="ann-hotspot" data-ann="s0-colon" onclick="openAnn('s0-colon')">관련:<span class="ann-badge">②</span></span>&nbsp;유초등교육과-1234(<span class="ann-hotspot" data-ann="s0-date" onclick="openAnn('s0-date')">2026.&nbsp;4.&nbsp;2.<span class="ann-badge">③</span></span>)</span></div>
               <div class="ann-bodyline ann-line1" style="margin-top:.3rem;">
                 <span class="ann-sym1b">2.</span><span class="ann-vmark">∨</span>
                 <span class="ann-hotspot" data-ann="s0-indent" onclick="openAnn('s0-indent')" style="flex:1;word-break:keep-all;">2026학년도 현장체험학습 실시 계획을 다음과 같이 수립하여 시행하고자 합니다.<span class="ann-badge">④</span></span>
@@ -1852,7 +1852,7 @@ body.ann-off #ann-panel { display: none !important; }
               <span class="ann-field">제목</span><span class="ann-vmark">∨∨</span><span class="ann-val" style="font-weight:700;"><span class="ann-hotspot" data-ann="s1-tag" onclick="openAnn('s1-tag')">[보고]<span class="ann-badge">②</span></span>&nbsp;학교폭력 예방교육 실시 결과 보고</span>
             </div>
             <div class="ann-body">
-              <div class="ann-bodyline ann-line1"><span class="ann-sym1">1.</span><span class="ann-vmark">∨</span><span>관련:&nbsp;<span class="ann-hotspot" data-ann="s1-colon" onclick="openAnn('s1-colon')">유초등교육과-1234(<span class="ann-hotspot" data-ann="s1-date" onclick="openAnn('s1-date');event.stopPropagation()">2026.&nbsp;4.&nbsp;2.<span class="ann-badge">④</span></span>)<span class="ann-badge">③</span></span></span></div>
+              <div class="ann-bodyline ann-line1"><span class="ann-sym1">1.</span><span class="ann-vmark">∨</span><span><span class="ann-hotspot" data-ann="s1-colon" onclick="openAnn('s1-colon')">관련:<span class="ann-badge">③</span></span>&nbsp;유초등교육과-1234(<span class="ann-hotspot" data-ann="s1-date" onclick="openAnn('s1-date')">2026.&nbsp;4.&nbsp;2.<span class="ann-badge">④</span></span>)</span></div>
               <div class="ann-bodyline ann-line1" style="margin-top:.3rem;"><span class="ann-sym1b">2.</span><span class="ann-vmark">∨</span><span style="flex:1;">학교폭력 예방교육 실시 결과를 다음과 같이 보고합니다.</span></div>
               <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s1-items" onclick="openAnn('s1-items')" style="display:contents;"><span class="ann-sym1">가.</span><span class="ann-vmark-h">∨</span>
                   <span>교육기간:&nbsp;<span class="ann-hotspot" data-ann="s1-range" onclick="openAnn('s1-range');event.stopPropagation()">2026.&nbsp;3.&nbsp;4.(화)∼3.&nbsp;28.(금)<span class="ann-badge">⑥</span></span><span class="ann-badge">⑤</span></span>
@@ -3881,9 +3881,10 @@ const ANN_DATA = {
         <span class="indent-num">2.</span><span class="indent-bar"></span><span class="indent-content">현장체험학습 실시 계획을</span>
       </div>
       <div class="indent-line" style="align-items:center;">
-        <span class="indent-pad" style="width:1.05em;">&nbsp;&nbsp;</span><span class="indent-bar"></span>
-        <span class="indent-gap ok" style="width:0;">&nbsp;</span>
-        <span class="indent-content">다음과 같이 시행하고자 합니다.</span>
+        <span class="indent-pad" style="width:1.05em;">&nbsp;&nbsp;</span><span class="indent-bar"></span><span class="indent-content">다음과 같이 시행하고자</span>
+      </div>
+      <div class="indent-line" style="align-items:center;">
+        <span class="indent-pad" style="width:1.05em;">&nbsp;&nbsp;</span><span class="indent-bar"></span><span class="indent-content">합니다.</span>
         <span class="indent-arrow ok">← "2." 다음 위치에 맞춤 ✅</span>
       </div>
       <div class="indent-line" style="margin-top:.3rem;">
@@ -4231,14 +4232,20 @@ function closeAnn() {
 }
 
 function annGoto(step, card) {
-  showView('workflow');
-  goStep(step);
-  if (card) {
-    setTimeout(() => {
-      const el = document.getElementById(card);
-      if (el) { el.classList.add('open'); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-    }, 150);
-  }
+  closeAnn();
+  setTimeout(() => {
+    showView('workflow');
+    goStep(step);
+    if (card) {
+      setTimeout(() => {
+        const el = document.getElementById(card);
+        if (el) {
+          el.classList.add('open');
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+    }
+  }, 50);
 }
 
 // ══════════════════════════════════
