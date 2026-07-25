@@ -1276,6 +1276,57 @@ body.ann-off #ann-panel { display: none !important; }
   .ec-tab-num { width: 22px; height: 22px; }
 }
 
+/* ══════════ ann-panel 기본 안내 + 진행률 ══════════ */
+.ann-default {
+  padding: 1.25rem 1.4rem; color: #fff;
+}
+.ann-default-title {
+  font-size: .82rem; font-weight: 700; color: var(--gold-l);
+  letter-spacing: .5px; margin-bottom: .65rem;
+  display: flex; align-items: center; gap: .4rem;
+}
+.ann-default-hint {
+  font-size: .78rem; color: rgba(255,255,255,.6);
+  line-height: 1.65; margin-bottom: 1rem;
+}
+
+/* 진행률 바 */
+.ann-progress-wrap { margin-bottom: 1rem; }
+.ann-progress-label {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: .72rem; color: rgba(255,255,255,.5); margin-bottom: .35rem;
+}
+.ann-progress-label .apl-count { color: var(--gold-l); font-weight: 700; font-size: .82rem; }
+.ann-progress-bar {
+  height: 6px; background: rgba(255,255,255,.12); border-radius: 99px; overflow: hidden;
+}
+.ann-progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--gold) 0%, #ffdd70 100%);
+  border-radius: 99px; transition: width .4s ease;
+}
+
+/* 항목 목록 */
+.ann-item-list { display: flex; flex-direction: column; gap: .3rem; }
+.ann-item-row {
+  display: flex; align-items: center; gap: .55rem;
+  padding: .38rem .55rem; border-radius: 7px;
+  cursor: pointer; transition: background .13s;
+  font-size: .78rem; color: rgba(255,255,255,.75);
+  border: 1px solid rgba(255,255,255,.06);
+}
+.ann-item-row:hover { background: rgba(255,255,255,.1); }
+.ann-item-row.seen { color: rgba(255,255,255,.45); }
+.ann-item-row.seen .air-num { background: rgba(255,255,255,.12); color: rgba(255,255,255,.3); }
+.air-num {
+  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+  background: var(--gold); color: var(--ink);
+  font-size: .65rem; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .3s;
+}
+.air-check { margin-left: auto; font-size: .8rem; color: var(--ok); flex-shrink: 0; }
+.ann-item-row.seen .air-check::before { content: '✓'; }
+
 /* ── 들여쓰기 정렬선 시각화 ── */
 .indent-demo {
   font-family: 'Noto Serif KR', serif;
@@ -1754,8 +1805,32 @@ body.ann-off #ann-panel { display: none !important; }
             <div style="margin-top:1.1rem;font-size:.72rem;color:var(--muted);">기안자&nbsp;&nbsp;홍길동 &nbsp;&nbsp;&nbsp; 검토자&nbsp;&nbsp;김담당 &nbsp;&nbsp;&nbsp; 결재권자&nbsp;&nbsp;○○교장</div>
           </div>
         </div>
-        <div class="ann-panel" id="ann-panel-0" style="display:none;">
-          <div class="ann-panel-inner" id="ann-panel-inner-0"></div>
+        <div class="ann-panel" id="ann-panel-0">
+          <div class="ann-default" id="ann-default-0">
+            <div class="ann-default-title">📌 번호를 클릭하면 규칙이 표시됩니다</div>
+            <div class="ann-default-hint">공문의 노란 번호 뱃지를 탭하면 해당 항목의 규칙과 올바른 예시가 여기에 나타납니다.</div>
+            <div class="ann-progress-wrap">
+              <div class="ann-progress-label">
+                <span>학습 진행</span>
+                <span class="apl-count" id="s0-progress-text">0 / 9</span>
+              </div>
+              <div class="ann-progress-bar">
+                <div class="ann-progress-fill" id="s0-progress-fill" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="ann-item-list" id="s0-item-list">
+              <div class="ann-item-row" id="air-s0-tag"    onclick="openAnn('s0-tag')">   <span class="air-num">①</span><span>성격 표시제</span>    <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s0-date"   onclick="openAnn('s0-date')">  <span class="air-num">②</span><span>날짜 표기</span>      <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s0-colon"  onclick="openAnn('s0-colon')"> <span class="air-num">③</span><span>쌍점(:) 규정</span>   <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s0-indent" onclick="openAnn('s0-indent')"><span class="air-num">④</span><span>하위 항목 기호</span> <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s0-range"  onclick="openAnn('s0-range')"> <span class="air-num">⑤</span><span>기간·물결표</span>   <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s0-items"  onclick="openAnn('s0-items')"> <span class="air-num">⑥</span><span>항목 들여쓰기</span> <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s0-money"  onclick="openAnn('s0-money')"> <span class="air-num">⑦</span><span>금액 표기</span>      <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s0-attach" onclick="openAnn('s0-attach')"><span class="air-num">⑧</span><span>붙임 표기</span>      <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s0-end"    onclick="openAnn('s0-end')">   <span class="air-num">⑨</span><span>'끝' + 종결어미</span><span class="air-check"></span></div>
+            </div>
+          </div>
+          <div class="ann-panel-inner" id="ann-panel-inner-0" style="display:none;"></div>
         </div>
       </div>
       <div class="cite" style="margin-top:.85rem;">💡 <strong>내부결재 핵심</strong>: 수신자란에 "내부결재" 표기 / 성격 표시([계획] 등) / 종결어미 "시행하고자 합니다"(의지형) / 붙임 2개 이상이면 번호 구분 / 발신명의 불필요</div>
@@ -1794,8 +1869,31 @@ body.ann-off #ann-panel { display: none !important; }
             <div style="margin-top:1.1rem;font-size:.72rem;color:var(--muted);">수신자&nbsp;&nbsp;○○교육장</div>
           </div>
         </div>
-        <div class="ann-panel" id="ann-panel-1" style="display:none;">
-          <div class="ann-panel-inner" id="ann-panel-inner-1"></div>
+        <div class="ann-panel" id="ann-panel-1">
+          <div class="ann-default" id="ann-default-1">
+            <div class="ann-default-title">📌 번호를 클릭하면 규칙이 표시됩니다</div>
+            <div class="ann-default-hint">공문의 노란 번호 뱃지를 탭하면 해당 항목의 규칙과 올바른 예시가 여기에 나타납니다.</div>
+            <div class="ann-progress-wrap">
+              <div class="ann-progress-label">
+                <span>학습 진행</span>
+                <span class="apl-count" id="s1-progress-text">0 / 8</span>
+              </div>
+              <div class="ann-progress-bar">
+                <div class="ann-progress-fill" id="s1-progress-fill" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="ann-item-list" id="s1-item-list">
+              <div class="ann-item-row" id="air-s1-recv"   onclick="openAnn('s1-recv')">  <span class="air-num">①</span><span>수신자 표기</span>    <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s1-tag"    onclick="openAnn('s1-tag')">   <span class="air-num">②</span><span>성격 표시제</span>    <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s1-date"   onclick="openAnn('s1-date')">  <span class="air-num">③</span><span>날짜 표기</span>      <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s1-colon"  onclick="openAnn('s1-colon')"> <span class="air-num">④</span><span>쌍점(:) 규정</span>   <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s1-range"  onclick="openAnn('s1-range')"> <span class="air-num">⑤</span><span>기간·물결표</span>   <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s1-items"  onclick="openAnn('s1-items')"> <span class="air-num">⑥</span><span>항목 들여쓰기</span> <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s1-attach" onclick="openAnn('s1-attach')"><span class="air-num">⑦</span><span>붙임 표기</span>      <span class="air-check"></span></div>
+              <div class="ann-item-row" id="air-s1-end"    onclick="openAnn('s1-end')">   <span class="air-num">⑧</span><span>'끝' + 종결어미</span><span class="air-check"></span></div>
+            </div>
+          </div>
+          <div class="ann-panel-inner" id="ann-panel-inner-1" style="display:none;"></div>
         </div>
       </div>
       <div class="cite" style="margin-top:.85rem;">💡 <strong>교육청 보고 핵심</strong>: 수신에 교육장(담당과장) 표기 / [보고] 성격 표시 / 종결어미는 "보고합니다"(단정형) / 붙임 2개 이상이면 번호 구분</div>
@@ -3958,11 +4056,17 @@ function switchScenario(idx, btn) {
   if (btn) btn.classList.add('on');
   document.querySelectorAll('.sc-view').forEach(v => v.classList.remove('on'));
   document.getElementById('scv' + idx).classList.add('on');
-  // 열려 있던 패널 닫기
+
+  // 모든 패널 초기화
   [0,1,2,3].forEach(i => {
-    const p = document.getElementById('ann-panel-' + i);
-    if (p) p.style.display = 'none';
+    const panel = document.getElementById('ann-panel-' + i);
+    const inner = document.getElementById('ann-panel-inner-' + i);
+    const def   = document.getElementById('ann-default-' + i);
+    if (inner) inner.style.display = 'none';
+    if (panel) panel.style.display = (i === idx && (i === 0 || i === 1)) ? 'block' : 'none';
+    if (def)   def.style.display   = (i === idx && (i === 0 || i === 1)) ? 'block' : 'none';
   });
+
   document.querySelectorAll('.ann-hotspot').forEach(el => el.classList.remove('active'));
 }
 
@@ -4020,11 +4124,48 @@ function toggleAnn() {
   document.getElementById('ann-label').textContent = annOn ? '주석 ON' : '주석 OFF';
   if (!annOn) {
     [0,1,2,3].forEach(i => {
-      const p = document.getElementById('ann-panel-' + i);
-      if (p) p.style.display = 'none';
+      const p   = document.getElementById('ann-panel-' + i);
+      const def = document.getElementById('ann-default-' + i);
+      if (p)   p.style.display   = 'none';
+      if (def) def.style.display = 'none';
     });
     document.querySelectorAll('.ann-hotspot').forEach(el => el.classList.remove('active'));
+  } else {
+    // annOn 복귀 시 현재 시나리오 기본카드 다시 표시
+    const sc = currentScenario;
+    if (sc === 0 || sc === 1) {
+      const panel = document.getElementById('ann-panel-' + sc);
+      const def   = document.getElementById('ann-default-' + sc);
+      const inner = document.getElementById('ann-panel-inner-' + sc);
+      if (panel) panel.style.display = 'block';
+      if (def)   def.style.display   = 'block';
+      if (inner) inner.style.display = 'none';
+    }
   }
+}
+
+// ── 진행률 데이터 ──
+const ANN_SEEN = { 0: new Set(), 1: new Set() };
+const ANN_TOTAL = { 0: 9, 1: 8 };
+
+function updateProgress(sc) {
+  const seen = ANN_SEEN[sc];
+  const total = ANN_TOTAL[sc];
+  if (total === undefined) return;
+  const count = seen.size;
+  const pct = Math.round(count / total * 100);
+  const txt = document.getElementById('s' + sc + '-progress-text');
+  const fill = document.getElementById('s' + sc + '-progress-fill');
+  if (txt) txt.textContent = count + ' / ' + total;
+  if (fill) fill.style.width = pct + '%';
+}
+
+function markSeen(sc, key) {
+  if (ANN_SEEN[sc] === undefined) return;
+  ANN_SEEN[sc].add(key);
+  const row = document.getElementById('air-' + key);
+  if (row) row.classList.add('seen');
+  updateProgress(sc);
 }
 
 function openAnn(key) {
@@ -4035,12 +4176,16 @@ function openAnn(key) {
   document.querySelectorAll('.ann-hotspot').forEach(el => el.classList.remove('active'));
   document.querySelectorAll(`[data-ann="${key}"]`).forEach(el => el.classList.add('active'));
 
-  // 현재 시나리오 패널만 사용
   const sc = currentScenario;
-  [0,1,2].forEach(i => {
-    const p = document.getElementById('ann-panel-' + i);
-    if (p) p.style.display = 'none';
+
+  // 기본카드 숨기고 상세 패널 표시
+  [0, 1].forEach(i => {
+    const def = document.getElementById('ann-default-' + i);
+    const inner = document.getElementById('ann-panel-inner-' + i);
+    if (def)   def.style.display   = 'none';
+    if (inner) inner.style.display = 'none';
   });
+
   const panel = document.getElementById('ann-panel-' + sc);
   const inner = document.getElementById('ann-panel-inner-' + sc);
   if (!panel || !inner) return;
@@ -4061,7 +4206,11 @@ function openAnn(key) {
       ? `<div class="ap-goto" onclick="annGoto(${d.goto.step},null)">→ 가이드에서 더 보기</div>`
       : ''}
   `;
+  inner.style.display = 'block';
   panel.style.display = 'block';
+
+  // 진행률 업데이트
+  markSeen(sc, key);
 
   if (window.innerWidth < 720) {
     setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
@@ -4069,9 +4218,14 @@ function openAnn(key) {
 }
 
 function closeAnn() {
-  [0,1,2].forEach(i => {
-    const p = document.getElementById('ann-panel-' + i);
-    if (p) p.style.display = 'none';
+  const sc = currentScenario;
+  [0, 1].forEach(i => {
+    const inner = document.getElementById('ann-panel-inner-' + i);
+    if (inner) inner.style.display = 'none';
+    const def = document.getElementById('ann-default-' + i);
+    if (def) def.style.display = (i === sc) ? 'block' : 'none';
+    const panel = document.getElementById('ann-panel-' + i);
+    if (panel) panel.style.display = (i === sc) ? 'block' : 'none';
   });
   document.querySelectorAll('.ann-hotspot').forEach(el => el.classList.remove('active'));
 }
@@ -4657,9 +4811,13 @@ renderDrills();
 (function() {
   const {view, step} = parseHash();
   applyState(view, step, false);
-  // 현재 상태를 히스토리에 등록 (replace = 새 항목 추가 안 함)
   const hash = view === 'quiz' ? 'quiz-0' : view+'-'+step;
   history.replaceState({view, step}, '', '#'+hash);
+  // ann-panel-0 기본카드 초기 표시
+  const p0 = document.getElementById('ann-panel-0');
+  if (p0) p0.style.display = 'block';
+  const d0 = document.getElementById('ann-default-0');
+  if (d0) d0.style.display = 'block';
 })();
 // 모바일(터치 기기) 진입 힌트
 if (window.matchMedia('(pointer: coarse)').matches) {
