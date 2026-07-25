@@ -689,6 +689,260 @@ body.ann-off #ann-panel { display: none !important; }
 
 
 
+/* ══════════ 품의 시나리오 ══════════ */
+
+/* 구매처 탭 */
+.purch-tabs {
+  display: flex; gap: .35rem; flex-wrap: wrap; margin-bottom: .85rem;
+}
+.purch-tab {
+  padding: .38rem .8rem; border-radius: 7px;
+  border: 1.5px solid var(--line); background: var(--paper);
+  font-family: inherit; font-size: .78rem; font-weight: 700;
+  color: var(--muted); cursor: pointer; transition: all .13s;
+}
+.purch-tab:hover { border-color: var(--ink); color: var(--ink); }
+.purch-tab.on { background: var(--blue); border-color: var(--blue); color: #fff; }
+.purch-panel { display: none; }
+.purch-panel.on { display: block; animation: pubFade .2s ease; }
+
+/* 품의 화면 미리보기 */
+.purch-form-wrap {
+  background: #fff; border: 1.5px solid #c8ccd8;
+  border-radius: 10px; overflow: hidden; margin-bottom: .85rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+}
+.purch-form-head {
+  background: #3a5a9a; color: #fff;
+  padding: .5rem .9rem; font-size: .78rem; font-weight: 700;
+  display: flex; align-items: center; gap: .4rem;
+}
+.purch-form-table {
+  width: 100%; border-collapse: collapse; font-size: .8rem;
+}
+.purch-form-table th {
+  background: #f0f2f8; color: var(--ink2);
+  padding: .42rem .75rem; text-align: left;
+  border: 1px solid #d0d4e0; width: 22%; font-size: .74rem;
+  font-weight: 700; white-space: nowrap; vertical-align: top;
+}
+.purch-form-table td {
+  padding: .42rem .75rem; border: 1px solid #d0d4e0;
+  font-size: .78rem; line-height: 1.65; vertical-align: top;
+}
+.purch-hl {
+  cursor: pointer; border-radius: 4px; padding: .05rem .3rem;
+  background: rgba(212,150,10,.12); border-bottom: 1.5px solid var(--gold);
+  transition: background .13s; display: inline;
+}
+.purch-hl:hover { background: rgba(212,150,10,.28); }
+.purch-tip {
+  display: none; margin-top: .4rem; padding: .45rem .65rem;
+  background: var(--ink); color: #fff; border-radius: 6px;
+  font-size: .74rem; line-height: 1.65;
+}
+.purch-tip.show { display: block; animation: pubFade .15s ease; }
+.purch-tip-tag {
+  display: inline-block; font-size: .66rem; font-weight: 700;
+  padding: .08rem .38rem; border-radius: 3px; margin-right: .3rem;
+  background: rgba(212,150,10,.3); color: var(--gold-l);
+}
+.purch-attach-row {
+  display: flex; align-items: center; gap: .5rem;
+  font-size: .76rem; background: #f8f9fc;
+  padding: .35rem .6rem; border-radius: 5px; margin-top: .3rem;
+}
+.purch-attach-icon { font-size: .9rem; }
+.purch-attach-name { color: var(--blue); font-weight: 700; }
+
+/* 단계별 체크리스트 */
+.purch-steps { display: flex; flex-direction: column; gap: .45rem; }
+.purch-step {
+  background: var(--paper); border: 1.5px solid var(--line);
+  border-radius: 9px; overflow: hidden; transition: border-color .15s;
+}
+.purch-step.done { border-color: var(--ok); }
+.purch-step-head {
+  display: flex; align-items: center; gap: .65rem;
+  padding: .6rem .85rem; cursor: pointer;
+}
+.purch-step-num {
+  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  background: var(--line); color: var(--muted);
+  font-size: .72rem; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.purch-step.done .purch-step-num { background: var(--ok); color: #fff; }
+.purch-step-label { font-size: .84rem; font-weight: 700; color: var(--ink); flex: 1; }
+.purch-step-check {
+  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+  border: 2px solid var(--line); background: none;
+  cursor: pointer; transition: all .15s; display: flex;
+  align-items: center; justify-content: center; font-size: .8rem;
+}
+.purch-step.done .purch-step-check { background: var(--ok); border-color: var(--ok); color: #fff; }
+.purch-step-body {
+  display: none; padding: 0 .85rem .7rem 2.85rem;
+  font-size: .8rem; color: #444; line-height: 1.75;
+  border-top: 1px solid var(--line);
+}
+.purch-step.open .purch-step-body { display: block; }
+.purch-step-warn {
+  margin-top: .5rem; padding: .45rem .65rem;
+  background: #fff5f5; border: 1.5px solid #f0c0c0;
+  border-radius: 7px; font-size: .78rem; color: #a02020; line-height: 1.65;
+}
+
+/* 증빙서 서식 */
+.card-cert-wrap {
+  background: #fff; border: 1.5px solid #c8ccd8;
+  border-radius: 10px; padding: 1.1rem 1.25rem;
+  margin-top: .6rem; font-family: 'Noto Serif KR', serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+}
+.card-cert-title {
+  text-align: center; font-size: .95rem; font-weight: 700;
+  margin-bottom: .15rem; color: var(--ink);
+}
+.card-cert-school {
+  text-align: right; font-size: .72rem; color: var(--muted);
+  margin-bottom: .65rem;
+}
+.card-cert-table {
+  width: 100%; border-collapse: collapse; font-size: .78rem;
+}
+.card-cert-table th {
+  background: #f0f2f8; padding: .4rem .65rem;
+  border: 1px solid #c8ccd8; font-weight: 700; font-size: .74rem;
+  text-align: center; white-space: nowrap; width: 18%;
+}
+.card-cert-table td {
+  padding: .4rem .65rem; border: 1px solid #c8ccd8;
+  font-size: .78rem; color: var(--muted);
+}
+.card-cert-evidence {
+  margin-top: .65rem; font-size: .78rem; color: var(--ink2);
+  padding: .4rem .5rem; background: #f8f9fc;
+  border-radius: 5px; line-height: 1.6;
+}
+
+/* ══════════ 회의록 서식·FAQ·위저드 ══════════ */
+
+/* C: 법정 판단 위저드 */
+.legal-wizard {
+  background: var(--cream); border: 1.5px solid var(--line);
+  border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: 1rem;
+}
+.legal-wizard-title {
+  font-size: .78rem; font-weight: 700; color: var(--ink2);
+  margin-bottom: .75rem; display: flex; align-items: center; gap: .4rem;
+}
+.legal-check-list { display: flex; flex-direction: column; gap: .4rem; margin-bottom: .75rem; }
+.legal-check-item {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .5rem .75rem; border-radius: 8px;
+  border: 1.5px solid var(--line); background: var(--paper);
+  font-size: .82rem; cursor: pointer; transition: all .15s;
+  user-select: none;
+}
+.legal-check-item:hover { border-color: var(--blue); }
+.legal-check-item.checked { border-color: var(--blue); background: #f0f4ff; color: var(--blue); font-weight: 700; }
+.legal-check-icon { font-size: 1rem; flex-shrink: 0; }
+.legal-wizard-result {
+  padding: .6rem .85rem; border-radius: 8px;
+  font-size: .82rem; font-weight: 700; line-height: 1.65;
+  display: none;
+}
+.legal-wizard-result.show { display: block; }
+.legal-result-yes { background: #fff8ec; border: 1.5px solid #e8a020; color: #7a3800; }
+.legal-result-no  { background: #f0faf4; border: 1.5px solid var(--ok); color: #1a6a3a; }
+.legal-wizard-reset {
+  background: none; border: none; font-family: inherit;
+  font-size: .75rem; color: var(--muted); cursor: pointer;
+  padding: .3rem 0; margin-top: .35rem; display: none;
+}
+.legal-wizard-reset.show { display: inline-flex; align-items: center; gap: .3rem; }
+
+/* B: 서식 미리보기 */
+.min-form-wrap {
+  background: var(--cream); border: 1px solid var(--line);
+  border-radius: 12px; overflow: hidden; margin-top: .5rem;
+}
+.min-form-title {
+  background: #2c3e6a; color: #fff;
+  padding: .6rem 1rem; font-size: .8rem; font-weight: 700;
+  display: flex; align-items: center; gap: .5rem;
+}
+.min-form-subtitle {
+  font-size: .72rem; color: rgba(255,255,255,.6); margin-top: .1rem;
+}
+.min-form-table {
+  width: 100%; border-collapse: collapse; font-size: .8rem;
+}
+.min-form-table th {
+  background: #f0f2f8; color: var(--ink2); font-size: .74rem;
+  font-weight: 700; padding: .45rem .75rem; text-align: left;
+  border: 1px solid var(--line); width: 28%; white-space: nowrap;
+  vertical-align: top;
+}
+.min-form-table td {
+  padding: .45rem .75rem; border: 1px solid var(--line);
+  color: var(--muted); font-size: .78rem; line-height: 1.65;
+  vertical-align: top;
+}
+.min-form-hl {
+  cursor: pointer; border-radius: 4px; padding: .05rem .25rem;
+  transition: background .13s; display: inline;
+}
+.min-form-hl:hover { background: rgba(212,150,10,.2); }
+.min-form-tip {
+  display: none; margin-top: .35rem; padding: .4rem .6rem;
+  background: var(--ink); color: #fff; border-radius: 6px;
+  font-size: .74rem; line-height: 1.6;
+}
+.min-form-tip.show { display: block; }
+.min-form-tag {
+  display: inline-block; font-size: .68rem; font-weight: 700;
+  padding: .1rem .4rem; border-radius: 4px; margin-right: .3rem;
+  background: rgba(212,150,10,.2); color: var(--gold-l);
+  vertical-align: middle;
+}
+
+/* A: FAQ 탭 */
+.min-faq-tabs {
+  display: flex; gap: .35rem; margin-bottom: .85rem; flex-wrap: wrap;
+}
+.min-faq-tab {
+  padding: .38rem .85rem; border-radius: 7px;
+  border: 1.5px solid var(--line); background: var(--paper);
+  font-family: inherit; font-size: .78rem; font-weight: 700;
+  color: var(--muted); cursor: pointer; transition: all .13s;
+}
+.min-faq-tab:hover { border-color: var(--ink); color: var(--ink); }
+.min-faq-tab.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.min-faq-panel { display: none; }
+.min-faq-panel.on { display: block; animation: pubFade .2s ease; }
+.min-faq-q {
+  font-size: .82rem; font-weight: 700; color: var(--ink);
+  margin-bottom: .5rem; display: flex; gap: .5rem;
+}
+.min-faq-qnum {
+  flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--blue); color: #fff; font-size: .7rem; font-weight: 900;
+  display: flex; align-items: center; justify-content: center; margin-top: .05rem;
+}
+.min-faq-a {
+  font-size: .8rem; color: #444; line-height: 1.75;
+  padding: .6rem .85rem; background: var(--cream);
+  border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0;
+}
+.min-faq-law {
+  margin-top: .5rem; font-size: .74rem; color: var(--muted);
+  padding: .35rem .6rem; background: #f0f2f8; border-radius: 6px;
+  line-height: 1.6;
+}
+
 /* ══════════ 회의록 위저드 ══════════ */
 .min-wizard {
   background: linear-gradient(135deg, var(--ink) 0%, var(--ink2) 100%);
@@ -1441,7 +1695,8 @@ body.ann-off #ann-panel { display: none !important; }
       <div class="sc-tabs">
         <button class="sc-tab on" onclick="switchScenario(0,this)">① 내부결재</button>
         <button class="sc-tab" onclick="switchScenario(1,this)">② 교육청 보고</button>
-        <button class="sc-tab" onclick="switchScenario(2,this)">③ 내부 협조</button>
+        <button class="sc-tab" onclick="switchScenario(2,this)">③ 품의 — 인터넷 구매</button>
+        <button class="sc-tab" onclick="switchScenario(3,this)">④ 품의 — 현장 구매</button>
       </div>
       <label style="display:flex;align-items:center;gap:.55rem;cursor:pointer;font-size:.8rem;font-weight:700;color:var(--ink2);flex-shrink:0;">
         <div id="ann-toggle" onclick="toggleAnn()" style="width:42px;height:22px;border-radius:99px;background:var(--gold);position:relative;cursor:pointer;transition:background .2s;">
@@ -1546,50 +1801,237 @@ body.ann-off #ann-panel { display: none !important; }
       <div class="cite" style="margin-top:.85rem;">💡 <strong>교육청 보고 핵심</strong>: 수신에 교육장(담당과장) 표기 / [보고] 성격 표시 / 종결어미는 "보고합니다"(단정형) / 붙임 2개 이상이면 번호 구분</div>
     </div>
 
-    <!-- 시나리오 2: 내부 협조 -->
+    <!-- 시나리오 2: 품의 — 인터넷 구매 -->
     <div class="sc-view" id="scv2">
-      <div class="ann-wrap">
-        <div class="ann-doc">
-          <div class="ann-doc-inner">
-            <div class="ann-row" style="margin-bottom:.25rem;">
-              <span class="ann-field">수신자</span>
-              <span class="ann-val">내부결재</span>
-            </div>
-            <div class="ann-row" style="margin-bottom:.25rem;"><span class="ann-field">(경유)</span></div>
-            <div class="ann-row ann-title-row" style="margin-bottom:.9rem;">
-              <span class="ann-field">제목</span><span class="ann-vmark">∨∨</span><span class="ann-val" style="font-weight:700;">2026학년도 가정통신문 발송 계획 안내</span>
-            </div>
-            <div class="ann-body">
-              <div class="ann-bodyline ann-line1"><span class="ann-sym1">1.</span><span class="ann-vmark">∨</span><span>관련:&nbsp;2026학년도 학교교육계획 32쪽</span></div>
-              <div class="ann-bodyline ann-line1" style="margin-top:.3rem;">
-                <span class="ann-sym1b">2.</span><span class="ann-vmark">∨</span>
-                <span class="ann-hotspot" data-ann="s2-below" onclick="openAnn('s2-below')" style="flex:1;">가정통신문 발송 계획을 다음과 같이 안내합니다.<span class="ann-badge">①</span></span>
-              </div>
-              <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s2-items" onclick="openAnn('s2-items')" style="display:contents;"><span class="ann-sym1">가.</span><span class="ann-vmark-h">∨</span>
-                  <span>발송일:&nbsp;<span class="ann-hotspot" data-ann="s2-date" onclick="openAnn('s2-date');event.stopPropagation()">2026.&nbsp;3.&nbsp;4.(화)<span class="ann-badge">②</span></span><span class="ann-badge">③</span></span>
-                </span>
-              </div>
-              <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-sym1">나.</span><span class="ann-vmark-h">∨</span><span>발송방법:&nbsp;가정통신문 앱(아이엠스쿨) 및 종이 발송</span></div>
-              <div class="ann-bodyline ann-line1 ann-indent1"><span class="ann-vmark">∨∨</span><span class="ann-sym1">다.</span><span class="ann-vmark-h">∨</span><span>내용:&nbsp;2026학년도 학사일정 안내</span></div>
-              <div class="ann-bodyline ann-line1 ann-indent1" style="margin-top:.3rem;"><span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s2-ending" onclick="openAnn('s2-ending')" style="display:contents;"><span class="ann-sym1">라.</span><span class="ann-vmark-h">∨</span>
-                  <span>협조사항:&nbsp;각 담임교사는 발송 전 내용을 확인하여 주시기 바랍니다.<span class="ann-badge">④</span></span>
-                </span>
-              </div>
-            </div>
-              <div class="blank-line"><span class="blank-line-icon">↵</span><span class="blank-line-rule">빈 줄</span></div>
-            <div class="ann-attach" style="margin-top:.4rem;">
-              <div style="display:inline-flex;align-items:baseline;gap:0;"><span class="ann-hotspot" data-ann="s2-attach" onclick="openAnn('s2-attach')" style="display:contents;">붙임<span class="ann-vmark">∨∨</span><span class="attach-list"><span class="attach-item"><span class="attach-num">1.</span><span class="ann-vmark-h">∨</span><span>가정통신문 초안 1부.</span></span><span class="attach-item"><span class="attach-num">2.</span><span class="ann-vmark-h">∨</span><span>가정통신문 배부 계획 1부.<span class="ann-vmark">∨∨</span><span class="ann-hotspot" data-ann="s2-end" onclick="openAnn('s2-end')">끝.<span class="ann-badge">⑥</span></span></span></span></span><span class="ann-badge">⑤</span></span></div>
-              <div style="margin-top:.4rem;padding-top:.4rem;border-top:1px dashed #d4b84a;opacity:.6;"></div>
-              <div style="margin-top:.4rem;">붙임<span class="ann-vmark">∨∨</span>가정통신문 초안 1부.<span class="ann-vmark">∨∨</span>끝.</div>
-            </div>
-            <div style="margin-top:1.1rem;font-size:.72rem;color:var(--muted);">기안자&nbsp;&nbsp;이담임 &nbsp;&nbsp;&nbsp; 검토자&nbsp;&nbsp;박담당 &nbsp;&nbsp;&nbsp; 결재권자&nbsp;&nbsp;○○교장</div>
-          </div>
-        </div>
-        <div class="ann-panel" id="ann-panel-2" style="display:none;">
-          <div class="ann-panel-inner" id="ann-panel-inner-2"></div>
+
+      <!-- 구매처 탭 -->
+      <div class="purch-tabs">
+        <button class="purch-tab on" onclick="showPurchTab(0,this)">지마켓</button>
+        <button class="purch-tab" onclick="showPurchTab(1,this)">아이스크림몰</button>
+        <button class="purch-tab" onclick="showPurchTab(2,this)">예스24</button>
+      </div>
+
+      <!-- 지마켓 -->
+      <div class="purch-panel on" id="pp2-0">
+        <div class="cite" style="border-color:var(--blue);background:#f0f4ff;margin-bottom:.75rem;">
+          📦 <strong>지마켓 견적서 저장</strong>: 장바구니 → <strong>「견적서출력」</strong> → <strong>「저장」</strong>
         </div>
       </div>
-      <div class="cite" style="margin-top:.85rem;">💡 <strong>내부 협조 핵심</strong>: "다음과 같이" 뒤 바로 항목으로 — "다음" 소제목 금지 / 종결어미 "바랍니다"(내부 협조요청) / 붙임 1개이면 번호 없이</div>
+      <!-- 아이스크림몰 -->
+      <div class="purch-panel" id="pp2-1">
+        <div class="cite" style="border-color:var(--blue);background:#f0f4ff;margin-bottom:.75rem;">
+          📦 <strong>아이스크림몰 견적서 저장</strong>: 장바구니 → <strong>「견적서확인하기」</strong> → <strong>「다운로드」</strong>
+        </div>
+      </div>
+      <!-- 예스24 -->
+      <div class="purch-panel" id="pp2-2">
+        <div class="cite" style="border-color:var(--blue);background:#f0f4ff;margin-bottom:.75rem;">
+          📦 <strong>예스24 견적서 저장</strong>: 카트 → 도서체크 → 인쇄 → 대상(PDF로 저장)<br>
+          또는 장바구니 화면캡처: 단축키 <kbd style="background:#f0f2f8;border:1px solid #c8ccd8;border-radius:4px;padding:.1rem .4rem;font-size:.78rem;">⊞ Win</kbd> + <kbd style="background:#f0f2f8;border:1px solid #c8ccd8;border-radius:4px;padding:.1rem .4rem;font-size:.78rem;">Shift</kbd> + <kbd style="background:#f0f2f8;border:1px solid #c8ccd8;border-radius:4px;padding:.1rem .4rem;font-size:.78rem;">S</kbd>
+        </div>
+      </div>
+
+      <!-- 품의 화면 미리보기 -->
+      <div class="purch-form-wrap">
+        <div class="purch-form-head">🖥️ K-에듀파인 품의등록 화면 — 항목 탭하면 작성 요령 표시</div>
+        <table class="purch-form-table">
+          <tr>
+            <th>회계연도</th>
+            <td>2026</td>
+          </tr>
+          <tr>
+            <th>제목</th>
+            <td>
+              <span class="purch-hl" onclick="togglePurchTip('pt-title-online')">[지마켓] 입학축하 학생선물 구입</span>
+              <div class="purch-tip" id="pt-title-online">
+                <span class="purch-tip-tag">필수</span>제목 앞에 <strong>(구매사이트)</strong>를 괄호로 표시합니다.<br>
+                예) [지마켓] ○○ 물품 구입
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>개요</th>
+            <td>
+              1. 관련: 행복초-1175(2026. 2. 6.) 입학식 추진 계획<br>
+              2. 신입생을 대상으로 입학 축하 선물을 구입하고자 합니다.<br>
+              3. 구입 물품: 문구 세트 등 17종<br>
+              4. 구입 수량: 161명부<br>
+              <span class="purch-hl" onclick="togglePurchTip('pt-method-online')">5. 구입 방법: 인터넷 구입(지마켓)</span>
+              <div class="purch-tip" id="pt-method-online">
+                <span class="purch-tip-tag">필수</span>개요에 <strong>구매 방법과 구매사이트</strong>를 반드시 명시합니다.<br>
+                예) 구입 방법: 인터넷 구입(지마켓)
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>첨부파일</th>
+            <td>
+              <span class="purch-hl" onclick="togglePurchTip('pt-attach-online')">
+                <div class="purch-attach-row">
+                  <span class="purch-attach-icon">📎</span>
+                  <span class="purch-attach-name">견적서_지마켓.xlsx</span>
+                  <span style="font-size:.72rem;color:var(--muted);">XLS</span>
+                </div>
+              </span>
+              <div class="purch-tip" id="pt-attach-online">
+                <span class="purch-tip-tag">필수</span>품목내용(수량·단가) 작성 후 <strong>첨부파일에 견적서 파일을 반드시 첨부</strong>합니다.<br>
+                파일명에 구매사이트를 포함하면 관리가 편합니다. (예: 견적서_지마켓.xlsx)<br>
+                <strong>배송비</strong>가 있는 경우 품목내용에 추가하여 작성합니다.
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="cite" style="margin-top:.1rem;">
+        ⚠️ <strong>인터넷 구매와 자체구매(현장방문)는 각각 따로 품의</strong>합니다. 한 품의에 섞지 마세요.
+      </div>
+    </div>
+
+    <!-- 시나리오 3: 품의 — 현장 구매 -->
+    <div class="sc-view" id="scv3">
+
+      <!-- 품의 화면 미리보기 -->
+      <div class="purch-form-wrap" style="margin-bottom:.85rem;">
+        <div class="purch-form-head">🖥️ K-에듀파인 품의등록 화면 — 항목 탭하면 작성 요령 표시</div>
+        <table class="purch-form-table">
+          <tr>
+            <th>회계연도</th>
+            <td>2026</td>
+          </tr>
+          <tr>
+            <th>제목</th>
+            <td>
+              <span class="purch-hl" onclick="togglePurchTip('pt-title-offline')">[자체구매] 입학축하 학생선물 구입</span>
+              <div class="purch-tip" id="pt-title-offline">
+                <span class="purch-tip-tag">필수</span>제목 앞에 <strong>(자체구매)</strong>를 괄호로 표시합니다.<br>
+                예) [자체구매] ○○ 물품 구입
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>개요</th>
+            <td>
+              1. 관련: 행복초-1175(2026. 2. 6.) 입학식 추진 계획<br>
+              2. 신입생을 대상으로 입학 축하 선물을 구입하고자 합니다.<br>
+              3. 구입 물품: 문구 세트 등 17종<br>
+              4. 구입 수량: 161명부<br>
+              <span class="purch-hl" onclick="togglePurchTip('pt-method-offline')">5. 구입 방법: 현장 방문 자체구매</span>
+              <div class="purch-tip" id="pt-method-offline">
+                <span class="purch-tip-tag">필수</span>개요에 <strong>구매 방법</strong>을 반드시 명시합니다.<br>
+                예) 구입 방법: 현장 방문 자체구매
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>요구유형</th>
+            <td>일반</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 단계별 체크리스트 -->
+      <div class="min-checklist" style="margin-bottom:.75rem;">
+        <div class="min-checklist-title">📋 현장 구매 단계별 체크리스트</div>
+        <div class="purch-steps" id="purch-steps-offline">
+
+          <div class="purch-step" id="ps-0">
+            <div class="purch-step-head" onclick="togglePurchStep(0)">
+              <div class="purch-step-num">1</div>
+              <div class="purch-step-label">품의 등록 — 제목에 [자체구매] 표시</div>
+              <div class="purch-step-check" onclick="checkPurchStep(event,0)"></div>
+            </div>
+            <div class="purch-step-body">
+              K-에듀파인에 품의를 등록합니다. 제목 앞에 <strong>[자체구매]</strong>를 반드시 표시하고, 개요에 <strong>구입 방법: 현장 방문 자체구매</strong>를 명시합니다.
+            </div>
+          </div>
+
+          <div class="purch-step" id="ps-1">
+            <div class="purch-step-head" onclick="togglePurchStep(1)">
+              <div class="purch-step-num">2</div>
+              <div class="purch-step-label">행정실 「카드사용대장」 작성 후 카드 수령</div>
+              <div class="purch-step-check" onclick="checkPurchStep(event,1)"></div>
+            </div>
+            <div class="purch-step-body">
+              행정실에서 <strong>카드사용대장</strong>을 작성하고 카드를 수령합니다.
+            </div>
+          </div>
+
+          <div class="purch-step" id="ps-2">
+            <div class="purch-step-head" onclick="togglePurchStep(2)">
+              <div class="purch-step-num">3</div>
+              <div class="purch-step-label">물품 구매 (카드 결제)</div>
+              <div class="purch-step-check" onclick="checkPurchStep(event,2)"></div>
+            </div>
+            <div class="purch-step-body">
+              현장에서 카드로 결제합니다.
+              <div class="purch-step-warn">
+                ⭐ <strong>23:00 이후 또는 공휴일(주말)에 불가피하게 카드를 사용할 경우</strong> 반드시 개요에 표기하세요.<br>
+                (사용내역 학교홈페이지 공개됨)<br>
+                예) 2026. 11. 11. ○○○ 행사참석으로 공휴일 카드 사용
+              </div>
+            </div>
+          </div>
+
+          <div class="purch-step" id="ps-3">
+            <div class="purch-step-head" onclick="togglePurchStep(3)">
+              <div class="purch-step-num">4</div>
+              <div class="purch-step-label">「신용카드사용증빙서」 작성 · 복사 후 제출</div>
+              <div class="purch-step-check" onclick="checkPurchStep(event,3)"></div>
+            </div>
+            <div class="purch-step-body">
+              카드 사용 후 <strong>신용카드사용증빙서</strong>를 작성하고 복사 후 제출합니다.<br>
+              카드전표에 <strong>사용자 성명을 정자로 서명</strong>합니다.
+              <!-- 증빙서 서식 미리보기 -->
+              <div style="margin-top:.6rem;">
+                <button class="purch-tab on" style="font-size:.74rem;padding:.28rem .65rem;" onclick="toggleCertForm()">📄 증빙서 서식 보기 ▼</button>
+                <div class="card-cert-wrap" id="card-cert-form">
+                  <div class="card-cert-title">학교회계 신용카드 사용 증빙서</div>
+                  <div class="card-cert-school">○○초등학교</div>
+                  <table class="card-cert-table">
+                    <tr>
+                      <th>건&nbsp;&nbsp;&nbsp;명</th>
+                      <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                      <th>사 용 자</th>
+                      <td colspan="3">성&nbsp;명:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(서명)</td>
+                    </tr>
+                    <tr>
+                      <th>사용날짜</th>
+                      <td>20&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;.</td>
+                      <th>사용금액</th>
+                      <td style="text-align:right;">원</td>
+                    </tr>
+                  </table>
+                  <div class="card-cert-evidence">
+                    ※ 증빙자료 <strong>[카드전표 및 내역서]</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="purch-step" id="ps-4">
+            <div class="purch-step-head" onclick="togglePurchStep(4)">
+              <div class="purch-step-num">5</div>
+              <div class="purch-step-label">카드 사용 당일 반납</div>
+              <div class="purch-step-check" onclick="checkPurchStep(event,4)"></div>
+            </div>
+            <div class="purch-step-body">
+              카드는 <strong>사용 당일 반납</strong>합니다. 「카드사용대장」을 작성 후 카드를 반납합니다.
+              <div class="purch-step-warn">
+                ⚠️ 카드는 <strong>사용 당일 반납</strong>이 원칙입니다. 부득이한 경우 즉시 반납하세요.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="cite">
+        ⚠️ <strong>인터넷 구매와 자체구매(현장방문)는 각각 따로 품의</strong>합니다. 한 품의에 섞지 마세요.
+      </div>
     </div>
 
     <!-- 추가 규칙 카드 -->
@@ -2390,6 +2832,38 @@ body.ann-off #ann-panel { display: none !important; }
     <div class="min-detail-wrap" id="md-legal">
       <div class="min-detail-header legal">⚖️ 법정 회의록 — 작성 방법</div>
 
+      <!-- C: 법정 판단 위저드 -->
+      <div class="legal-wizard">
+        <div class="legal-wizard-title">🔍 내 회의가 법정에 해당하는지 확인하세요</div>
+        <div class="legal-check-list" id="legal-checks">
+          <div class="legal-check-item" onclick="toggleLegalCheck(this)">
+            <span class="legal-check-icon">☐</span>
+            <span>학교운영위원회 / 인사자문위원회 등 <strong>개별법·특별법에 따라 구성된 위원회</strong></span>
+          </div>
+          <div class="legal-check-item" onclick="toggleLegalCheck(this)">
+            <span class="legal-check-icon">☐</span>
+            <span><strong>교육감·교육장</strong>이 직접 참석하는 회의</span>
+          </div>
+          <div class="legal-check-item" onclick="toggleLegalCheck(this)">
+            <span class="legal-check-icon">☐</span>
+            <span>관계기관 <strong>국장급 이상 공무원 3인 이상</strong> 참석 회의</span>
+          </div>
+          <div class="legal-check-item" onclick="toggleLegalCheck(this)">
+            <span class="legal-check-icon">☐</span>
+            <span>그 밖에 <strong>회의록 작성이 필요하다고 인정</strong>되는 주요 회의</span>
+          </div>
+        </div>
+        <div class="legal-wizard-result legal-result-yes" id="legal-result-yes">
+          ⚖️ <strong>법정 회의록 작성 의무</strong> — 아래 작성 방법과 서식을 반드시 따르세요.<br>
+          <span style="font-size:.75rem;font-weight:400;">근거: 공공기록물법 제17조 및 시행령 제18조</span>
+        </div>
+        <div class="legal-wizard-result legal-result-no" id="legal-result-no">
+          📋 <strong>비법정 회의</strong> — 위 항목에 해당하지 않으면 작성 의무는 없으나, 필요 시 간략히 작성합니다.
+        </div>
+        <button class="legal-wizard-reset" id="legal-wizard-reset" onclick="resetLegalChecks()">↩ 다시 선택</button>
+      </div>
+
+      <!-- 작성 내용 카드 -->
       <div class="rule-card open">
         <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
           <div class="rule-card-title"><span class="rc-badge">작성 내용</span> 무엇을 써야 하나</div>
@@ -2411,6 +2885,86 @@ body.ann-off #ann-panel { display: none !important; }
         </div>
       </div>
 
+      <!-- B: 서식 미리보기 -->
+      <div class="rule-card">
+        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
+          <div class="rule-card-title"><span class="rc-badge">서식</span> 회의록 작성 서식 — 항목 클릭 시 작성 요령</div>
+          <span class="rc-chevron">›</span>
+        </div>
+        <div class="rule-card-body">
+          <div class="min-form-wrap">
+            <div class="min-form-title">
+              📄 회의록 작성 예시
+              <span class="min-form-subtitle">각 항목을 탭하면 작성 요령이 표시됩니다</span>
+            </div>
+            <table class="min-form-table">
+              <tr>
+                <th>회의명</th>
+                <td>
+                  <span class="min-form-hl" onclick="toggleFormTip('ft-name')">○○○위원회 제○차 <strong>회의록</strong></span>
+                  <div class="min-form-tip" id="ft-name">
+                    <span class="min-form-tag">필수</span>제목에 반드시 <strong>'회의록'</strong>을 명기합니다. 업무관리시스템 등록 시 회의록임을 확인할 수 있어야 합니다.
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>개최부서(기관)</th>
+                <td>○○학교</td>
+              </tr>
+              <tr>
+                <th>일시</th>
+                <td>○○. ○. ○.&nbsp;&nbsp;00:00∼00:00</td>
+              </tr>
+              <tr>
+                <th>장소</th>
+                <td>○○실</td>
+              </tr>
+              <tr>
+                <th>참석자 명단</th>
+                <td>
+                  <span class="min-form-hl" onclick="toggleFormTip('ft-attend')">출석위원 / 출석공무원 / 작성자</span>
+                  <div class="min-form-tip" id="ft-attend">
+                    <span class="min-form-tag">출석서명 필수</span>형식적인 회의 개최를 방지하기 위해 <strong>출석서명은 반드시</strong> 받아야 합니다. 전원 확인서명은 <strong>대표 1인으로 갈음</strong> 가능.
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>진행순서</th>
+                <td>1. 개회&nbsp;&nbsp;2. 회의안건 상정 및 토의&nbsp;&nbsp;3. 폐회</td>
+              </tr>
+              <tr>
+                <th>상정안건</th>
+                <td>1.&nbsp;&nbsp;2.&nbsp;&nbsp;3.</td>
+              </tr>
+              <tr>
+                <th>발언요지</th>
+                <td>
+                  <span class="min-form-hl" onclick="toggleFormTip('ft-speech')">○ 발언자성명(직위) : 발언요지<br>○ 발언자성명(직위) : 발언요지</span>
+                  <div class="min-form-tip" id="ft-speech">
+                    <span class="min-form-tag">핵심만</span><strong>발언자 성명(직위)</strong>를 표기하고, 상정안건에 대한 <strong>핵심·중요 내용만</strong> 정리합니다.<br>
+                    모든 발언을 축어로 기록할 필요 없음. 속기·녹음인 경우 별첨 표시.
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>결정사항 및<br>표결내용</th>
+                <td>
+                  <span class="min-form-hl" onclick="toggleFormTip('ft-result')">○ 결정사항 : 안건 ○에 대하여 ○○ 결정함<br>○ 표결내용 : 안건 ○에 대하여 ○○와 같이 표결함</span>
+                  <div class="min-form-tip" id="ft-result">
+                    <span class="min-form-tag">필수</span>중요 토론·의결 사안은 반드시 <strong>자세히 기술</strong>합니다. 표결 결과(찬성/반대/기권 수)도 포함하세요.
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>비고</th>
+                <td>기타 회의 운영과 관련한 참고사항</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 결재 방법 카드 -->
       <div class="rule-card">
         <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
           <div class="rule-card-title"><span class="rc-badge">결재 방법</span> 확인 서명 및 결재</div>
@@ -2445,6 +2999,46 @@ body.ann-off #ann-panel { display: none !important; }
           <div class="cite blue">
             전자결재하고, 위원 확인 서명은 <strong>위원의 병렬협조(결재)로 갈음</strong><br>
             (예: 교과 협의회 등)
+          </div>
+        </div>
+      </div>
+
+      <!-- A: FAQ 탭 -->
+      <div class="rule-card">
+        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
+          <div class="rule-card-title"><span class="rc-badge">FAQ</span> 자주 묻는 질문</div>
+          <span class="rc-chevron">›</span>
+        </div>
+        <div class="rule-card-body">
+          <div class="min-faq-tabs">
+            <button class="min-faq-tab on" onclick="showMinFaq(0,this)">Q1 법정 범위</button>
+            <button class="min-faq-tab"    onclick="showMinFaq(1,this)">Q2 발언요지</button>
+            <button class="min-faq-tab"    onclick="showMinFaq(2,this)">Q3 발언자 성명</button>
+          </div>
+          <div class="min-faq-panel on" id="mfp-0">
+            <div class="min-faq-q"><span class="min-faq-qnum">Q</span><span>비법정 위원회도 법정 의무에 해당할 수 있나요?</span></div>
+            <div class="min-faq-a">
+              개별법·특별법 근거가 없어도 <strong>회의록 작성이 필요하다고 인정되는 주요 회의</strong>는 작성 의무가 있습니다.<br>
+              예를 들어 교육감·교육장 참석 회의, 국장급 이상 공무원 3인 이상 참석 회의도 법정 대상에 포함됩니다.
+              <div class="min-faq-law">📋 근거: 공공기록물법 제17조(기록물의 생산의무) 제2항, 시행령 제18조 제1항</div>
+            </div>
+          </div>
+          <div class="min-faq-panel" id="mfp-1">
+            <div class="min-faq-q"><span class="min-faq-qnum">Q</span><span>발언 요지는 모든 발언 내용을 다 써야 하나요?</span></div>
+            <div class="min-faq-a">
+              아닙니다. 발언요지는 상정안건에 대해 발언한 내용 중 <strong>핵심이 되거나 중요한 내용만 정리</strong>하여 기재합니다.<br>
+              최종 결정사항에만 국한하거나 발언자의 모든 발언을 축어로 기록할 필요는 없습니다.<br>
+              인사말, 단순 확인 질문 등은 <strong>생략 가능</strong>합니다.
+              <div class="min-faq-law">📋 근거: 공공기록물법 시행령 제18조 제2항</div>
+            </div>
+          </div>
+          <div class="min-faq-panel" id="mfp-2">
+            <div class="min-faq-q"><span class="min-faq-qnum">Q</span><span>발언자 이름을 반드시 써야 하나요?</span></div>
+            <div class="min-faq-a">
+              법령에 명시적 의무는 없으나, <strong>공공기관의 투명하고 책임 있는 행정 구현</strong>을 위해 발언자 성명(직위)을 포함하도록 <strong>권장</strong>합니다.<br>
+              국가기록원 기록물 관리지침 서식에도 <strong>발언자성명(직위) : 발언요지</strong> 형식으로 작성하도록 안내하고 있습니다.
+              <div class="min-faq-law">📋 근거: 국가기록원 기록물 관리지침, 서울기록원 기록물관리 지침</div>
+            </div>
           </div>
         </div>
       </div>
@@ -3365,11 +3959,55 @@ function switchScenario(idx, btn) {
   document.querySelectorAll('.sc-view').forEach(v => v.classList.remove('on'));
   document.getElementById('scv' + idx).classList.add('on');
   // 열려 있던 패널 닫기
-  [0,1,2].forEach(i => {
+  [0,1,2,3].forEach(i => {
     const p = document.getElementById('ann-panel-' + i);
     if (p) p.style.display = 'none';
   });
   document.querySelectorAll('.ann-hotspot').forEach(el => el.classList.remove('active'));
+}
+
+// ── 품의 구매처 탭 ──
+function showPurchTab(idx, btn) {
+  document.querySelectorAll('.purch-tab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.purch-panel').forEach(p => p.classList.remove('on'));
+  document.getElementById('pp2-' + idx).classList.add('on');
+}
+
+// ── 품의 팁 토글 ──
+function togglePurchTip(id) {
+  const tip = document.getElementById(id);
+  if (!tip) return;
+  document.querySelectorAll('.purch-tip').forEach(t => {
+    if (t.id !== id) t.classList.remove('show');
+  });
+  tip.classList.toggle('show');
+}
+
+// ── 현장구매 체크리스트 ──
+function togglePurchStep(idx) {
+  const step = document.getElementById('ps-' + idx);
+  if (!step) return;
+  step.classList.toggle('open');
+}
+
+function checkPurchStep(e, idx) {
+  e.stopPropagation();
+  const step = document.getElementById('ps-' + idx);
+  if (!step) return;
+  step.classList.toggle('done');
+  const chk = step.querySelector('.purch-step-check');
+  chk.textContent = step.classList.contains('done') ? '✓' : '';
+  // 완료 시 자동으로 접기
+  if (step.classList.contains('done')) step.classList.remove('open');
+}
+
+// ── 증빙서 서식 토글 ──
+let certFormOpen = true;
+function toggleCertForm() {
+  certFormOpen = !certFormOpen;
+  const form = document.getElementById('card-cert-form');
+  form.style.display = certFormOpen ? 'block' : 'none';
 }
 
 let currentAnn = null;
@@ -3381,7 +4019,7 @@ function toggleAnn() {
   document.getElementById('ann-knob').style.left = annOn ? '22px' : '2px';
   document.getElementById('ann-label').textContent = annOn ? '주석 ON' : '주석 OFF';
   if (!annOn) {
-    [0,1,2].forEach(i => {
+    [0,1,2,3].forEach(i => {
       const p = document.getElementById('ann-panel-' + i);
       if (p) p.style.display = 'none';
     });
@@ -3567,6 +4205,66 @@ function checkDrill(i) {
 // ══════════════════════════════════
 // Step6 회의록
 // ══════════════════════════════════
+// ══════════════════════════════════
+// C: 법정 판단 위저드
+// ══════════════════════════════════
+function toggleLegalCheck(el) {
+  el.classList.toggle('checked');
+  const icon = el.querySelector('.legal-check-icon');
+  icon.textContent = el.classList.contains('checked') ? '☑' : '☐';
+  updateLegalResult();
+}
+
+function updateLegalResult() {
+  const checked = document.querySelectorAll('#legal-checks .legal-check-item.checked').length;
+  const total   = document.querySelectorAll('#legal-checks .legal-check-item').length;
+  const yes = document.getElementById('legal-result-yes');
+  const no  = document.getElementById('legal-result-no');
+  const rst = document.getElementById('legal-wizard-reset');
+  if (checked > 0) {
+    yes.classList.add('show'); no.classList.remove('show');
+    rst.classList.add('show');
+  } else if (document.querySelectorAll('#legal-checks .legal-check-item').length > 0
+             && [...document.querySelectorAll('#legal-checks .legal-check-item')].some(i => !i.classList.contains('checked'))) {
+    // 아무것도 선택 안 된 상태 — 결과 숨김
+    yes.classList.remove('show'); no.classList.remove('show');
+    rst.classList.remove('show');
+  }
+}
+
+function resetLegalChecks() {
+  document.querySelectorAll('#legal-checks .legal-check-item').forEach(el => {
+    el.classList.remove('checked');
+    el.querySelector('.legal-check-icon').textContent = '☐';
+  });
+  document.getElementById('legal-result-yes').classList.remove('show');
+  document.getElementById('legal-result-no').classList.remove('show');
+  document.getElementById('legal-wizard-reset').classList.remove('show');
+}
+
+// ══════════════════════════════════
+// B: 서식 팁 토글
+// ══════════════════════════════════
+function toggleFormTip(id) {
+  const tip = document.getElementById(id);
+  if (!tip) return;
+  // 다른 팁 닫기
+  document.querySelectorAll('.min-form-tip').forEach(t => {
+    if (t.id !== id) t.classList.remove('show');
+  });
+  tip.classList.toggle('show');
+}
+
+// ══════════════════════════════════
+// A: FAQ 탭 전환
+// ══════════════════════════════════
+function showMinFaq(idx, btn) {
+  document.querySelectorAll('.min-faq-tab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.min-faq-panel').forEach(p => p.classList.remove('on'));
+  document.getElementById('mfp-' + idx).classList.add('on');
+}
+
 // ══════════════════════════════════
 // 회의록 위저드
 // ══════════════════════════════════
