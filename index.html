@@ -4294,10 +4294,23 @@ function closeAnn() {
   });
 }
 
+// card → rt-section 매핑 (sv2 전용)
+const CARD_TO_RT = {
+  'rc-tag':       'rt-title',
+  'rc-date':      'rt-date',
+  'rc-num':       'rt-num',
+  'rc-items':     'rt-items',
+  'rc-spell':     'rt-spell',
+  'rc-terms':     'rt-spell',
+  'rc-punct':     'rt-punct',
+  'rc-attach':    'rt-attach',
+  'rc-end-cases': 'rt-attach',
+};
+
 function annGoto(step, card) {
   closeAnn();
   setTimeout(() => {
-    // scrollTo 억제하고 뷰·스텝만 전환
+    // view·step 전환 (scrollTo 없이)
     document.querySelectorAll('.view').forEach(el => el.classList.remove('on'));
     document.getElementById('view-workflow').classList.add('on');
     document.querySelectorAll('.nav-tab').forEach((b,i) => b.classList.toggle('on', i===0));
@@ -4311,11 +4324,33 @@ function annGoto(step, card) {
       setTimeout(() => {
         const el = document.getElementById(card);
         if (!el) return;
-        // 해당 sv의 모든 rule-card 닫기 → 타겟만 열기
-        const sv = document.getElementById('sv' + step);
-        if (sv) sv.querySelectorAll('.rule-card').forEach(rc => rc.classList.remove('open'));
+
+        // sv2인 경우 해당 rule-section 탭 활성화
+        const rtId = CARD_TO_RT[card];
+        if (rtId) {
+          // 모든 rule-section 숨기기, 모든 rule-tab 비활성
+          document.querySelectorAll('.rule-section').forEach(s => s.classList.remove('on'));
+          document.querySelectorAll('.rule-tab').forEach(b => b.classList.remove('on'));
+          // 타겟 섹션 열기
+          const rtEl = document.getElementById(rtId);
+          if (rtEl) {
+            rtEl.classList.add('on');
+            // 해당 섹션의 모든 rule-card 열기
+            rtEl.querySelectorAll('.rule-card').forEach(rc => rc.classList.add('open'));
+          }
+          // 해당 탭 버튼 활성화
+          document.querySelectorAll('.rule-tab').forEach(btn => {
+            if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(rtId)) {
+              btn.classList.add('on');
+            }
+          });
+        } else {
+          // sv2 외 다른 sv의 경우 해당 sv 내 모든 rule-card 열기
+          if (sv) sv.querySelectorAll('.rule-card').forEach(rc => rc.classList.add('open'));
+        }
+
+        // 타겟 카드 열기 + 스크롤
         el.classList.add('open');
-        // 네비바 여유 두고 스크롤
         requestAnimationFrame(() => {
           const top = el.getBoundingClientRect().top + window.scrollY - 70;
           window.scrollTo({ top, behavior: 'smooth' });
