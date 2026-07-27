@@ -4330,9 +4330,10 @@ function annGoto(step, card) {
         if (rtId) {
           // 해당 탭 버튼 찾아서 showRuleTab 직접 호출
           let tabBtn = null;
+          const needle = "'" + rtId + "'";
           document.querySelectorAll('.rule-tab').forEach(btn => {
             const oc = btn.getAttribute('onclick') || '';
-            if (oc.indexOf(\"'\" + rtId + \"'\") !== -1) tabBtn = btn;
+            if (oc.indexOf(needle) !== -1) tabBtn = btn;
           });
           if (tabBtn) {
             showRuleTab(rtId, tabBtn);
