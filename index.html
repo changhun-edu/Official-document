@@ -106,6 +106,7 @@ nav {
 .steps-bar {
   background: var(--paper);
   border-bottom: 1px solid var(--line);
+  position: sticky; top: 56px; z-index: 150;
 }
 .steps-bar-inner {
   max-width: var(--max-w);
@@ -565,27 +566,27 @@ body.vis-on #vis-knob   { left: 22px; }
   display: flex; align-items: center; gap: .5rem;
   padding: .38rem .5rem; border-radius: 7px;
   cursor: pointer; transition: background .13s;
-  font-size: .78rem; color: rgba(255,255,255,.65);
+  font-size: .78rem; color: rgba(255,255,255,.92);
   border: 1px solid transparent;
 }
-.ann-col-item:hover { background: rgba(255,255,255,.08); color: #fff; }
+.ann-col-item:hover { background: rgba(255,255,255,.1); color: #fff; }
 .ann-col-item.active {
-  background: rgba(212,150,10,.18);
-  border-color: rgba(212,150,10,.35);
+  background: rgba(212,150,10,.28);
+  border-color: var(--gold);
   color: #fff; font-weight: 700;
 }
-.ann-col-item.seen { color: rgba(255,255,255,.35); }
+.ann-col-item.seen { color: rgba(255,255,255,.55); }
 .ann-col-item.seen.active { color: #fff; }
 .aci-num {
   width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
-  background: rgba(255,255,255,.12); color: rgba(255,255,255,.5);
+  background: rgba(255,255,255,.2); color: #fff;
   font-size: .65rem; font-weight: 900;
   display: flex; align-items: center; justify-content: center;
   transition: all .2s;
 }
 .ann-col-item.active .aci-num { background: var(--gold); color: var(--ink); }
-.ann-col-item.seen .aci-num   { background: rgba(255,255,255,.06); }
-.aci-check { margin-left: auto; font-size: .72rem; color: var(--ok); flex-shrink: 0; }
+.ann-col-item.seen .aci-num   { background: rgba(255,255,255,.12); color: rgba(255,255,255,.6); }
+.aci-check { margin-left: auto; font-size: .78rem; color: var(--ok); flex-shrink: 0; font-weight: 900; }
 
 .ann-col-rule {
   flex: 1; padding: 1rem 1.1rem; overflow-y: auto; overflow-x: hidden;
@@ -1036,6 +1037,54 @@ body.ann-off #ann-panel { display: none !important; }
   padding: .3rem 0; margin-top: .35rem; display: none;
 }
 .legal-wizard-reset.show { display: inline-flex; align-items: center; gap: .3rem; }
+
+/* ① 유형 진단 */
+.min-diag {
+  background: var(--cream); border: 1.5px solid var(--line);
+  border-radius: 14px; padding: 1.1rem 1.2rem; margin-bottom: 1.2rem;
+}
+.min-diag-title { font-size: .95rem; font-weight: 800; color: var(--ink); margin-bottom: .3rem; }
+.min-diag-sub { font-size: .8rem; color: var(--muted); margin-bottom: .8rem; line-height: 1.6; }
+.min-diag-result {
+  padding: .65rem .9rem; border-radius: 8px;
+  font-size: .82rem; font-weight: 700; line-height: 1.65;
+  display: none; margin-top: .3rem;
+}
+.min-diag-result.show { display: block; }
+.min-diag-result.legal { background: #fff8ec; border: 1.5px solid #e8a020; color: #7a3800; }
+.min-diag-result.non   { background: #f0faf4; border: 1.5px solid var(--ok); color: #1a6a3a; }
+.min-diag-hint { font-size: .78rem; color: var(--muted); text-align: center; padding: .5rem; }
+
+/* ② 서식 주인공 */
+.min-form-hero {
+  background: #fff; border: 1.5px solid var(--line);
+  border-radius: 14px; padding: 1.1rem 1.2rem; margin-bottom: 1.2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,.05);
+}
+.min-form-hero-title { font-size: .95rem; font-weight: 800; color: var(--ink); margin-bottom: .1rem; }
+.min-form-hero-sub { font-size: .74rem; font-weight: 400; color: var(--muted); margin-left: .4rem; }
+
+/* ③ 비교표 */
+.min-compare-hero {
+  background: #fff; border: 1.5px solid var(--line);
+  border-radius: 14px; padding: 1.1rem 1.2rem; margin-bottom: 1.2rem;
+}
+.min-compare-title { font-size: .95rem; font-weight: 800; color: var(--ink); margin-bottom: .8rem; }
+.min-compare-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+.min-compare-table thead th {
+  padding: .55rem .7rem; font-size: .82rem; font-weight: 800;
+  border-bottom: 2px solid var(--ink); text-align: left;
+}
+.min-compare-table thead th:nth-child(2) { color: #b06000; }
+.min-compare-table thead th:nth-child(3) { color: var(--ok); }
+.min-compare-table td {
+  padding: .55rem .7rem; border-bottom: 1px solid var(--line);
+  vertical-align: top; line-height: 1.6;
+}
+.min-compare-table .mct-label { font-weight: 700; color: var(--ink2); font-size: .78rem; white-space: nowrap; background: #f7f8fb; }
+.mct-must { color: #b06000; font-weight: 700; }
+.mct-option { color: var(--ok); font-weight: 700; }
+.mct-note { font-weight: 400; font-size: .72rem; color: var(--muted); }
 
 /* B: 서식 미리보기 */
 .min-form-wrap {
@@ -2942,421 +2991,182 @@ body.ann-off #ann-panel { display: none !important; }
 
 <!-- ══════ 회의록 뷰 ══════ -->
 <div class="view" id="view-minutes">
-<!-- STEP 6: 회의록 작성 -->
   <div class="step-view on" id="sv6">
     <div class="step-hero sh3">
       <div class="hero-num">6</div>
       <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 6</div>
       <h2>회의록 작성법</h2>
-      <p>법정·비법정 회의록은 작성 방법과 결재 절차가 다릅니다. 내 회의 유형을 먼저 선택하세요.</p>
+      <p>① 내 회의 유형을 진단하고 → ② 서식대로 작성한 뒤 → ③ 유형별 결재 방법을 확인하세요.</p>
     </div>
 
-    <!-- ★ 위저드 -->
-    <div class="min-wizard">
-      <div class="min-wizard-q">내가 작성해야 할 회의록은 어떤 종류인가요?</div>
-      <div class="min-wizard-sub">아래 중 해당하는 유형을 선택하면 작성 방법과 체크리스트를 바로 확인할 수 있습니다.</div>
-      <div class="min-wizard-choices">
-        <button class="min-wiz-btn" id="mwb-legal" onclick="selectMinType('legal')">
-          <span class="min-wiz-icon">⚖️</span>
-          <span class="min-wiz-label">법정 회의록</span>
-          <span class="min-wiz-desc">법령에 의무화된 회의<br>학교운영위원회·인사자문위원회 등</span>
-        </button>
-        <button class="min-wiz-btn" id="mwb-non" onclick="selectMinType('non')">
-          <span class="min-wiz-icon">📋</span>
-          <span class="min-wiz-label">비법정 회의록</span>
-          <span class="min-wiz-desc">관례로 운영하는 회의<br>학년 협의회·교과 협의회 등</span>
-        </button>
+    <!-- ① 유형 진단 (통합 위저드) -->
+    <div class="min-diag">
+      <div class="min-diag-title">① 내 회의 유형 진단</div>
+      <div class="min-diag-sub">아래 항목 중 <strong>하나라도 해당</strong>하면 법정 회의록입니다. 체크해 보세요.</div>
+      <div class="legal-check-list" id="legal-checks">
+        <div class="legal-check-item" onclick="toggleLegalCheck(this)">
+          <span class="legal-check-icon">☐</span>
+          <span>학교운영위원회 / 인사자문위원회 등 <strong>개별법·특별법에 따라 구성된 위원회</strong></span>
+        </div>
+        <div class="legal-check-item" onclick="toggleLegalCheck(this)">
+          <span class="legal-check-icon">☐</span>
+          <span><strong>교육감·교육장</strong>이 직접 참석하는 회의</span>
+        </div>
+        <div class="legal-check-item" onclick="toggleLegalCheck(this)">
+          <span class="legal-check-icon">☐</span>
+          <span>관계기관 <strong>국장급 이상 공무원 3인 이상</strong> 참석 회의</span>
+        </div>
+        <div class="legal-check-item" onclick="toggleLegalCheck(this)">
+          <span class="legal-check-icon">☐</span>
+          <span>그 밖에 <strong>회의록 작성이 필요하다고 인정</strong>되는 주요 회의</span>
+        </div>
       </div>
-      <div class="min-wiz-hint" id="min-wiz-hint">👆 위 카드를 탭하여 선택하세요</div>
-      <div class="min-type-badge legal" id="mtb-legal" onclick="selectMinType('legal')">
-        ⚖️ 법정 회의록 선택됨 — 작성 방법 보기
-        <span class="mtb-arrow">↓</span>
+      <div class="min-diag-result legal" id="legal-result-yes">
+        ⚖️ <strong>법정 회의록 작성 의무</strong> — 아래 서식을 반드시 갖춰 작성하세요.<br>
+        <span style="font-size:.75rem;font-weight:400;">근거: 공공기록물법 제17조 및 시행령 제18조</span>
       </div>
-      <div class="min-type-badge non" id="mtb-non" onclick="selectMinType('non')">
-        📋 비법정 회의록 선택됨 — 작성 방법 보기
-        <span class="mtb-arrow">↓</span>
+      <div class="min-diag-result non" id="legal-result-no">
+        📋 <strong>비법정 회의</strong> — 작성 의무는 없으나 필요 시 개조식으로 간략히 작성합니다.
       </div>
-      <button class="min-reset-btn" id="min-reset-btn" style="display:none;" onclick="resetMinType()">↩ 다시 선택</button>
+      <div class="min-diag-hint" id="min-diag-hint">👆 해당하는 항목을 체크하면 유형이 판정됩니다</div>
+      <button class="legal-wizard-reset" id="legal-wizard-reset" onclick="resetLegalChecks()">↩ 다시 선택</button>
     </div>
 
-    <!-- 법정 상세 -->
-    <div class="min-detail-wrap" id="md-legal">
-      <div class="min-detail-header legal">⚖️ 법정 회의록 — 작성 방법</div>
-
-      <!-- C: 법정 판단 위저드 -->
-      <div class="legal-wizard">
-        <div class="legal-wizard-title">🔍 내 회의가 법정에 해당하는지 확인하세요</div>
-        <div class="legal-check-list" id="legal-checks">
-          <div class="legal-check-item" onclick="toggleLegalCheck(this)">
-            <span class="legal-check-icon">☐</span>
-            <span>학교운영위원회 / 인사자문위원회 등 <strong>개별법·특별법에 따라 구성된 위원회</strong></span>
-          </div>
-          <div class="legal-check-item" onclick="toggleLegalCheck(this)">
-            <span class="legal-check-icon">☐</span>
-            <span><strong>교육감·교육장</strong>이 직접 참석하는 회의</span>
-          </div>
-          <div class="legal-check-item" onclick="toggleLegalCheck(this)">
-            <span class="legal-check-icon">☐</span>
-            <span>관계기관 <strong>국장급 이상 공무원 3인 이상</strong> 참석 회의</span>
-          </div>
-          <div class="legal-check-item" onclick="toggleLegalCheck(this)">
-            <span class="legal-check-icon">☐</span>
-            <span>그 밖에 <strong>회의록 작성이 필요하다고 인정</strong>되는 주요 회의</span>
-          </div>
-        </div>
-        <div class="legal-wizard-result legal-result-yes" id="legal-result-yes">
-          ⚖️ <strong>법정 회의록 작성 의무</strong> — 아래 작성 방법과 서식을 반드시 따르세요.<br>
-          <span style="font-size:.75rem;font-weight:400;">근거: 공공기록물법 제17조 및 시행령 제18조</span>
-        </div>
-        <div class="legal-wizard-result legal-result-no" id="legal-result-no">
-          📋 <strong>비법정 회의</strong> — 위 항목에 해당하지 않으면 작성 의무는 없으나, 필요 시 간략히 작성합니다.
-        </div>
-        <button class="legal-wizard-reset" id="legal-wizard-reset" onclick="resetLegalChecks()">↩ 다시 선택</button>
+    <!-- ② 회의록 서식 (항상 펼침, 주인공) -->
+    <div class="min-form-hero">
+      <div class="min-form-hero-title">② 회의록 작성 서식 <span class="min-form-hero-sub">각 항목을 탭하면 작성 요령이 표시됩니다</span></div>
+      <div class="min-form-wrap">
+        <table class="min-form-table">
+          <tr>
+            <th>회의명</th>
+            <td>
+              <span class="min-form-hl" onclick="toggleFormTip('ft-name')">○○○위원회 제○차 <strong>회의록</strong></span>
+              <div class="min-form-tip" id="ft-name">
+                <span class="min-form-tag">필수</span>제목에 반드시 <strong>'회의록'</strong>을 명기합니다. 업무관리시스템 등록 시 회의록임을 확인할 수 있어야 합니다.
+              </div>
+            </td>
+          </tr>
+          <tr><th>개최부서(기관)</th><td>○○학교</td></tr>
+          <tr><th>일시</th><td>○○. ○. ○.&nbsp;&nbsp;00:00∼00:00</td></tr>
+          <tr><th>장소</th><td>○○실</td></tr>
+          <tr>
+            <th>참석자 명단</th>
+            <td>
+              <span class="min-form-hl" onclick="toggleFormTip('ft-attend')">출석위원 / 출석공무원 / 작성자</span>
+              <div class="min-form-tip" id="ft-attend">
+                <span class="min-form-tag">출석서명 필수</span>형식적인 회의 개최를 방지하기 위해 <strong>출석서명은 반드시</strong> 받아야 합니다. 전원 확인서명은 <strong>대표 1인으로 갈음</strong> 가능.
+              </div>
+            </td>
+          </tr>
+          <tr><th>진행순서</th><td>1. 개회&nbsp;&nbsp;2. 회의안건 상정 및 토의&nbsp;&nbsp;3. 폐회</td></tr>
+          <tr><th>상정안건</th><td>1.&nbsp;&nbsp;2.&nbsp;&nbsp;3.</td></tr>
+          <tr>
+            <th>발언요지</th>
+            <td>
+              <span class="min-form-hl" onclick="toggleFormTip('ft-speech')">○ 발언자성명(직위) : 발언요지<br>○ 발언자성명(직위) : 발언요지</span>
+              <div class="min-form-tip" id="ft-speech">
+                <span class="min-form-tag">핵심만</span><strong>발언자 성명(직위)</strong>를 표기하고, 상정안건에 대한 <strong>핵심·중요 내용만</strong> 정리합니다.<br>
+                모든 발언을 축어로 기록할 필요 없음. 속기·녹음인 경우 별첨 표시.
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>결정사항 및<br>표결내용</th>
+            <td>
+              <span class="min-form-hl" onclick="toggleFormTip('ft-result')">○ 결정사항 : 안건 ○에 대하여 ○○ 결정함<br>○ 표결내용 : 안건 ○에 대하여 ○○와 같이 표결함</span>
+              <div class="min-form-tip" id="ft-result">
+                <span class="min-form-tag">필수</span>중요 토론·의결 사안은 반드시 <strong>자세히 기술</strong>합니다. 표결 결과(찬성/반대/기권 수)도 포함하세요.
+              </div>
+            </td>
+          </tr>
+          <tr><th>비고</th><td>기타 회의 운영과 관련한 참고사항</td></tr>
+        </table>
       </div>
-
-      <!-- 작성 내용 카드 -->
-      <div class="rule-card open">
-        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-          <div class="rule-card-title"><span class="rc-badge">작성 내용</span> 무엇을 써야 하나</div>
-          <span class="rc-chevron">›</span>
-        </div>
-        <div class="rule-card-body">
-          <div class="cite" style="border-color:var(--err);background:#fff8f8;">
-            <strong>반드시 포함할 내용</strong><br>
-            중요 토론 사안이나 투표·의결 사안 등이 있을 때는 <strong>자세히 기술</strong>
-          </div>
-          <div class="cite">
-            <strong>회의록 구성요소</strong><br>
-            회의명 · 개최기관 · 일시 및 장소 · 참석자 및 배석자 명단 · 진행순서 · 상정안건 · 발언요지 · <strong>결정사항 및 표결내용</strong>
-          </div>
-          <div class="cite blue">
-            통상적인 회의 진행 절차 발언, 인사말, 단순 확인 질문 등은 <strong>생략 가능</strong><br>
-            주요 발언 및 최종결과 등을 중심으로 <strong>개조식으로 간략히</strong> 작성
-          </div>
-        </div>
-      </div>
-
-      <!-- B: 서식 미리보기 -->
-      <div class="rule-card">
-        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-          <div class="rule-card-title"><span class="rc-badge">서식</span> 회의록 작성 서식 — 항목 클릭 시 작성 요령</div>
-          <span class="rc-chevron">›</span>
-        </div>
-        <div class="rule-card-body">
-          <div class="min-form-wrap">
-            <div class="min-form-title">
-              📄 회의록 작성 예시
-              <span class="min-form-subtitle">각 항목을 탭하면 작성 요령이 표시됩니다</span>
-            </div>
-            <table class="min-form-table">
-              <tr>
-                <th>회의명</th>
-                <td>
-                  <span class="min-form-hl" onclick="toggleFormTip('ft-name')">○○○위원회 제○차 <strong>회의록</strong></span>
-                  <div class="min-form-tip" id="ft-name">
-                    <span class="min-form-tag">필수</span>제목에 반드시 <strong>'회의록'</strong>을 명기합니다. 업무관리시스템 등록 시 회의록임을 확인할 수 있어야 합니다.
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th>개최부서(기관)</th>
-                <td>○○학교</td>
-              </tr>
-              <tr>
-                <th>일시</th>
-                <td>○○. ○. ○.&nbsp;&nbsp;00:00∼00:00</td>
-              </tr>
-              <tr>
-                <th>장소</th>
-                <td>○○실</td>
-              </tr>
-              <tr>
-                <th>참석자 명단</th>
-                <td>
-                  <span class="min-form-hl" onclick="toggleFormTip('ft-attend')">출석위원 / 출석공무원 / 작성자</span>
-                  <div class="min-form-tip" id="ft-attend">
-                    <span class="min-form-tag">출석서명 필수</span>형식적인 회의 개최를 방지하기 위해 <strong>출석서명은 반드시</strong> 받아야 합니다. 전원 확인서명은 <strong>대표 1인으로 갈음</strong> 가능.
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th>진행순서</th>
-                <td>1. 개회&nbsp;&nbsp;2. 회의안건 상정 및 토의&nbsp;&nbsp;3. 폐회</td>
-              </tr>
-              <tr>
-                <th>상정안건</th>
-                <td>1.&nbsp;&nbsp;2.&nbsp;&nbsp;3.</td>
-              </tr>
-              <tr>
-                <th>발언요지</th>
-                <td>
-                  <span class="min-form-hl" onclick="toggleFormTip('ft-speech')">○ 발언자성명(직위) : 발언요지<br>○ 발언자성명(직위) : 발언요지</span>
-                  <div class="min-form-tip" id="ft-speech">
-                    <span class="min-form-tag">핵심만</span><strong>발언자 성명(직위)</strong>를 표기하고, 상정안건에 대한 <strong>핵심·중요 내용만</strong> 정리합니다.<br>
-                    모든 발언을 축어로 기록할 필요 없음. 속기·녹음인 경우 별첨 표시.
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th>결정사항 및<br>표결내용</th>
-                <td>
-                  <span class="min-form-hl" onclick="toggleFormTip('ft-result')">○ 결정사항 : 안건 ○에 대하여 ○○ 결정함<br>○ 표결내용 : 안건 ○에 대하여 ○○와 같이 표결함</span>
-                  <div class="min-form-tip" id="ft-result">
-                    <span class="min-form-tag">필수</span>중요 토론·의결 사안은 반드시 <strong>자세히 기술</strong>합니다. 표결 결과(찬성/반대/기권 수)도 포함하세요.
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th>비고</th>
-                <td>기타 회의 운영과 관련한 참고사항</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- 결재 방법 카드 -->
-      <div class="rule-card">
-        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-          <div class="rule-card-title"><span class="rc-badge">결재 방법</span> 확인 서명 및 결재</div>
-          <span class="rc-chevron">›</span>
-        </div>
-        <div class="rule-card-body">
-          <div class="cite" style="border-color:var(--blue);background:#f0f4ff;">
-            <strong>학교 내·외부 위원으로 구성된 회의</strong><br>
-            위원 서명 및 결재(전자 결재)<br>
-            참석자 전원에 대한 확인서명은 생략하고<br>
-            <strong>대표 1인(결재라인 외의 위원) 확인서명</strong>으로 갈음 가능
-          </div>
-          <div class="cite red">
-            형식적인 회의 개최를 방지하기 위해 <strong>출석서명은 필요</strong>
-          </div>
-          <div style="margin-top:.75rem;font-size:.78rem;font-weight:700;color:var(--ink2);margin-bottom:.35rem;">결재 예시 (학교운영위원회)</div>
-          <div class="apv-box">
-            <div class="apv-cell"><div class="apv-cell-top">기안자</div><div class="apv-cell-name">담당자</div><div class="apv-cell-date"></div></div>
-            <div class="apv-cell"><div class="apv-cell-top">검토</div><div class="apv-cell-name">교감</div><div class="apv-cell-date"></div></div>
-            <div class="apv-cell"><div class="apv-cell-top">결재</div><div class="apv-cell-name">교장</div><div class="apv-cell-date"></div></div>
-            <div class="apv-cell" style="background:#f0f4ff;"><div class="apv-cell-top" style="color:var(--blue);">위원 확인서명</div><div class="apv-cell-name" style="font-size:.72rem;color:var(--blue);">대표위원 1인</div><div class="apv-cell-date"></div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="rule-card">
-        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-          <div class="rule-card-title"><span class="rc-badge">교내 회의</span> 학교 내부 직원으로 구성된 경우</div>
-          <span class="rc-chevron">›</span>
-        </div>
-        <div class="rule-card-body">
-          <div class="cite blue">
-            전자결재하고, 위원 확인 서명은 <strong>위원의 병렬협조(결재)로 갈음</strong><br>
-            (예: 교과 협의회 등)
-          </div>
-        </div>
-      </div>
-
-      <!-- A: FAQ 탭 -->
-      <div class="rule-card">
-        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-          <div class="rule-card-title"><span class="rc-badge">FAQ</span> 자주 묻는 질문</div>
-          <span class="rc-chevron">›</span>
-        </div>
-        <div class="rule-card-body">
-          <div class="min-faq-tabs">
-            <button class="min-faq-tab on" onclick="showMinFaq(0,this)">Q1 법정 범위</button>
-            <button class="min-faq-tab"    onclick="showMinFaq(1,this)">Q2 발언요지</button>
-            <button class="min-faq-tab"    onclick="showMinFaq(2,this)">Q3 발언자 성명</button>
-          </div>
-          <div class="min-faq-panel on" id="mfp-0">
-            <div class="min-faq-q"><span class="min-faq-qnum">Q</span><span>비법정 위원회도 법정 의무에 해당할 수 있나요?</span></div>
-            <div class="min-faq-a">
-              개별법·특별법 근거가 없어도 <strong>회의록 작성이 필요하다고 인정되는 주요 회의</strong>는 작성 의무가 있습니다.<br>
-              예를 들어 교육감·교육장 참석 회의, 국장급 이상 공무원 3인 이상 참석 회의도 법정 대상에 포함됩니다.
-              <div class="min-faq-law">📋 근거: 공공기록물법 제17조(기록물의 생산의무) 제2항, 시행령 제18조 제1항</div>
-            </div>
-          </div>
-          <div class="min-faq-panel" id="mfp-1">
-            <div class="min-faq-q"><span class="min-faq-qnum">Q</span><span>발언 요지는 모든 발언 내용을 다 써야 하나요?</span></div>
-            <div class="min-faq-a">
-              아닙니다. 발언요지는 상정안건에 대해 발언한 내용 중 <strong>핵심이 되거나 중요한 내용만 정리</strong>하여 기재합니다.<br>
-              최종 결정사항에만 국한하거나 발언자의 모든 발언을 축어로 기록할 필요는 없습니다.<br>
-              인사말, 단순 확인 질문 등은 <strong>생략 가능</strong>합니다.
-              <div class="min-faq-law">📋 근거: 공공기록물법 시행령 제18조 제2항</div>
-            </div>
-          </div>
-          <div class="min-faq-panel" id="mfp-2">
-            <div class="min-faq-q"><span class="min-faq-qnum">Q</span><span>발언자 이름을 반드시 써야 하나요?</span></div>
-            <div class="min-faq-a">
-              법령에 명시적 의무는 없으나, <strong>공공기관의 투명하고 책임 있는 행정 구현</strong>을 위해 발언자 성명(직위)을 포함하도록 <strong>권장</strong>합니다.<br>
-              국가기록원 기록물 관리지침 서식에도 <strong>발언자성명(직위) : 발언요지</strong> 형식으로 작성하도록 안내하고 있습니다.
-              <div class="min-faq-law">📋 근거: 국가기록원 기록물 관리지침, 서울기록원 기록물관리 지침</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 법정 체크리스트 -->
-      <div class="min-checklist">
-        <div class="min-checklist-title">✅ 법정 회의록 작성 전 확인사항</div>
-        <div class="min-cs-item" id="mcs-l0">
-          <div class="min-cs-q">외부 위원이 참석하는 회의인가?</div>
-          <div class="min-cs-btns">
-            <button class="min-cs-btn min-cs-y" onclick="minCsAnswer(this,'y','l0')">예</button>
-            <button class="min-cs-btn min-cs-n" onclick="minCsAnswer(this,'n','l0')">아니오</button>
-          </div>
-          <div class="min-cs-ans" id="mca-l0"></div>
-        </div>
-        <div class="min-cs-item" id="mcs-l1">
-          <div class="min-cs-q">중요 토론 사안이나 표결이 있는가?</div>
-          <div class="min-cs-btns">
-            <button class="min-cs-btn min-cs-y" onclick="minCsAnswer(this,'y','l1')">예</button>
-            <button class="min-cs-btn min-cs-n" onclick="minCsAnswer(this,'n','l1')">아니오</button>
-          </div>
-          <div class="min-cs-ans" id="mca-l1"></div>
-        </div>
-        <div class="cite" style="margin-top:.65rem;">💡 <strong>법정 원칙</strong>: 구성요소 빠짐없이 작성 / 위원 서명 + 전자결재 / 출석서명 필수</div>
-      </div>
+      <div class="cite blue" style="margin-top:.7rem;">💡 통상적인 진행 절차 발언·인사말·단순 확인 질문은 <strong>생략 가능</strong>. 주요 발언과 최종 결과 중심으로 <strong>개조식으로 간략히</strong> 작성합니다.</div>
     </div>
 
-    <!-- 비법정 상세 -->
-    <div class="min-detail-wrap" id="md-non">
-      <div class="min-detail-header non">📋 비법정 회의록 — 작성 방법</div>
-
-      <div class="rule-card open">
-        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-          <div class="rule-card-title"><span class="rc-badge">관행적 회의</span> 의례적·관행적 회의</div>
-          <span class="rc-chevron">›</span>
-        </div>
-        <div class="rule-card-body">
-          <div class="cite">관행적이고 의례적인 회의 → <strong>회의록 작성 생략 가능</strong></div>
-          <div class="cite blue">
-            필요시, 회의결과만 간략히 보고<br>
-            (예: K-에듀파인 <strong>메모관리 기능</strong> 이용)
-          </div>
-        </div>
-      </div>
-
-      <div class="rule-card">
-        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-          <div class="rule-card-title"><span class="rc-badge">기타 회의</span> 각종 운영 회의</div>
-          <span class="rc-chevron">›</span>
-        </div>
-        <div class="rule-card-body">
-          <div class="cite">기타 운영하는 각종 회의 → <strong>개조식으로 간략히 작성(1~2쪽 이내)</strong>, 전자문서로 작성·관리</div>
-          <div class="compare">
-            <div class="cbox bad"><span class="cbox-lbl">❌ 과도한 작성</span><code>회의 진행 절차 전체 기술
-인사말, 자기소개 내용
-단순 확인 질문·답변
-전체 발언 축어 기록
-(5쪽 이상)</code></div>
-            <div class="cbox good"><span class="cbox-lbl">✅ 개조식 간략 작성</span><code>• 안건 1: ○○ 계획 심의
-  - 결정: 원안 가결
-• 안건 2: ○○ 예산 조정
-  - 결정: 수정 후 재심의
-(1~2쪽 이내)</code></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="rule-card">
-        <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-          <div class="rule-card-title"><span class="rc-badge">결재 방법</span> 전자결재 + 단계 축소</div>
-          <span class="rc-chevron">›</span>
-        </div>
-        <div class="rule-card-body">
-          <div class="cite blue">
-            <strong>전자결재, 결재단계 축소</strong> (위임전결규정 반영)<br>
-            회의록 개별 확인 서명은 생략하고 위임전결로 결재단계 축소
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin:.65rem 0;">
-            <div class="cbox good" style="background:#f0f4ff;border-color:#a0b8e0;">
-              <span class="cbox-lbl" style="color:var(--blue);">내부 위원</span>
-              <code style="line-height:1.9;">병렬협조(결재)로 처리</code>
-            </div>
-            <div class="cbox good" style="background:#f8f0ff;border-color:#c0a0e0;">
-              <span class="cbox-lbl" style="color:#7030b0;">외부 위원</span>
-              <code style="line-height:1.9;">전자우편, 문자 등으로 통보</code>
-            </div>
-          </div>
-          <div class="cite">
-            인사·예산 관련 등 <strong>중요 회의</strong>의 경우, 확인서명을<br>
-            내부위원은 병렬협조로 갈음, 외부위원은 전자우편·문자 등 확인 및 회신
-          </div>
-        </div>
-      </div>
-
-      <!-- 비법정 체크리스트 -->
-      <div class="min-checklist">
-        <div class="min-checklist-title">✅ 비법정 회의록 작성 전 확인사항</div>
-        <div class="min-cs-item" id="mcs-n0">
-          <div class="min-cs-q">관행적·의례적 성격의 회의인가?</div>
-          <div class="min-cs-btns">
-            <button class="min-cs-btn min-cs-y" onclick="minCsAnswer(this,'y','n0')">예</button>
-            <button class="min-cs-btn min-cs-n" onclick="minCsAnswer(this,'n','n0')">아니오</button>
-          </div>
-          <div class="min-cs-ans" id="mca-n0"></div>
-        </div>
-        <div class="min-cs-item" id="mcs-n1">
-          <div class="min-cs-q">외부 위원이 참석하는가?</div>
-          <div class="min-cs-btns">
-            <button class="min-cs-btn min-cs-y" onclick="minCsAnswer(this,'y','n1')">예</button>
-            <button class="min-cs-btn min-cs-n" onclick="minCsAnswer(this,'n','n1')">아니오</button>
-          </div>
-          <div class="min-cs-ans" id="mca-n1"></div>
-        </div>
-        <div class="min-cs-item" id="mcs-n2">
-          <div class="min-cs-q">인사·예산 관련 중요 사안을 다루는가?</div>
-          <div class="min-cs-btns">
-            <button class="min-cs-btn min-cs-y" onclick="minCsAnswer(this,'y','n2')">예</button>
-            <button class="min-cs-btn min-cs-n" onclick="minCsAnswer(this,'n','n2')">아니오</button>
-          </div>
-          <div class="min-cs-ans" id="mca-n2"></div>
-        </div>
-        <div class="cite" style="margin-top:.65rem;">💡 <strong>비법정 원칙</strong>: 법정은 철저히, 비법정은 간략하게. 모든 회의록은 <strong>전자문서로 작성·관리</strong>합니다.</div>
-      </div>
+    <!-- ③ 법정 vs 비법정 비교 (항상 표시) -->
+    <div class="min-compare-hero">
+      <div class="min-compare-title">③ 법정 vs 비법정 — 무엇이 다른가</div>
+      <table class="min-compare-table">
+        <thead>
+          <tr><th>구분</th><th>⚖️ 법정 회의록</th><th>📋 비법정 회의록</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mct-label">해당 회의</td>
+            <td>학교운영위원회<br>인사자문위원회 등</td>
+            <td>학년 협의회<br>교과 협의회 등</td>
+          </tr>
+          <tr>
+            <td class="mct-label">작성 의무</td>
+            <td class="mct-must">의무 (반드시 작성)</td>
+            <td class="mct-option">권장 (생략 가능)</td>
+          </tr>
+          <tr>
+            <td class="mct-label">작성 방법</td>
+            <td>구성요소 빠짐없이<br>중요 사안 자세히 기술</td>
+            <td>개조식 간략 작성<br>(1~2쪽 이내)</td>
+          </tr>
+          <tr>
+            <td class="mct-label">출석 서명</td>
+            <td class="mct-must">필수<br><span class="mct-note">(대표 1인 갈음 가능)</span></td>
+            <td class="mct-option">생략 가능</td>
+          </tr>
+          <tr>
+            <td class="mct-label">결재 방법</td>
+            <td>위원 서명 + 전자결재</td>
+            <td>전자결재 + 단계 축소<br><span class="mct-note">내부: 병렬협조 / 외부: 문자·메일 통보</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="cite" style="margin-top:.6rem;">💡 <strong>법정은 철저히, 비법정은 간략하게.</strong> 단, 모든 회의록은 <strong>전자문서로 작성·관리</strong>합니다.</div>
     </div>
 
-    <!-- 법정 vs 비법정 비교표 (항상 표시) -->
-    <div class="rule-card" style="margin-top:1.25rem;">
+    <!-- 보조: 결재 예시 + FAQ (접이식) -->
+    <div class="rule-card" style="margin-top:1.1rem;">
       <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">비교</span> 법정 vs 비법정 한눈에 비교</div>
+        <div class="rule-card-title"><span class="rc-badge">결재 예시</span> 유형별 결재선</div>
         <span class="rc-chevron">›</span>
       </div>
       <div class="rule-card-body">
-        <table class="mon-table">
-          <thead>
-            <tr>
-              <th style="width:18%;">구분</th>
-              <th style="width:40%;">작성 여부 및 방법</th>
-              <th style="width:42%;">확인 서명 및 결재 방법</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="font-weight:700;color:var(--blue);font-size:.8rem;">법정 회의록<br><span style="font-weight:400;font-size:.75rem;color:var(--muted);">학교운영위원회<br>인사자문위원회 등</span></td>
-              <td>
-                <div style="margin-bottom:.4rem;"><strong>중요 토론·의결 사안: 자세히 기술</strong></div>
-                <div style="font-size:.78rem;color:var(--muted);">구성요소: 회의명·개최기관·일시·장소·참석자·진행순서·상정안건·발언요지·결정사항·표결내용</div>
-              </td>
-              <td>
-                <div style="margin-bottom:.35rem;">• 위원 서명 및 전자결재</div>
-                <div style="margin-bottom:.35rem;">• <strong>대표 1인 확인서명</strong>으로 갈음</div>
-                <div style="color:var(--err);font-weight:700;font-size:.8rem;">• 출석서명은 필수</div>
-              </td>
-            </tr>
-            <tr>
-              <td style="font-weight:700;color:var(--ok);font-size:.8rem;">비법정 회의록<br><span style="font-weight:400;font-size:.75rem;color:var(--muted);">학년 협의회<br>교과 협의회 등</span></td>
-              <td>
-                <div style="margin-bottom:.35rem;">• 관행적·의례적 → <strong>작성 생략 가능</strong></div>
-                <div>• 기타 회의 → <strong>개조식 간략 작성(1~2쪽)</strong></div>
-              </td>
-              <td>
-                <div style="margin-bottom:.35rem;">• 전자결재 + <strong>결재단계 축소</strong></div>
-                <div style="margin-bottom:.35rem;">• 내부위원: 병렬협조</div>
-                <div>• 외부위원: 전자우편·문자 통보</div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div style="font-size:.78rem;font-weight:700;color:var(--ink2);margin-bottom:.35rem;">학교운영위원회 (외부위원 포함)</div>
+        <div class="apv-box">
+          <div class="apv-cell"><div class="apv-cell-top">기안자</div><div class="apv-cell-name">담당자</div><div class="apv-cell-date"></div></div>
+          <div class="apv-cell"><div class="apv-cell-top">검토</div><div class="apv-cell-name">교감</div><div class="apv-cell-date"></div></div>
+          <div class="apv-cell"><div class="apv-cell-top">결재</div><div class="apv-cell-name">교장</div><div class="apv-cell-date"></div></div>
+          <div class="apv-cell" style="background:#f0f4ff;"><div class="apv-cell-top" style="color:var(--blue);">위원 확인서명</div><div class="apv-cell-name" style="font-size:.72rem;color:var(--blue);">대표위원 1인</div><div class="apv-cell-date"></div></div>
+        </div>
+        <div class="cite blue" style="margin-top:.7rem;">교내 직원으로만 구성된 회의(예: 교과 협의회)는 위원 확인서명을 <strong>위원의 병렬협조(결재)로 갈음</strong>합니다.</div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
+        <div class="rule-card-title"><span class="rc-badge">FAQ</span> 자주 묻는 질문</div>
+        <span class="rc-chevron">›</span>
+      </div>
+      <div class="rule-card-body">
+        <div class="min-faq-tabs">
+          <button class="min-faq-tab on" onclick="showMinFaq(0,this)">Q1 발언요지 범위</button>
+          <button class="min-faq-tab"    onclick="showMinFaq(1,this)">Q2 발언자 성명</button>
+        </div>
+        <div class="min-faq-panel on" id="mfp-0">
+          <div class="min-faq-q"><span class="min-faq-qnum">Q</span><span>발언 요지는 모든 발언 내용을 다 써야 하나요?</span></div>
+          <div class="min-faq-a">
+            아닙니다. 발언요지는 상정안건에 대해 발언한 내용 중 <strong>핵심이 되거나 중요한 내용만 정리</strong>하여 기재합니다.<br>
+            발언자의 모든 발언을 축어로 기록할 필요는 없으며, 인사말·단순 확인 질문 등은 <strong>생략 가능</strong>합니다.
+            <div class="min-faq-law">📋 근거: 공공기록물법 시행령 제18조 제2항</div>
+          </div>
+        </div>
+        <div class="min-faq-panel" id="mfp-1">
+          <div class="min-faq-q"><span class="min-faq-qnum">Q</span><span>발언자 이름을 반드시 써야 하나요?</span></div>
+          <div class="min-faq-a">
+            법령에 명시적 의무는 없으나, <strong>공공기관의 투명하고 책임 있는 행정 구현</strong>을 위해 발언자 성명(직위)을 포함하도록 <strong>권장</strong>합니다.<br>
+            국가기록원 기록물 관리지침 서식에도 <strong>발언자성명(직위) : 발언요지</strong> 형식으로 안내하고 있습니다.
+            <div class="min-faq-law">📋 근거: 국가기록원 기록물 관리지침</div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -4539,18 +4349,18 @@ function toggleLegalCheck(el) {
 
 function updateLegalResult() {
   const checked = document.querySelectorAll('#legal-checks .legal-check-item.checked').length;
-  const total   = document.querySelectorAll('#legal-checks .legal-check-item').length;
   const yes = document.getElementById('legal-result-yes');
   const no  = document.getElementById('legal-result-no');
   const rst = document.getElementById('legal-wizard-reset');
+  const hint = document.getElementById('min-diag-hint');
   if (checked > 0) {
     yes.classList.add('show'); no.classList.remove('show');
     rst.classList.add('show');
-  } else if (document.querySelectorAll('#legal-checks .legal-check-item').length > 0
-             && [...document.querySelectorAll('#legal-checks .legal-check-item')].some(i => !i.classList.contains('checked'))) {
-    // 아무것도 선택 안 된 상태 — 결과 숨김
-    yes.classList.remove('show'); no.classList.remove('show');
+    if (hint) hint.style.display = 'none';
+  } else {
+    yes.classList.remove('show'); no.classList.add('show');
     rst.classList.remove('show');
+    if (hint) hint.style.display = 'block';
   }
 }
 
@@ -4562,6 +4372,8 @@ function resetLegalChecks() {
   document.getElementById('legal-result-yes').classList.remove('show');
   document.getElementById('legal-result-no').classList.remove('show');
   document.getElementById('legal-wizard-reset').classList.remove('show');
+  const hint = document.getElementById('min-diag-hint');
+  if (hint) hint.style.display = 'block';
 }
 
 // ══════════════════════════════════
@@ -4587,92 +4399,7 @@ function showMinFaq(idx, btn) {
   document.getElementById('mfp-' + idx).classList.add('on');
 }
 
-// ══════════════════════════════════
-// 회의록 위저드
-// ══════════════════════════════════
-let minTypeSelected = null; // 'legal' | 'non' | null
-
-function selectMinType(type) {
-  minTypeSelected = type;
-
-  // 위저드 버튼 강조
-  ['legal','non'].forEach(t => {
-    const btn = document.getElementById('mwb-' + t);
-    btn.classList.remove('picked-legal','picked-non');
-  });
-  document.getElementById('mwb-' + type).classList.add('picked-' + type);
-
-  // 힌트 숨기기
-  document.getElementById('min-wiz-hint').classList.add('hidden');
-
-  // 배지 표시
-  document.getElementById('mtb-legal').classList.toggle('show', type === 'legal');
-  document.getElementById('mtb-non').classList.toggle('show', type === 'non');
-
-  // 리셋 버튼 표시
-  document.getElementById('min-reset-btn').style.display = 'inline-flex';
-
-  // 상세 영역 전환
-  const showLegal = type === 'legal';
-  document.getElementById('md-legal').classList.toggle('show', showLegal);
-  document.getElementById('md-non').classList.toggle('show', !showLegal);
-
-  // 스크롤
-  setTimeout(() => {
-    const el = document.getElementById('md-' + type);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 80);
-}
-
-function resetMinType() {
-  minTypeSelected = null;
-  ['legal','non'].forEach(t => {
-    document.getElementById('mwb-' + t).classList.remove('picked-legal','picked-non');
-    document.getElementById('mtb-' + t).classList.remove('show');
-    document.getElementById('md-' + t).classList.remove('show');
-  });
-  document.getElementById('min-wiz-hint').classList.remove('hidden');
-  document.getElementById('min-reset-btn').style.display = 'none';
-  window.scrollTo({ top: 56, behavior: 'smooth' });
-}
-
-// 탭 이동 후 돌아와도 선택 상태 복원
-function restoreMinType() {
-  if (minTypeSelected) selectMinType(minTypeSelected);
-}
-
-const MIN_CS_ANSWERS = {
-  'l0': {
-    y: '외부 위원 참석 시 — 참석자 전원 서명 대신 대표 1인 확인서명으로 갈음 가능. 단, 출석서명은 반드시 필요합니다.',
-    n: '내부 직원으로만 구성 시 — 위원 확인 서명을 병렬협조(결재)로 갈음할 수 있습니다.',
-  },
-  'l1': {
-    y: '중요 토론·표결 사안은 발언요지와 표결내용을 포함하여 반드시 자세히 기술합니다.',
-    n: '통상적 진행절차·인사말·단순 질문은 생략하고 최종결과를 중심으로 개조식으로 간략히 작성합니다.',
-  },
-  'n0': {
-    y: '관행적·의례적 회의는 회의록 작성을 생략할 수 있습니다. 필요시 K-에듀파인 메모관리 기능으로 결과만 기록하세요.',
-    n: '각종 운영 회의는 개조식으로 간략히 작성(1~2쪽 이내)하고 전자문서로 관리합니다.',
-  },
-  'n1': {
-    y: '외부 위원에게는 전자우편·문자 등으로 회의결과를 통보합니다. (중요 회의는 확인 회신 받기)',
-    n: '내부 직원만 참석하는 경우 병렬협조(결재)로 확인서명을 갈음합니다.',
-  },
-  'n2': {
-    y: '인사·예산 관련 중요 사안은 비법정이라도 확인서명을 받아야 합니다. 내부위원은 병렬협조, 외부위원은 전자우편·문자 확인.',
-    n: '일반적인 운영 회의는 전자결재 + 결재단계 축소로 처리합니다.',
-  },
-};
-
-function minCsAnswer(btn, ans, id) {
-  const item = document.getElementById('mcs-' + id);
-  item.querySelectorAll('.min-cs-btn').forEach(b => b.classList.remove('picked'));
-  btn.classList.add('picked');
-  item.classList.add('answered');
-  const ansEl = document.getElementById('mca-' + id);
-  ansEl.textContent = MIN_CS_ANSWERS[id][ans];
-  ansEl.classList.add('show');
-}
+function restoreMinType() {}
 
 function goHome() {
   showView('workflow');
