@@ -454,6 +454,28 @@ nav {
 
   /* 검색결과 전체 너비 */
   #search-results { right: .5rem; left: .5rem; width: auto; }
+
+  /* 표 가로 스크롤 — 좁은 화면 넘침 방지 (정렬 보존) */
+  .pub-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .min-form-table, .purch-doc-table { font-size: .78rem; }
+  .min-form-table th, .purch-doc-table th { font-size: .72rem; padding: .4rem .5rem; }
+  .min-form-table td, .purch-doc-table td { padding: .4rem .5rem; }
+  .pub-table { min-width: 340px; }
+
+  /* 검토·협조 등 인라인 2단 그리드 → 1단 */
+  .rule-card-body > div[style*="1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* 결재 전체 경로 다이어그램 가로 스크롤 */
+  .awpf-grid { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .awf-flow { flex-wrap: wrap; }
+
+  /* 법정/비법정 비교표 — 가로 스크롤 + 폰트 축소 */
+  .min-compare-hero { overflow-x: auto; }
+  .min-compare-table { font-size: .74rem; min-width: 380px; }
+  .min-compare-table thead th { font-size: .76rem; padding: .45rem .5rem; }
+  .min-compare-table td { padding: .45rem .5rem; }
 }
 
 /* ── 시각화 훈련장 ── */
@@ -546,6 +568,24 @@ body.vis-on #vis-knob   { left: 22px; }
 @media (max-width: 859px) {
   .ann-wrap { flex-direction: column; }
   .ann-wrap .ann-panel { width: 100%; }
+}
+/* 모바일: 공문 문서 화면폭에 맞춤 */
+@media (max-width: 600px) {
+  .ann-wrap .ann-doc { max-width: 100%; width: 100%; }
+  .ann-doc-inner { padding: 1.1rem 1.1rem; font-size: .86rem; line-height: 2; }
+  /* 2컬럼 패널 → 세로 스택 */
+  .ann-panel-2col { flex-direction: column; }
+  .ann-col-list {
+    width: 100%; border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    flex-direction: row; flex-wrap: wrap; gap: .35rem;
+    padding: .75rem;
+  }
+  .ann-col-list-title { flex-basis: 100%; margin-bottom: .3rem; }
+  .ann-col-item { flex: 0 0 auto; font-size: .74rem; padding: .3rem .5rem; }
+  .ann-col-item span:not(.aci-num):not(.aci-check) { white-space: nowrap; }
+  .ann-col-progress { flex-basis: 100%; margin-top: .3rem; }
+  .ann-col-rule { padding: .9rem 1rem; }
 }
 
 /* 2컬럼 패널 내부 */
