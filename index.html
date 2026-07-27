@@ -106,13 +106,12 @@ nav {
 .steps-bar {
   background: var(--paper);
   border-bottom: 1px solid var(--line);
-  overflow-x: auto;
 }
 .steps-bar-inner {
   max-width: var(--max-w);
   margin: 0 auto;
   padding: .75rem var(--side-pad);
-  display: flex; gap: 0;
+  display: flex; gap: 0; flex-wrap: wrap;
 }
 .steps-bar::-webkit-scrollbar { display: none; }
 .step-btn {
@@ -637,6 +636,11 @@ body.vis-on #vis-knob   { left: 22px; }
   overflow-x: hidden;
   max-width: 540px;
 }
+/* 품의 문서는 A4 비율 대신 내용 높이에 맞춤 */
+.ann-doc.ann-doc-auto {
+  aspect-ratio: auto;
+  height: fit-content;
+}
 .ann-doc-inner {
   padding: 1.75rem 2rem;
   font-family: 'Noto Serif KR', serif;
@@ -829,7 +833,7 @@ body.ann-off #ann-panel { display: none !important; }
 }
 .pt-step.done .pt-check { background: var(--ok); border-color: var(--ok); color: #fff; }
 .pt-body {
-  display: none; padding: 0 .9rem .75rem 2.85rem;
+  display: none; padding: 0 .9rem 1.1rem 2.85rem;
   font-size: .82rem; color: #444; line-height: 1.75;
 }
 .pt-step.open .pt-body { display: block; }
@@ -988,6 +992,12 @@ body.ann-off #ann-panel { display: none !important; }
   margin-top: .65rem; font-size: .78rem; color: var(--ink2);
   padding: .4rem .5rem; background: #f8f9fc;
   border-radius: 5px; line-height: 1.6;
+}
+.card-cert-blank {
+  margin-top: .5rem; min-height: 120px;
+  border: 1px dashed #c8ccd8; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  color: #b0b4c0; font-size: .78rem;
 }
 
 /* ══════════ 회의록 서식·FAQ·위저드 ══════════ */
@@ -2068,7 +2078,7 @@ body.ann-off #ann-panel { display: none !important; }
     <!-- 시나리오 2: 품의 — 인터넷 구매 (문서 + 2컬럼 패널) -->
     <div class="sc-view" id="scv2">
       <div class="ann-wrap">
-        <div class="ann-doc">
+        <div class="ann-doc ann-doc-auto">
           <div class="ann-doc-inner">
             <div class="purch-form-mini-head">🖥️ K-에듀파인 품의등록 (인터넷 구매)</div>
             <table class="purch-doc-table">
@@ -2124,7 +2134,7 @@ body.ann-off #ann-panel { display: none !important; }
     <div class="sc-view" id="scv3">
       <!-- 상단: 품의 문서 + 2컬럼 패널 -->
       <div class="ann-wrap" style="margin-bottom:1.2rem;">
-        <div class="ann-doc">
+        <div class="ann-doc ann-doc-auto">
           <div class="ann-doc-inner">
             <div class="purch-form-mini-head">🖥️ K-에듀파인 품의등록 (현장 구매)</div>
             <table class="purch-doc-table">
@@ -2269,6 +2279,7 @@ body.ann-off #ann-panel { display: none !important; }
             <span class="chip ch-a">[참석]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">회의·행사 참석</span>
             <span class="chip ch-u">[긴급]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">보고기일 시급</span>
             <span class="chip ch-q">[설문]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">의견 수렴</span>
+            <span style="flex-basis:100%;height:0;"></span>
             <span class="chip ch-r">[보고]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">보고 요청</span>
             <span class="chip ch-f">[이첩]</span><span style="font-size:.8rem;color:var(--muted);align-self:center;">상급기관 공문 전달</span>
           </div>
@@ -3563,6 +3574,18 @@ const searchDB = [
   {tag:"제출 기한", text:"보고기일 5일 이상 확보 (휴일 제외). 긴급 사안 제외", step:4, card:null},
   {tag:"수신처 적정성", text:"반드시 필요한 기관에만 발송. 파급 범위 본문 하단 명시", step:4, card:null},
   {tag:"모니터링 관점표", text:"10가지: 자율성보장, 자료집계활용, 공문게시, 이해도, 중복, 간소화, 기한, 수신처, 보고횟수, 기타", step:4, card:null},
+  {tag:"다음 아래 금지", text:"다음과 같이 다음에 다음 아래를 소제목으로 다시 쓰지 않습니다. 바로 항목으로 연결", step:1, card:"rc-nobelow"},
+  {tag:"종결어미", text:"발송 문서는 합니다 단정형. 내부결재는 하고자 합니다 의지형. 협조는 바랍니다", step:1, card:"rc-ending"},
+  {tag:"성격 표시제 권장", text:"제목 앞 계획 안내 보고 협조 긴급 참석 설문 이첩 표기. 법적 의무 아닌 권장사항", step:2, card:"rc-tag"},
+  {tag:"대국민 공개 여부", text:"공개 부분공개 비공개 설정. 목록 본문 붙임. 원문공개 학교장 결재문서. 정보공개포털", step:4, card:"rc-publish"},
+  {tag:"부분공개 개인정보", text:"부분공개 시 제목 본문 대국민 공개. 붙임만 비공개. 개인정보 노출 주의", step:4, card:"rc-publish"},
+  {tag:"비공개 사유", text:"정보공개법 9조 1항 1호부터 8호. 목록 제목은 공개 원칙. 직원열람 범위 기간 설정", step:4, card:"rc-publish"},
+  {tag:"결재선 검토 협조", text:"행정실장 협조 교감 검토 순서. 검토 수직 협조 수평. 결재선 판단", step:4, card:"rc-review"},
+  {tag:"공개 설정 시뮬레이터", text:"K-에듀파인 대국민공개여부 직원열람범위 직원열람제한 설정 화면", step:4, card:"rc-publish"},
+  {tag:"회의록 법정 비법정", text:"법정 회의록 작성 의무. 학교운영위원회 인사자문위원회. 공공기록물법 17조. 구성요소 발언요지", step:1, card:null, target:"minutes"},
+  {tag:"회의록 발언요지", text:"발언자 성명 직위. 핵심 중요 내용만. 결정사항 표결내용. 출석서명 확인", step:1, card:null, target:"minutes"},
+  {tag:"품의 인터넷 구매", text:"지마켓 아이스크림몰 예스24 견적서. 구매사이트 표시. 견적서 첨부", step:1, card:null, target:"purch-online"},
+  {tag:"품의 현장 구매 카드", text:"자체구매 카드사용대장 신용카드사용증빙서. 23시 이후 공휴일 카드 사용. 카드 당일 반납", step:1, card:null, target:"purch-offline"},
 ];
 
 function openSearch(e) {
@@ -3580,7 +3603,7 @@ function doSearch(val) {
   const hits = searchDB.filter(d => d.tag.includes(val) || d.text.toLowerCase().includes(kw)).slice(0,6);
   if (!hits.length) { box.style.display='none'; return; }
   box.style.display='block';
-  box.innerHTML = hits.map((d,i) => `<div class="sr-item" onclick="searchGo(${d.step},'${d.card||""}')">
+  box.innerHTML = hits.map((d,i) => `<div class="sr-item" onclick="searchGo(${d.step},'${d.card||""}','${d.target||""}')">
     <div class="sr-tag">${d.tag}</div>
     <div class="sr-text">${highlight(d.text, val)}</div>
   </div>`).join('');
@@ -3590,15 +3613,41 @@ function highlight(txt, kw) {
   return txt.replace(new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'), m => `<mark>${m}</mark>`);
 }
 
-function searchGo(step, card) {
+function searchGo(step, card, target) {
+  card = card || null;
+  target = target || null;
   document.getElementById('search-results').style.display='none';
   document.getElementById('search-input').value='';
+  const box = document.getElementById('nav-search-box');
+  if (box) box.classList.remove('open');
+
+  // 특수 target: 회의록 / 품의
+  if (target === 'minutes') { showView('minutes'); return; }
+  if (target === 'purch-online') { showView('workflow'); goStep(1); setTimeout(()=>switchScenario(2,document.querySelectorAll('.sc-tab')[2]),150); return; }
+  if (target === 'purch-offline') { showView('workflow'); goStep(1); setTimeout(()=>switchScenario(3,document.querySelectorAll('.sc-tab')[3]),150); return; }
+
   showView('workflow');
   goStep(step);
   if (card) {
     setTimeout(() => {
       const el = document.getElementById(card);
-      if (el) { el.classList.add('open'); el.scrollIntoView({behavior:'smooth',block:'center'}); }
+      if (!el) return;
+      // rule-section(rt-*) 안에 있으면 해당 탭 활성화
+      const rtId = (typeof CARD_TO_RT !== 'undefined') ? CARD_TO_RT[card] : null;
+      if (rtId) {
+        let tabBtn = null;
+        const needle = "'" + rtId + "'";
+        document.querySelectorAll('.rule-tab').forEach(btn => {
+          const oc = btn.getAttribute('onclick') || '';
+          if (oc.indexOf(needle) !== -1) tabBtn = btn;
+        });
+        if (tabBtn) showRuleTab(rtId, tabBtn);
+      }
+      el.classList.add('open');
+      setTimeout(() => {
+        const top = el.getBoundingClientRect().top + window.scrollY - 70;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }, 100);
     }, 100);
   }
 }
@@ -4149,6 +4198,7 @@ function renderPurchTimeline() {
               <tr><th>사용날짜</th><td>20&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;&nbsp;.</td><th>사용금액</th><td style="text-align:right;">원</td></tr>
             </table>
             <div class="card-cert-evidence">※ 증빙자료 <strong>[카드전표 및 내역서]</strong></div>
+            <div class="card-cert-blank">카드전표 및 내역서 부착란</div>
           </div>
         </div>` : ''}
       </div>
@@ -4939,11 +4989,6 @@ renderDrills();
   const p0 = document.getElementById('ann-panel-0');
   if (p0) p0.style.display = 'block';
 })();
-// 모바일(터치 기기) 진입 힌트
-if (window.matchMedia('(pointer: coarse)').matches) {
-  const hint = document.getElementById('steps-hint');
-  if (hint) { hint.style.display = 'block'; setTimeout(()=>hint.style.display='none', 3000); }
-}
 </script>
 <footer style="text-align:center;padding:.6rem .75rem;font-size:.72rem;color:rgba(0,0,0,.32);letter-spacing:.3px;border-top:1px solid rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;"><span>출처: 2026 올바른 공문서 작성 방법 안내 (전남광주통합특별시교육청)</span><span style="color:rgba(0,0,0,.15);">|</span><span>만든이 2026 최창훈</span></footer>
 </body>
