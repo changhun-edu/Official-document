@@ -3468,12 +3468,6 @@ document.addEventListener('click', e => {
 // 뷰 / 스텝
 // ══════════════════════════════════
 // URL 해시 → 상태 파싱
-function parseHash() {
-  const h = location.hash.replace('#','') || 'workflow-1';
-  const [v, s] = h.split('-');
-  return { view: v || 'workflow', step: parseInt(s) || 1 };
-}
-
 // 상태를 실제로 화면에 적용 (히스토리 push 없이)
 function applyState(v, n, push, noScroll) {
   document.querySelectorAll('.view').forEach(el => el.classList.remove('on'));
@@ -3490,8 +3484,7 @@ function applyState(v, n, push, noScroll) {
     document.querySelectorAll('.step-btn').forEach((b,i) => b.classList.toggle('on', i===n-1));
   }
   if (push) {
-    const hash = v === 'quiz' ? 'quiz-0' : v+'-'+n;
-    history.pushState({view:v, step:n}, '', '#'+hash);
+    history.pushState({view:v, step:n}, '', location.pathname + location.search);
   }
   if (!noScroll) window.scrollTo({top: 0, behavior: 'smooth'});
 }
@@ -3511,8 +3504,7 @@ window.addEventListener('popstate', e => {
   if (e.state) {
     applyState(e.state.view, e.state.step, false);
   } else {
-    const {view, step} = parseHash();
-    applyState(view, step, false);
+    applyState('workflow', 1, false);
   }
 });
 
@@ -4163,7 +4155,7 @@ function annGoto(step, card) {
     const sv = document.getElementById('sv' + step);
     if (sv) sv.classList.add('on');
     document.querySelectorAll('.step-btn').forEach((b,i) => b.classList.toggle('on', i===step-1));
-    history.pushState({view:'workflow', step}, '', '#workflow-'+step);
+    history.pushState({view:'workflow', step}, '', location.pathname + location.search);
 
     if (card) {
       setTimeout(() => {
@@ -4695,12 +4687,10 @@ function showRuleTab(id, btn) {
 // ── 초기화 ──
 clLoad();
 renderDrills();
-// 첫 진입: 해시가 있으면 복원, 없으면 기본 상태 등록
+// 첫 진입: 기본 상태(공문 살펴보기)로 시작
 (function() {
-  const {view, step} = parseHash();
-  applyState(view, step, false);
-  const hash = view === 'quiz' ? 'quiz-0' : view+'-'+step;
-  history.replaceState({view, step}, '', '#'+hash);
+  applyState('workflow', 1, false);
+  history.replaceState({view:'workflow', step:1}, '', location.pathname + location.search);
   // ann-panel-0 초기 표시
   const p0 = document.getElementById('ann-panel-0');
   if (p0) p0.style.display = 'block';
