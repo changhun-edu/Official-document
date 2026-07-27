@@ -1114,10 +1114,17 @@ body.ann-off #ann-panel { display: none !important; }
   vertical-align: top;
 }
 .min-form-hl {
-  cursor: pointer; border-radius: 4px; padding: .05rem .25rem;
+  cursor: pointer; border-radius: 4px; padding: .05rem .3rem;
   transition: background .13s; display: inline;
+  background: rgba(212,150,10,.1);
+  border-bottom: 2px dotted var(--gold);
+  color: var(--ink) !important; font-weight: 500;
 }
-.min-form-hl:hover { background: rgba(212,150,10,.2); }
+.min-form-hl::after {
+  content: ' 👆'; font-size: .8em;
+}
+.min-form-hl:hover { background: rgba(212,150,10,.28); }
+.min-form-hl.min-form-open { background: rgba(212,150,10,.28); border-bottom-style: solid; }
 .min-form-tip {
   display: none; margin-top: .35rem; padding: .4rem .6rem;
   background: var(--ink); color: #fff; border-radius: 6px;
@@ -1742,6 +1749,11 @@ body.ann-off #ann-panel { display: none !important; }
   margin-bottom: 1.25rem; display: none;
 }
 .apv-wizard-panel.open { display: block; }
+.apv-stage-title {
+  font-size: 1rem; font-weight: 800; color: var(--ink);
+  margin-bottom: .7rem; padding-left: .6rem;
+  border-left: 4px solid var(--gold);
+}
 
 .awp-header {
   background: var(--ink); color: #fff;
@@ -2689,29 +2701,21 @@ body.ann-off #ann-panel { display: none !important; }
       <div class="hero-num">4</div>
       <div style="font-size:.7rem;font-weight:700;letter-spacing:.8px;color:var(--muted);margin-bottom:.2rem;">STEP 4</div>
       <h2>결재 올리기</h2>
-      <p>내가 기안자일 때 어떤 결재 방식이 적용되는지, 서명란에 뭘 써야 하는지 알 수 있습니다.</p>
+      <p>① 결재선을 정하고 → ② 검토·협조를 이해한 뒤 → ③ 공개 여부를 설정해 상신합니다.</p>
     </div>
 
-    <!-- ★ 결재선 판단 위저드 -->
-    <button class="apv-wizard-trigger" onclick="openWizard()">
-      <div class="awt-row">📋 결재선 판단 도우미</div>
-      <div class="awt-sub">행정실장 협조와 교감 검토, 무엇이 먼저일까요?</div>
-    </button>
-
-    <div class="apv-wizard-panel" id="apv-wizard-panel">
+    <!-- ① 결재선 정하기 (위저드 펼침, 주인공) -->
+    <div class="apv-stage-title">① 결재선 정하기</div>
+    <div class="apv-wizard-panel open" id="apv-wizard-panel">
       <div class="awp-header">
         <div class="awp-header-title">📋 결재선 판단 도우미</div>
-        <button class="awp-close" onclick="closeWizard()">✕</button>
       </div>
       <div class="awp-body">
-
-        <!-- 진행 표시 -->
         <div class="awp-steps-indicator" id="awp-dots">
           <div class="awp-step-dot active" id="awp-dot-0"></div>
           <div class="awp-step-dot" id="awp-dot-1"></div>
         </div>
 
-        <!-- Q1 -->
         <div class="awp-q-block on" id="awp-q0">
           <div class="awp-q-label">STEP 1 / 2</div>
           <div class="awp-q-text">행정실장 협조가 필요한 문서인가요?</div>
@@ -2728,7 +2732,6 @@ body.ann-off #ann-panel { display: none !important; }
           </div>
         </div>
 
-        <!-- Q2 -->
         <div class="awp-q-block" id="awp-q1">
           <div class="awp-q-label">STEP 2 / 2</div>
           <div class="awp-q-text">부장교사의 검토가 필요한가요?</div>
@@ -2745,32 +2748,23 @@ body.ann-off #ann-panel { display: none !important; }
           </div>
         </div>
 
-        <!-- 결과 -->
         <div class="awp-result" id="awp-result">
-
           <div class="awr-recommend" id="awr-recommend-box">
             <div class="awr-label">✅ 권장 결재선</div>
             <div class="awr-title" id="awr-title-text"></div>
             <div id="awr-badge-area"></div>
-            <!-- 미니 플로우 -->
             <div class="awf-flow" id="awf-mini-flow"></div>
             <div class="awr-basis" id="awr-basis-text"></div>
             <button class="awr-copy-btn" id="awr-copy-btn" onclick="copyResult()">📋 결재선 복사</button>
           </div>
-
-          <!-- 대안 -->
           <div class="awr-alt" id="awr-alt-box" style="display:none;">
             <div class="awr-alt-title" id="awr-alt-title"></div>
             <div class="alt-flow" id="awr-alt-flow"></div>
             <div class="awr-alt-note" id="awr-alt-note"></div>
           </div>
-
-          <!-- 전체 인터랙티브 플로우 다이어그램 -->
           <div class="awp-fullflow">
             <div class="awpf-title">🔎 전체 결재 경로 — 선택된 경로 강조 표시</div>
-            <div class="awpf-grid" id="awpf-grid">
-              <!-- JS로 렌더링 -->
-            </div>
+            <div class="awpf-grid" id="awpf-grid"></div>
             <div class="awpf-legend">
               <div class="awpf-lg-item"><div class="awpf-lg-dot" style="background:#1a2f6a;"></div> 검토 경로</div>
               <div class="awpf-lg-item"><div class="awpf-lg-dot" style="background:#c0a0e0;border:1px solid #9060c0;"></div> 협조(수평)</div>
@@ -2778,14 +2772,14 @@ body.ann-off #ann-panel { display: none !important; }
               <div class="awpf-lg-item"><div class="awpf-lg-dot" style="background:#f5f5f7;border:1px dashed #ccc;"></div> 생략 가능</div>
             </div>
           </div>
-
           <button class="awr-reset" onclick="resetWizard()">↩ 처음부터 다시 선택</button>
         </div>
+      </div>
+    </div>
 
-      </div><!-- /awp-body -->
-    </div><!-- /apv-wizard-panel -->
-
-    <div class="rule-card" id="rc-review">
+    <!-- ② 검토 vs 협조 -->
+    <div class="apv-stage-title" style="margin-top:1.4rem;">② 검토 vs 협조 이해하기</div>
+    <div class="rule-card open" id="rc-review">
       <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
         <div class="rule-card-title"><span class="rc-badge">검토·협조</span> 검토(수직)와 협조(수평)의 차이</div>
         <span class="rc-chevron">›</span>
@@ -2809,120 +2803,61 @@ body.ann-off #ann-panel { display: none !important; }
       </div>
     </div>
 
-    <!-- ① 대국민 공개 여부 -->
+    <!-- ③ 공개 여부 설정 -->
+    <div class="apv-stage-title" style="margin-top:1.4rem;">③ 대국민 공개 여부 설정</div>
     <div class="rule-card open" id="rc-publish">
       <div class="rule-card-head" onclick="toggleRC(this.parentElement)">
-        <div class="rule-card-title"><span class="rc-badge">공개 설정</span> 🌐 대국민 공개 여부 설정</div>
+        <div class="rule-card-title"><span class="rc-badge">공개 설정</span> 🌐 공개 · 부분공개 · 비공개</div>
         <span class="rc-chevron">›</span>
       </div>
       <div class="rule-card-body">
-
-        <!-- 원문공개 대상 -->
         <div class="pub-origin-badge">
           <span class="pob-icon">⭐</span>
           <span><strong>원문 공개 대상</strong>: 국장 이상 / 기관장 / 교육장 / <strong>학교장</strong>이 결재한 생산문서 (내부결재 포함)<br>
           근거: 공공기관의 정보공개에 관한 법률(정보공개법)</span>
         </div>
 
-        <!-- A: 공개 유형 탭 -->
-        <div class="pub-tabs">
-          <button class="pub-tab" id="pt-open"    onclick="showPubTab('open',this)">
-            <span class="pub-tab-icon">🟢</span>공개
-          </button>
-          <button class="pub-tab" id="pt-partial" onclick="showPubTab('partial',this)">
-            <span class="pub-tab-icon">🟡</span>부분공개
-          </button>
-          <button class="pub-tab" id="pt-secret"  onclick="showPubTab('secret',this)">
-            <span class="pub-tab-icon">🔴</span>비공개
-          </button>
-        </div>
-
-        <!-- 탭: 공개 -->
-        <div class="pub-panel" id="pp-open">
-          <div class="pub-table-wrap">
-            <table class="pub-table">
-              <thead><tr>
-                <th>구분</th>
-                <th>목록(제목)</th>
-                <th>본문(기안문)</th>
-                <th>붙임(첨부파일)</th>
-              </tr></thead>
-              <tbody><tr>
-                <td class="row-label">공개</td>
+        <!-- C: 3유형 통합 비교표 -->
+        <div class="pub-table-wrap" style="margin-top:.8rem;">
+          <table class="pub-table">
+            <thead><tr>
+              <th>공개 유형</th>
+              <th>목록(제목)</th>
+              <th>본문(기안문)</th>
+              <th>붙임(첨부)</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td class="row-label">🟢 공개</td>
                 <td class="pub-cell-open pub-cell-hl">공개</td>
                 <td class="pub-cell-open pub-cell-hl">공개</td>
                 <td class="pub-cell-open pub-cell-hl">공개</td>
-              </tr></tbody>
-            </table>
-          </div>
-          <div class="cite" style="margin-bottom:0;">제목·본문·붙임 파일 모두 정보공개포털(<a href="https://www.open.go.kr" target="_blank" style="color:var(--blue);">www.open.go.kr</a>)을 통해 대국민 공개됩니다.</div>
-        </div>
-
-        <!-- 탭: 부분공개 -->
-        <div class="pub-panel" id="pp-partial">
-          <div class="pub-table-wrap">
-            <table class="pub-table">
-              <thead><tr>
-                <th>구분</th>
-                <th>목록(제목)</th>
-                <th>본문(기안문)</th>
-                <th>붙임(첨부파일)</th>
-              </tr></thead>
-              <tbody>
-                <tr>
-                  <td class="row-label">부분공개<br><span style="font-size:.68rem;font-weight:400;color:var(--muted);">일반문서</span></td>
-                  <td class="pub-cell-open pub-cell-hl">공개</td>
-                  <td class="pub-cell-open pub-cell-hl">공개</td>
-                  <td class="pub-cell-check">비공개<br>(첨부파일 체크 확인)</td>
-                </tr>
-                <tr>
-                  <td class="row-label">부분공개<br><span style="font-size:.68rem;font-weight:400;color:var(--muted);">재정문서</span></td>
-                  <td class="pub-cell-open pub-cell-hl">공개</td>
-                  <td class="pub-cell-open pub-cell-hl">공개</td>
-                  <td class="pub-cell-check">비공개<br>(첨부파일 체크 확인)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="pub-warn">
-            <span class="pw-icon">⚠️</span>
-            <span><strong>개인정보 노출 주의</strong> — 부분공개 설정 시 <strong>제목·본문은 대국민에게 공개</strong>됩니다.<br>
-            본문에 개인정보·민감 내용이 포함된 경우 반드시 삭제 후 기안하세요.</span>
-          </div>
-        </div>
-
-        <!-- 탭: 비공개 -->
-        <div class="pub-panel" id="pp-secret">
-          <div class="pub-table-wrap">
-            <table class="pub-table">
-              <thead><tr>
-                <th>구분</th>
-                <th>목록(제목)</th>
-                <th>본문(기안문)</th>
-                <th>붙임(첨부파일)</th>
-              </tr></thead>
-              <tbody><tr>
-                <td class="row-label">비공개<br><span style="font-size:.68rem;font-weight:400;color:var(--muted);">붙임 1~8호</span></td>
+              </tr>
+              <tr>
+                <td class="row-label">🟡 부분공개</td>
+                <td class="pub-cell-open pub-cell-hl">공개</td>
+                <td class="pub-cell-open pub-cell-hl">공개</td>
+                <td class="pub-cell-secret pub-cell-hl">비공개</td>
+              </tr>
+              <tr>
+                <td class="row-label">🔴 비공개</td>
                 <td class="pub-cell-open">공개<br><span style="font-size:.68rem;font-weight:400;">(원칙)</span></td>
                 <td class="pub-cell-secret pub-cell-hl">비공개</td>
                 <td class="pub-cell-secret pub-cell-hl">비공개</td>
-              </tr></tbody>
-            </table>
-          </div>
-          <div class="cite" style="margin-bottom:.5rem;">
-            비공개 문서 중 <strong>목록(제목)은 공개가 원칙</strong>이나, 비밀·기밀문서인 경우 비공개 가능합니다.
-          </div>
-          <div class="pub-warn">
-            <span class="pw-icon">⚠️</span>
-            <span>비공개 사유는 정보공개법 <strong>9조 1항 1~8호</strong> 중 해당 호를 반드시 선택해야 합니다.</span>
-          </div>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pub-warn" style="margin-top:.6rem;">
+          <span class="pw-icon">⚠️</span>
+          <span><strong>부분공개 시 개인정보 주의</strong> — 제목·본문은 대국민 공개됩니다. 개인정보·민감 내용은 본문에서 삭제 후 기안하세요.<br>
+          <strong>비공개</strong>는 정보공개법 <strong>9조 1항 1~8호</strong> 중 해당 호를 반드시 선택. 목록(제목)은 공개가 원칙입니다.</span>
         </div>
 
-        <!-- B: K-에듀파인 시뮬레이터 -->
+        <!-- 시뮬레이터 (보조) -->
         <div class="pub-sim-wrap">
           <div class="pub-sim-title">🖥️ K-에듀파인 설정 화면 — 직접 선택해보기</div>
           <div class="pub-sim-body">
-            <!-- 왼쪽: 설정 패널 -->
             <div class="pub-sim-left">
               <div class="pub-sim-row">
                 <span class="pub-sim-label">대국민공개여부</span>
@@ -2958,7 +2893,6 @@ body.ann-off #ann-panel { display: none !important; }
                 </div>
               </div>
             </div>
-            <!-- 오른쪽: 결과 미리보기 -->
             <div class="pub-sim-right">
               <div class="pub-sim-result-title">📋 결과 미리보기</div>
               <div class="pub-result-row pub-result-open" id="sim-r-list">
@@ -2983,7 +2917,7 @@ body.ann-off #ann-panel { display: none !important; }
     </div>
 
     <div class="step-nav">
-      <button class="btn btn-out" onclick="goStep(3)">← 본문 쓰기</button>
+      <button class="btn btn-out" onclick="goStep(2)">← 작성 규칙</button>
       <button class="btn btn-ink" onclick="showView('quiz')">📝 퀴즈로 실력 확인</button>
     </div>
   </div>
@@ -3025,16 +2959,15 @@ body.ann-off #ann-panel { display: none !important; }
         ⚖️ <strong>법정 회의록 작성 의무</strong> — 아래 서식을 반드시 갖춰 작성하세요.<br>
         <span style="font-size:.75rem;font-weight:400;">근거: 공공기록물법 제17조 및 시행령 제18조</span>
       </div>
-      <div class="min-diag-result non" id="legal-result-no">
-        📋 <strong>비법정 회의</strong> — 작성 의무는 없으나 필요 시 개조식으로 간략히 작성합니다.
+      <div class="min-diag-result non show" id="legal-result-no">
+        📋 <strong>현재 판정: 비법정 회의</strong> — 위 항목에 해당하지 않으면 작성 의무는 없으나 필요 시 개조식으로 간략히 작성합니다. <span style="font-size:.75rem;font-weight:400;">(해당 항목을 체크하면 법정으로 바뀝니다)</span>
       </div>
-      <div class="min-diag-hint" id="min-diag-hint">👆 해당하는 항목을 체크하면 유형이 판정됩니다</div>
       <button class="legal-wizard-reset" id="legal-wizard-reset" onclick="resetLegalChecks()">↩ 다시 선택</button>
     </div>
 
     <!-- ② 회의록 서식 (항상 펼침, 주인공) -->
     <div class="min-form-hero">
-      <div class="min-form-hero-title">② 회의록 작성 서식 <span class="min-form-hero-sub">각 항목을 탭하면 작성 요령이 표시됩니다</span></div>
+      <div class="min-form-hero-title">② 회의록 작성 서식 <span class="min-form-hero-sub">👆 노란 밑줄 항목을 탭하면 작성 요령이 표시됩니다</span></div>
       <div class="min-form-wrap">
         <table class="min-form-table">
           <tr>
@@ -3506,7 +3439,7 @@ function applyState(v, n, push, noScroll) {
     const hash = v === 'quiz' ? 'quiz-0' : v+'-'+n;
     history.pushState({view:v, step:n}, '', '#'+hash);
   }
-  if (!noScroll) window.scrollTo({top: 56, behavior: 'smooth'});
+  if (!noScroll) window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 function showView(v) {
@@ -4352,15 +4285,13 @@ function updateLegalResult() {
   const yes = document.getElementById('legal-result-yes');
   const no  = document.getElementById('legal-result-no');
   const rst = document.getElementById('legal-wizard-reset');
-  const hint = document.getElementById('min-diag-hint');
   if (checked > 0) {
     yes.classList.add('show'); no.classList.remove('show');
     rst.classList.add('show');
-    if (hint) hint.style.display = 'none';
   } else {
+    // 아무것도 체크 안 함 → 비법정 판정 표시
     yes.classList.remove('show'); no.classList.add('show');
     rst.classList.remove('show');
-    if (hint) hint.style.display = 'block';
   }
 }
 
@@ -4370,10 +4301,8 @@ function resetLegalChecks() {
     el.querySelector('.legal-check-icon').textContent = '☐';
   });
   document.getElementById('legal-result-yes').classList.remove('show');
-  document.getElementById('legal-result-no').classList.remove('show');
+  document.getElementById('legal-result-no').classList.add('show');
   document.getElementById('legal-wizard-reset').classList.remove('show');
-  const hint = document.getElementById('min-diag-hint');
-  if (hint) hint.style.display = 'block';
 }
 
 // ══════════════════════════════════
@@ -4386,7 +4315,13 @@ function toggleFormTip(id) {
   document.querySelectorAll('.min-form-tip').forEach(t => {
     if (t.id !== id) t.classList.remove('show');
   });
+  document.querySelectorAll('.min-form-hl').forEach(h => h.classList.remove('min-form-open'));
   tip.classList.toggle('show');
+  // 방금 클릭한 하이라이트에 open 표시
+  if (tip.classList.contains('show')) {
+    const hl = tip.previousElementSibling;
+    if (hl && hl.classList.contains('min-form-hl')) hl.classList.add('min-form-open');
+  }
 }
 
 // ══════════════════════════════════
