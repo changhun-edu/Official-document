@@ -4328,33 +4328,33 @@ function annGoto(step, card) {
         // sv2인 경우 해당 rule-section 탭 활성화
         const rtId = CARD_TO_RT[card];
         if (rtId) {
-          // 모든 rule-section 숨기기, 모든 rule-tab 비활성
-          document.querySelectorAll('.rule-section').forEach(s => s.classList.remove('on'));
-          document.querySelectorAll('.rule-tab').forEach(b => b.classList.remove('on'));
-          // 타겟 섹션 열기
-          const rtEl = document.getElementById(rtId);
-          if (rtEl) {
-            rtEl.classList.add('on');
-            // 해당 섹션의 모든 rule-card 열기
-            rtEl.querySelectorAll('.rule-card').forEach(rc => rc.classList.add('open'));
-          }
-          // 해당 탭 버튼 활성화
+          // 해당 탭 버튼 찾아서 showRuleTab 직접 호출
+          let tabBtn = null;
           document.querySelectorAll('.rule-tab').forEach(btn => {
-            if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(rtId)) {
-              btn.classList.add('on');
-            }
+            const oc = btn.getAttribute('onclick') || '';
+            if (oc.indexOf(\"'\" + rtId + \"'\") !== -1) tabBtn = btn;
           });
+          if (tabBtn) {
+            showRuleTab(rtId, tabBtn);
+          } else {
+            // 버튼 못 찾아도 섹션만 열기
+            document.querySelectorAll('.rule-section').forEach(s => s.classList.remove('on'));
+            const rtEl = document.getElementById(rtId);
+            if (rtEl) {
+              rtEl.classList.add('on');
+              rtEl.querySelectorAll('.rule-card').forEach(rc => rc.classList.add('open'));
+            }
+          }
         } else {
-          // sv2 외 다른 sv의 경우 해당 sv 내 모든 rule-card 열기
           if (sv) sv.querySelectorAll('.rule-card').forEach(rc => rc.classList.add('open'));
         }
 
         // 타겟 카드 열기 + 스크롤
         el.classList.add('open');
-        requestAnimationFrame(() => {
+        setTimeout(() => {
           const top = el.getBoundingClientRect().top + window.scrollY - 70;
           window.scrollTo({ top, behavior: 'smooth' });
-        });
+        }, 100);
       }, 400);
     }
   }, 50);
