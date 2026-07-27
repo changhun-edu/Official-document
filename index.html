@@ -542,11 +542,89 @@ body.vis-on #vis-knob   { left: 22px; }
   align-items: start;
 }
 .ann-wrap .ann-doc  { flex-shrink: 0; }
-.ann-wrap .ann-panel{ flex-shrink: 0; width: 300px; }
+.ann-wrap .ann-panel{ flex-shrink: 0; width: 500px; }
 @media (max-width: 859px) {
   .ann-wrap { flex-direction: column; }
   .ann-wrap .ann-panel { width: 100%; }
 }
+
+/* 2컬럼 패널 내부 */
+.ann-panel-2col {
+  display: flex; height: 100%;
+}
+.ann-col-list {
+  width: 160px; flex-shrink: 0;
+  border-right: 1px solid rgba(255,255,255,.1);
+  padding: 1rem .75rem;
+  display: flex; flex-direction: column; gap: 0;
+}
+.ann-col-list-title {
+  font-size: .65rem; font-weight: 700; color: var(--gold-l);
+  letter-spacing: .6px; margin-bottom: .6rem; padding: 0 .25rem;
+}
+.ann-col-item {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .38rem .5rem; border-radius: 7px;
+  cursor: pointer; transition: background .13s;
+  font-size: .78rem; color: rgba(255,255,255,.65);
+  border: 1px solid transparent;
+}
+.ann-col-item:hover { background: rgba(255,255,255,.08); color: #fff; }
+.ann-col-item.active {
+  background: rgba(212,150,10,.18);
+  border-color: rgba(212,150,10,.35);
+  color: #fff; font-weight: 700;
+}
+.ann-col-item.seen { color: rgba(255,255,255,.35); }
+.ann-col-item.seen.active { color: #fff; }
+.aci-num {
+  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(255,255,255,.12); color: rgba(255,255,255,.5);
+  font-size: .65rem; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+.ann-col-item.active .aci-num { background: var(--gold); color: var(--ink); }
+.ann-col-item.seen .aci-num   { background: rgba(255,255,255,.06); }
+.aci-check { margin-left: auto; font-size: .72rem; color: var(--ok); flex-shrink: 0; }
+
+.ann-col-rule {
+  flex: 1; padding: 1rem 1.1rem; overflow-y: auto;
+  min-width: 0;
+}
+/* 진행률 — 리스트 하단 */
+.ann-col-progress {
+  margin-top: auto; padding-top: .6rem;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.ann-col-progress-label {
+  display: flex; justify-content: space-between;
+  font-size: .65rem; color: rgba(255,255,255,.4); margin-bottom: .3rem;
+}
+.ann-col-progress-label .acp-count { color: var(--gold-l); font-weight: 700; }
+.ann-col-progress-bar {
+  height: 4px; background: rgba(255,255,255,.1); border-radius: 99px; overflow: hidden;
+}
+.ann-col-progress-fill {
+  height: 100%; background: var(--gold); border-radius: 99px; transition: width .4s;
+}
+
+/* 규칙 영역 — 기존 ap-* 재활용 + 오버라이드 */
+.ann-col-rule .ap-head { font-size: .88rem; margin-bottom: .6rem; }
+.ann-col-rule .ap-rule { font-size: .78rem; padding: .55rem .75rem; margin-bottom: .5rem; }
+.ann-col-rule .ap-compare { gap: .35rem; margin: .45rem 0; }
+.ann-col-rule .ap-bad, .ann-col-rule .ap-good { padding: .4rem .65rem; font-size: .76rem; }
+.ann-col-rule .ap-bad-lbl, .ann-col-rule .ap-good-lbl { font-size: .65rem; }
+.ann-col-rule .ap-code { font-size: .76rem; }
+.ann-col-rule .ap-goto { font-size: .73rem; margin-top: .6rem; }
+
+/* 빈 상태 */
+.ann-col-empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  height: 100%; color: rgba(255,255,255,.3); text-align: center; gap: .5rem;
+  font-size: .82rem; padding: 1rem;
+}
+.ann-col-empty-icon { font-size: 2rem; opacity: .4; }
 
 /* 공문 박스 */
 .ann-doc {
@@ -1805,31 +1883,36 @@ body.ann-off #ann-panel { display: none !important; }
           </div>
         </div>
         <div class="ann-panel" id="ann-panel-0">
-          <div class="ann-default" id="ann-default-0">
-            <div class="ann-default-title">📌 번호를 클릭하면 규칙이 표시됩니다</div>
-            <div class="ann-default-hint">공문의 노란 번호 뱃지를 탭하면 해당 항목의 규칙과 올바른 예시가 여기에 나타납니다.</div>
-            <div class="ann-progress-wrap">
-              <div class="ann-progress-label">
-                <span>학습 진행</span>
-                <span class="apl-count" id="s0-progress-text">0 / 9</span>
-              </div>
-              <div class="ann-progress-bar">
-                <div class="ann-progress-fill" id="s0-progress-fill" style="width:0%"></div>
+          <div class="ann-panel-2col">
+            <!-- 왼쪽: 항목 목록 + 진행률 -->
+            <div class="ann-col-list" id="ann-col-list-0">
+              <div class="ann-col-list-title">📌 항목 목록</div>
+              <div class="ann-col-item" id="aci-s0-tag"    onclick="openAnn('s0-tag')">   <span class="aci-num">①</span><span>성격 표시제</span>   <span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s0-colon"  onclick="openAnn('s0-colon')"> <span class="aci-num">②</span><span>쌍점(:) 규정</span>  <span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s0-date"   onclick="openAnn('s0-date')">  <span class="aci-num">③</span><span>날짜 표기</span>     <span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s0-indent" onclick="openAnn('s0-indent')"><span class="aci-num">④</span><span>하위 항목 기호</span><span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s0-items"  onclick="openAnn('s0-items')"> <span class="aci-num">⑤</span><span>항목 들여쓰기</span><span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s0-range"  onclick="openAnn('s0-range')"> <span class="aci-num">⑥</span><span>기간·물결표</span>  <span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s0-money"  onclick="openAnn('s0-money')"> <span class="aci-num">⑦</span><span>금액 표기</span>     <span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s0-attach" onclick="openAnn('s0-attach')"><span class="aci-num">⑧</span><span>붙임 표기</span>     <span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s0-end"    onclick="openAnn('s0-end')">   <span class="aci-num">⑨</span><span>'끝'+종결어미</span><span class="aci-check"></span></div>
+              <div class="ann-col-progress">
+                <div class="ann-col-progress-label">
+                  <span>학습 진행</span><span class="acp-count" id="s0-progress-text2">0 / 9</span>
+                </div>
+                <div class="ann-col-progress-bar">
+                  <div class="ann-col-progress-fill" id="s0-progress-fill2" style="width:0%"></div>
+                </div>
               </div>
             </div>
-            <div class="ann-item-list" id="s0-item-list">
-              <div class="ann-item-row" id="air-s0-tag"    onclick="openAnn('s0-tag')">   <span class="air-num">①</span><span>성격 표시제</span>    <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s0-colon"  onclick="openAnn('s0-colon')"> <span class="air-num">②</span><span>쌍점(:) 규정</span>   <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s0-date"   onclick="openAnn('s0-date')">  <span class="air-num">③</span><span>날짜 표기</span>      <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s0-indent" onclick="openAnn('s0-indent')"><span class="air-num">④</span><span>하위 항목 기호</span> <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s0-items"  onclick="openAnn('s0-items')"> <span class="air-num">⑤</span><span>항목 들여쓰기</span> <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s0-range"  onclick="openAnn('s0-range')"> <span class="air-num">⑥</span><span>기간·물결표</span>   <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s0-money"  onclick="openAnn('s0-money')"> <span class="air-num">⑦</span><span>금액 표기</span>      <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s0-attach" onclick="openAnn('s0-attach')"><span class="air-num">⑧</span><span>붙임 표기</span>      <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s0-end"    onclick="openAnn('s0-end')">   <span class="air-num">⑨</span><span>'끝' + 종결어미</span><span class="air-check"></span></div>
+            <!-- 오른쪽: 규칙 내용 -->
+            <div class="ann-col-rule" id="ann-col-rule-0">
+              <div class="ann-col-empty">
+                <div class="ann-col-empty-icon">👈</div>
+                <div>번호를 클릭하면<br>규칙이 표시됩니다</div>
+              </div>
             </div>
           </div>
-          <div class="ann-panel-inner" id="ann-panel-inner-0" style="display:none;"></div>
         </div>
       </div>
       <div class="cite" style="margin-top:.85rem;">💡 <strong>내부결재 핵심</strong>: 수신자란에 "내부결재" 표기 / 성격 표시([계획] 등) / 종결어미 "시행하고자 합니다"(의지형) / 붙임 2개 이상이면 번호 구분 / 발신명의 불필요</div>
@@ -1868,30 +1951,33 @@ body.ann-off #ann-panel { display: none !important; }
           </div>
         </div>
         <div class="ann-panel" id="ann-panel-1">
-          <div class="ann-default" id="ann-default-1">
-            <div class="ann-default-title">📌 번호를 클릭하면 규칙이 표시됩니다</div>
-            <div class="ann-default-hint">공문의 노란 번호 뱃지를 탭하면 해당 항목의 규칙과 올바른 예시가 여기에 나타납니다.</div>
-            <div class="ann-progress-wrap">
-              <div class="ann-progress-label">
-                <span>학습 진행</span>
-                <span class="apl-count" id="s1-progress-text">0 / 8</span>
-              </div>
-              <div class="ann-progress-bar">
-                <div class="ann-progress-fill" id="s1-progress-fill" style="width:0%"></div>
+          <div class="ann-panel-2col">
+            <div class="ann-col-list" id="ann-col-list-1">
+              <div class="ann-col-list-title">📌 항목 목록</div>
+              <div class="ann-col-item" id="aci-s1-recv"   onclick="openAnn('s1-recv')">  <span class="aci-num">①</span><span>수신자 표기</span>   <span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s1-tag"    onclick="openAnn('s1-tag')">   <span class="aci-num">②</span><span>성격 표시제</span>   <span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s1-colon"  onclick="openAnn('s1-colon')"> <span class="aci-num">③</span><span>쌍점(:) 규정</span>  <span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s1-date"   onclick="openAnn('s1-date')">  <span class="aci-num">④</span><span>날짜 표기</span>     <span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s1-items"  onclick="openAnn('s1-items')"> <span class="aci-num">⑤</span><span>항목 들여쓰기</span><span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s1-range"  onclick="openAnn('s1-range')"> <span class="aci-num">⑥</span><span>기간·물결표</span>  <span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s1-attach" onclick="openAnn('s1-attach')"><span class="aci-num">⑦</span><span>붙임 표기</span>     <span class="aci-check"></span></div>
+              <div class="ann-col-item" id="aci-s1-end"    onclick="openAnn('s1-end')">   <span class="aci-num">⑧</span><span>'끝'+종결어미</span><span class="aci-check"></span></div>
+              <div class="ann-col-progress">
+                <div class="ann-col-progress-label">
+                  <span>학습 진행</span><span class="acp-count" id="s1-progress-text2">0 / 8</span>
+                </div>
+                <div class="ann-col-progress-bar">
+                  <div class="ann-col-progress-fill" id="s1-progress-fill2" style="width:0%"></div>
+                </div>
               </div>
             </div>
-            <div class="ann-item-list" id="s1-item-list">
-              <div class="ann-item-row" id="air-s1-recv"   onclick="openAnn('s1-recv')">  <span class="air-num">①</span><span>수신자 표기</span>    <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s1-tag"    onclick="openAnn('s1-tag')">   <span class="air-num">②</span><span>성격 표시제</span>    <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s1-colon"  onclick="openAnn('s1-colon')"> <span class="air-num">③</span><span>쌍점(:) 규정</span>   <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s1-date"   onclick="openAnn('s1-date')">  <span class="air-num">④</span><span>날짜 표기</span>      <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s1-items"  onclick="openAnn('s1-items')"> <span class="air-num">⑤</span><span>항목 들여쓰기</span> <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s1-range"  onclick="openAnn('s1-range')"> <span class="air-num">⑥</span><span>기간·물결표</span>   <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s1-attach" onclick="openAnn('s1-attach')"><span class="air-num">⑦</span><span>붙임 표기</span>      <span class="air-check"></span></div>
-              <div class="ann-item-row" id="air-s1-end"    onclick="openAnn('s1-end')">   <span class="air-num">⑧</span><span>'끝' + 종결어미</span><span class="air-check"></span></div>
+            <div class="ann-col-rule" id="ann-col-rule-1">
+              <div class="ann-col-empty">
+                <div class="ann-col-empty-icon">👈</div>
+                <div>번호를 클릭하면<br>규칙이 표시됩니다</div>
+              </div>
             </div>
           </div>
-          <div class="ann-panel-inner" id="ann-panel-inner-1" style="display:none;"></div>
         </div>
       </div>
       <div class="cite" style="margin-top:.85rem;">💡 <strong>교육청 보고 핵심</strong>: 수신에 교육장(담당과장) 표기 / [보고] 성격 표시 / 종결어미는 "보고합니다"(단정형) / 붙임 2개 이상이면 번호 구분</div>
@@ -4056,16 +4142,14 @@ function switchScenario(idx, btn) {
   document.querySelectorAll('.sc-view').forEach(v => v.classList.remove('on'));
   document.getElementById('scv' + idx).classList.add('on');
 
-  // 모든 패널 초기화
+  // 패널 표시 — sc0·sc1만 2컬럼 패널 표시
   [0,1,2,3].forEach(i => {
     const panel = document.getElementById('ann-panel-' + i);
-    const inner = document.getElementById('ann-panel-inner-' + i);
-    const def   = document.getElementById('ann-default-' + i);
-    if (inner) inner.style.display = 'none';
     if (panel) panel.style.display = (i === idx && (i === 0 || i === 1)) ? 'block' : 'none';
-    if (def)   def.style.display   = (i === idx && (i === 0 || i === 1)) ? 'block' : 'none';
   });
 
+  // 규칙 영역 초기화
+  closeAnn();
   document.querySelectorAll('.ann-hotspot').forEach(el => el.classList.remove('active'));
 }
 
@@ -4123,22 +4207,16 @@ function toggleAnn() {
   document.getElementById('ann-label').textContent = annOn ? '주석 ON' : '주석 OFF';
   if (!annOn) {
     [0,1,2,3].forEach(i => {
-      const p   = document.getElementById('ann-panel-' + i);
-      const def = document.getElementById('ann-default-' + i);
-      if (p)   p.style.display   = 'none';
-      if (def) def.style.display = 'none';
+      const p = document.getElementById('ann-panel-' + i);
+      if (p) p.style.display = 'none';
     });
     document.querySelectorAll('.ann-hotspot').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.ann-col-item').forEach(el => el.classList.remove('active'));
   } else {
-    // annOn 복귀 시 현재 시나리오 기본카드 다시 표시
     const sc = currentScenario;
     if (sc === 0 || sc === 1) {
       const panel = document.getElementById('ann-panel-' + sc);
-      const def   = document.getElementById('ann-default-' + sc);
-      const inner = document.getElementById('ann-panel-inner-' + sc);
       if (panel) panel.style.display = 'block';
-      if (def)   def.style.display   = 'block';
-      if (inner) inner.style.display = 'none';
     }
   }
 }
@@ -4153,17 +4231,21 @@ function updateProgress(sc) {
   if (total === undefined) return;
   const count = seen.size;
   const pct = Math.round(count / total * 100);
-  const txt = document.getElementById('s' + sc + '-progress-text');
-  const fill = document.getElementById('s' + sc + '-progress-fill');
-  if (txt) txt.textContent = count + ' / ' + total;
-  if (fill) fill.style.width = pct + '%';
+  const txt2  = document.getElementById('s' + sc + '-progress-text2');
+  const fill2 = document.getElementById('s' + sc + '-progress-fill2');
+  if (txt2)  txt2.textContent  = count + ' / ' + total;
+  if (fill2) fill2.style.width = pct + '%';
 }
 
 function markSeen(sc, key) {
   if (ANN_SEEN[sc] === undefined) return;
   ANN_SEEN[sc].add(key);
-  const row = document.getElementById('air-' + key);
-  if (row) row.classList.add('seen');
+  const aci = document.getElementById('aci-' + key);
+  if (aci) {
+    aci.classList.add('seen');
+    const chk = aci.querySelector('.aci-check');
+    if (chk) chk.textContent = '✓';
+  }
   updateProgress(sc);
 }
 
@@ -4171,26 +4253,19 @@ function openAnn(key) {
   if (!annOn) return;
   const d = ANN_DATA[key];
   if (!d) return;
+  const sc = currentScenario;
 
   document.querySelectorAll('.ann-hotspot').forEach(el => el.classList.remove('active'));
   document.querySelectorAll(`[data-ann="${key}"]`).forEach(el => el.classList.add('active'));
 
-  const sc = currentScenario;
+  document.querySelectorAll('.ann-col-item').forEach(el => el.classList.remove('active'));
+  const aci = document.getElementById('aci-' + key);
+  if (aci) aci.classList.add('active');
 
-  // 기본카드 숨기고 상세 패널 표시
-  [0, 1].forEach(i => {
-    const def = document.getElementById('ann-default-' + i);
-    const inner = document.getElementById('ann-panel-inner-' + i);
-    if (def)   def.style.display   = 'none';
-    if (inner) inner.style.display = 'none';
-  });
+  const ruleEl = document.getElementById('ann-col-rule-' + sc);
+  if (!ruleEl) return;
 
-  const panel = document.getElementById('ann-panel-' + sc);
-  const inner = document.getElementById('ann-panel-inner-' + sc);
-  if (!panel || !inner) return;
-
-  inner.innerHTML = `
-    <button class="ap-close" onclick="closeAnn()">✕</button>
+  ruleEl.innerHTML = `
     <div class="ap-head">
       ${d.num ? `<span class="ap-num">${d.num}</span>` : ''}${d.title}
     </div>
@@ -4205,28 +4280,18 @@ function openAnn(key) {
       ? `<div class="ap-goto" onclick="annGoto(${d.goto.step},null)">→ 가이드에서 더 보기</div>`
       : ''}
   `;
-  inner.style.display = 'block';
-  panel.style.display = 'block';
 
-  // 진행률 업데이트
   markSeen(sc, key);
-
-  if (window.innerWidth < 720) {
-    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
-  }
 }
 
 function closeAnn() {
-  const sc = currentScenario;
-  [0, 1].forEach(i => {
-    const inner = document.getElementById('ann-panel-inner-' + i);
-    if (inner) inner.style.display = 'none';
-    const def = document.getElementById('ann-default-' + i);
-    if (def) def.style.display = (i === sc) ? 'block' : 'none';
-    const panel = document.getElementById('ann-panel-' + i);
-    if (panel) panel.style.display = (i === sc) ? 'block' : 'none';
-  });
   document.querySelectorAll('.ann-hotspot').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.ann-col-item').forEach(el => el.classList.remove('active'));
+  const emptyHtml = `<div class="ann-col-empty"><div class="ann-col-empty-icon">👈</div><div>번호를 클릭하면<br>규칙이 표시됩니다</div></div>`;
+  [0,1].forEach(i => {
+    const r = document.getElementById('ann-col-rule-' + i);
+    if (r) r.innerHTML = emptyHtml;
+  });
 }
 
 function annGoto(step, card) {
@@ -4818,11 +4883,9 @@ renderDrills();
   applyState(view, step, false);
   const hash = view === 'quiz' ? 'quiz-0' : view+'-'+step;
   history.replaceState({view, step}, '', '#'+hash);
-  // ann-panel-0 기본카드 초기 표시
+  // ann-panel-0 초기 표시
   const p0 = document.getElementById('ann-panel-0');
   if (p0) p0.style.display = 'block';
-  const d0 = document.getElementById('ann-default-0');
-  if (d0) d0.style.display = 'block';
 })();
 // 모바일(터치 기기) 진입 힌트
 if (window.matchMedia('(pointer: coarse)').matches) {
